@@ -91,7 +91,9 @@ function get_externals(){
   local ext_develenv_dir=
   rsync --delete --exclude .svn -arv $EXT_DEVELENV_DIR/sonar-runner/src/site/resources/ sonar-runner/src/main/rpm/SOURCES
   rsync --delete --exclude .svn -arv $EXT_DEVELENV_DIR/jenkins/src/site/resources/ jenkins/src/main/rpm/SOURCES
+  mkdir -p src/main/development/vagrant/instance/modules/home/files
   rsync --delete --exclude .svn -arv ./src/main/resources/home src/main/development/vagrant/instance/modules/home/files
+  
   rsync --delete --exclude .svn -arv $PIPELINE_PLUGIN_DIR/plugin/app/hudson/jobs/pipeline-ADMIN-01-addPipeline/ jenkins/src/main/config/jobs/pipeline-ADMIN-01-addPipeline
   rsync --delete --exclude .svn -arv $EXT_DEVELENV_DIR/jenkins/src/main/config/plugins jenkins/src/main/config/plugins
   rsync --delete --exclude .svn -arv $EXT_DEVELENV_DIR/nexus/src/site/resources/ nexus/src/main/rpm/SOURCES
@@ -101,6 +103,7 @@ function get_externals(){
   rsync --delete --exclude .svn -arv $EXT_DEVELENV_DIR/soapui/src/site/resources/ soapui/src/main/rpm/SOURCES
   rsync --delete --exclude .svn -arv $EXT_DEVELENV_DIR/src/site/resources/tools/ src/main/rpm/SOURCES
   rsync --delete --exclude .svn -arv $EXT_DEVELENV_DIR/devpi/src/site/resources/ devpi/src/main/rpm/SOURCES
+  mkdir -p deploymentPipeline/src/main/deploymentPipeline
   rsync --delete --exclude .svn -arv $PIPELINE_PLUGIN_DIR/src/main/deploymentPipeline/ deploymentPipeline/src/main/deploymentPipeline
 }
 get_externals
