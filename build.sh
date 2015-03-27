@@ -82,19 +82,26 @@ MVN_BASE_OPTIONS="--global-settings=$settings_file --settings=$settings_file \
                     -DDEFAULT_JAVA_HOME=$develenv_java_home"
 
 function get_externals(){
-  rsync --delete -arv ../ext-develenv/sonar-runner/src/site/resources/ sonar-runner/src/main/rpm/SOURCES
-  rsync --delete -arv ../ext-develenv/jenkins/src/site/resources/ jenkins/src/main/rpm/SOURCES
+  DEFAULT_EXT_DEVELENV_DIR=../ext-develenv
+  DEFAULT_PIPELINE_PLUGIN_DIR=../pipeline_plugin
+  
+  [[ "$EXT_DEVELENV_DIR" == "" ]] && EXT_DEVELENV_DIR=$DEFAULT_EXT_DEVELENV_DIR
+  [[ "$PIPELINE_PLUGIN_DIR" == "" ]] && PIPELINE_PLUGIN_DIR=$DEFAULT_PIPELINE_PLUGIN_DIR
+ 
+  local ext_develenv_dir=
+  rsync --delete -arv $EXT_DEVELENV_DIR/sonar-runner/src/site/resources/ sonar-runner/src/main/rpm/SOURCES
+  rsync --delete -arv $EXT_DEVELENV_DIR/jenkins/src/site/resources/ jenkins/src/main/rpm/SOURCES
   rsync --delete -arv ./src/main/resources/home src/main/development/vagrant/instance/modules/home/files
-  rsync --delete -arv ../pipeline_plugin/plugin/app/hudson/jobs/pipeline-ADMIN-01-addPipeline jenkins/src/main/config/jobs/pipeline-ADMIN-01-addPipeline
-  rsync --delete -arv ../ext-develenv/jenkins/src/main/config/plugins jenkins/src/main/config/plugins
-  rsync --delete -arv ../ext-develenv/nexus/src/site/resources nexus/src/main/rpm/SOURCES
-  rsync --delete -arv ../ext-develenv/sonar/src/site/resources/ sonar/src/main/rpm/SOURCES
-  rsync --delete -arv ../ext-develenv/selenium/src/site/resources/ selenium/src/main/rpm/SOURCES
-  rsync --delete -arv ../ext-develenv/jmeter/src/site/resources/ jmeter/src/main/rpm/SOURCES
-  rsync --delete -arv ../ext-develenv/soapui/src/site/resources/ soapui/src/main/rpm/SOURCES
-  rsync --delete -arv ../ext-develenv/src/site/resources/tools src/main/rpm/SOURCES
-  rsync --delete -arv ../ext-develenv/devpi/src/site/resources devpi/src/main/rpm/SOURCES
-  rsync --delete --exclude .svn -arv ../pipeline_plugin deploymentPipeline/src/main/deploymentPipeline
+  rsync --delete --exclude .svn -arv $PIPELINE_PLUGIN_DIR/plugin/app/hudson/jobs/pipeline-ADMIN-01-addPipeline jenkins/src/main/config/jobs/pipeline-ADMIN-01-addPipeline
+  rsync --delete -arv $EXT_DEVELENV_DIR/jenkins/src/main/config/plugins jenkins/src/main/config/plugins
+  rsync --delete -arv $EXT_DEVELENV_DIR/nexus/src/site/resources nexus/src/main/rpm/SOURCES
+  rsync --delete -arv $EXT_DEVELENV_DIR/sonar/src/site/resources/ sonar/src/main/rpm/SOURCES
+  rsync --delete -arv $EXT_DEVELENV_DIR/selenium/src/site/resources/ selenium/src/main/rpm/SOURCES
+  rsync --delete -arv $EXT_DEVELENV_DIR/jmeter/src/site/resources/ jmeter/src/main/rpm/SOURCES
+  rsync --delete -arv $EXT_DEVELENV_DIR/soapui/src/site/resources/ soapui/src/main/rpm/SOURCES
+  rsync --delete -arv $EXT_DEVELENV_DIR/src/site/resources/tools src/main/rpm/SOURCES
+  rsync --delete -arv $EXT_DEVELENV_DIR/devpi/src/site/resources devpi/src/main/rpm/SOURCES
+  rsync --delete --exclude .svn -arv $PIPELINE_PLUGIN_DIR deploymentPipeline/src/main/deploymentPipeline
 }
 get_externals
 _log "Initializing maven build"
