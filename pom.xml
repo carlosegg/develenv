@@ -61,23 +61,12 @@
       </notifiers>
    </ciManagement>
    <scm>
-      <connection>scm:svn:http://develenv.googlecode.com/svn/trunk/develenv</connection>
-      <developerConnection>scm:svn:https://develenv.googlecode.com/svn/trunk/develenv</developerConnection>
-      <url>http://develenv.googlecode.com/svn/trunk/develenv</url>
+      <connection>scm:git:https://github.com/carlosegg/develenv</connection>
+      <developerConnection>scm:git:https://github.com/carlosegg/develenv</developerConnection>
+      <url>https://github.com/carlosegg/develenv</url>
    </scm>
    <build> 
       <plugins>
-
-         <!-- Generar una release. Es necesario tener instalado un cliente de SVN -->
-         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-release-plugin</artifactId>
-            <version>2.0-beta-9</version>
-            <configuration>
-               <username>carlosegg</username>
-               <tagBase>https://develenv.googlecode.com/svn/tags</tagBase>
-            </configuration>
-         </plugin>
          <!-- modificar las opciones del compilador -->
          <plugin>
             <artifactId>maven-compiler-plugin</artifactId>
@@ -190,44 +179,6 @@
                   </configuration>
                </execution>
             </executions>
-         </plugin>
-         <!-- En modo SNAPSHOT se hace coincidir con el número de revisión del
-               SVN -->
-         <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>buildnumber-maven-plugin</artifactId>
-            <version>1.2</version>
-            <executions>
-               <execution>
-                  <phase>validate</phase>
-                  <goals>
-                     <goal>create</goal>
-                  </goals>
-               </execution>
-            </executions>
-            <configuration>
-               <format>{0,date,yyyy-MM-dd}</format>
-               <items>
-                  <item>timestamp</item>
-               </items>
-               <doCheck>true</doCheck>
-               <doUpdate>true</doUpdate>
-               <providerImplementations>
-                  <svn>javasvn</svn>
-               </providerImplementations>
-            </configuration>
-            <dependencies>
-               <dependency>
-               <groupId>com.google.code.maven-scm-provider-svnjava</groupId>
-               <artifactId>maven-scm-provider-svnjava</artifactId>
-               <version>2.0.5</version>
-               </dependency>
-               <dependency>
-               <groupId>org.tmatesoft.svnkit</groupId>
-               <artifactId>svnkit</artifactId>
-               <version>1.7.8</version>
-               </dependency>
-            </dependencies>
          </plugin>
          <!-- generar el site del proyecto en español -->
          <plugin>
