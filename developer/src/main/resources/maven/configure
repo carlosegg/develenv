@@ -1,0 +1,137 @@
+#!/bin/bash
+currentDir(){
+   DIR=`dirname $0`
+   if test `expr $0 : "/.*"` -eq 0 ; then
+     OLD_DIR=$PWD
+     cd $PWD/$DIR
+     DIR=$PWD
+     cd $OLD_DIR
+   fi
+}
+addEnviroment(){
+    echo ------------------------------------------------
+    echo   Agregando variables de entorno 
+    echo ------------------------------------------------
+    APPLICATION_HOME=$1
+    FILE=$3
+    cp -R $FILE $FILE.bak
+    TEMP1=`dirname $3`/deleteme
+    TEMP2=`dirname $3`/deleteme2
+    NEW_HOME="$2"
+    EXPORT_APPLICATION_HOME="$APPLICATION_HOME="
+    EXPORT_PATH="PATH="
+    items=`cat $FILE|grep "$EXPORT_APPLICATION_HOME"|wc -l`
+    paths=`cat $FILE|grep "$EXPORT_PATH"|wc -l`
+    # Comentamos todos los EXPORT APPLICATION
+    if [ "$items" != "0" ]; then
+        cat $FILE| sed s:"$EXPORT_APPLICATION_HOME":"#export ":g>$TEMP1
+    else
+        cp $FILE $TEMP1
+    fi
+    
+    EXISTE=""
+    for i in `grep "$EXPORT_PATH" $TEMP1`;
+        do
+        LAST_PATH="$i"
+        EXISTE2=`echo $LAST_PATH|grep "$APPLICATION_HOME/bin"`
+        if [ "$EXISTE2" != "" ]; then
+           EXISTE="1"
+        fi
+    done
+    echo "$EXPORT_APPLICATION_HOME"$NEW_HOME>>$TEMP1
+    cat $TEMP1|sed s:"$EXPORT_PATH":"#export ":g >$TEMP2
+    if [ "$EXISTE" == "" ]; then
+       if [ "$LAST_PATH" == "" ]; then
+       	   echo PATH=\$$APPLICATION_HOME/bin:\$PATH >>$TEMP2
+       else 
+	   	   echo PATH=\$$APPLICATION_HOME/bin:`echo $LAST_PATH |cut -d'=' -f2` >>$TEMP2
+       fi
+    else
+       echo $LAST_PATH >>$TEMP2
+    fi
+    rm -Rf $FILE
+    cat $TEMP2 |grep -v "#export" > $FILE
+    rm -Rf $TEMP1 $TEMP2
+}
+install_in_basrc(){
+if ! [ -w $HOME/.bashrc ]; then
+   echo >> $HOME/.bashrc
+fi
+echo >> $HOME/.bashrc
+addEnviroment "MAVEN_HOME" "$DIR" "$HOME/.bashrc"
+echo "-------------------------------------------------------------------------"
+   echo "Ejecuta . $HOME/.bashrc para añadir MAVEN al path"
+   echo "-------------------------------------------------------------------------"
+
+}
+currentDir
+ 
+
+echo "Configuración Common Enviroment"
+echo -e "Usuario de hudson: \c"
+read HUDSON_USER
+echo -e "Contraseña de hudson: \c"
+read HUDSON_PASSWORD
+echo -e "Usuario scm: \c"
+read SCM_USER_KEY
+echo -e "Password scm: \c"
+read SCM_PASSWORD_KEY
+MAVEN_HOME=$DIR
+mkdir -p $MAVEN_HOME/repository
+MAVEN_LOCAL_REPOSITORY="<!--maven.local.repository-->"
+HTTP_HUDSON_USER="<username>developer.hudson.user</username>"
+HTTP_HUDSON_PASSWORD="<password>developer.hudson.password</password>"
+REPO_SITE_URL="<repoSiteUrl>repoSiteUrl</repoSiteUrl>"
+SCM_USER="<scmUser>scm.user</scmUser>"
+SCM_PASSWORD="<scmPassword>scm.password</scmPassword>"
+CHECKOUT_DIRECTORY="<scmCheckoutDirectory>dev/workspace"
+SUBST_MAVEN_LOCAL_REPOSITORY="<localRepository>$MAVEN_HOME/repository</localRepository>"
+SUBST_HTTP_HUDSON_USER="<username><![CDATA[$HUDSON_USER]]></username>"
+SUBST_HTTP_HUDSON_PASSWORD="<password><![CDATA[$HUDSON_PASSWORD]]></password>"
+SUBST_SCM_USER="<scmUser><![CDATA[$SCM_USER_KEY]]></scmUser>"
+SUBST_SCM_PASSWORD="<scmPassword><![CDATA[$SCM_PASSWORD_KEY]]></scmPassword>"
+SUBST_REPO_SITE_URL="<repoSiteUrl><![CDATA[file\://localhost$PWD/site]]></repoSiteUrl>"
+SUBST_CHECKOUT_DIRECTORY="<scmCheckoutDirectory><![CDATA[$PWD]]>"
+    echo -e "¿Son correctos los datos (S/n): \c"
+    read ANSWER_MAVEN
+    case $ANSWER_MAVEN in
+        'S'|'s'|'')
+        ;;
+
+        'N'|'n')
+                exit 1
+                ;;
+        *)  echo "Debes teclar s  o n"
+        echo "Debes reconfigurar develenv"
+        exit 1
+    esac
+
+
+
+cp $DIR/conf/settings.xml $DIR/deleteme
+cat $DIR/deleteme | sed s:$MAVEN_LOCAL_REPOSITORY:$SUBST_MAVEN_LOCAL_REPOSITORY:g > $DIR/deleteme2
+cat $DIR/deleteme2 | sed s:$HTTP_HUDSON_USER:$SUBST_HTTP_HUDSON_USER:g > $DIR/deleteme
+cat $DIR/deleteme | sed s:$HTTP_HUDSON_PASSWORD:$SUBST_HTTP_HUDSON_PASSWORD:g > $DIR/deleteme2
+cat $DIR/deleteme2 | sed s:$SCM_USER:$SUBST_SCM_USER:g > $DIR/deleteme
+cat $DIR/deleteme | sed s:$SCM_PASSWORD:$SUBST_SCM_PASSWORD:g > $DIR/deleteme2
+cat $DIR/deleteme2 | sed s:$REPO_SITE_URL:$SUBST_REPO_SITE_URL:g > $DIR/deleteme
+cat $DIR/deleteme | sed s:$CHECKOUT_DIRECTORY:$SUBST_CHECKOUT_DIRECTORY:g > $DIR/deleteme2
+
+
+cp $DIR/deleteme2 $DIR/conf/settings.xml
+rm $DIR/deleteme $DIR/deleteme2
+
+    echo -e "Desearías introducir $MAVEN_HOME/bin en el PATH en el script de inicio de sesión? (S/n): \c"
+    read ANSWER_MAVEN
+    case $ANSWER_MAVEN in
+        'S'|'s'|'')
+        install_in_basrc
+        ;;
+
+        'N'|'n') 
+                exit 1
+                ;;
+        *)  echo "Debes teclar s  o n"
+        echo "Debes reconfigurar develenv"
+        exit 1
+    esac

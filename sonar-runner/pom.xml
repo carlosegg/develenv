@@ -1,0 +1,41 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <artifactId>develenv</artifactId>
+      <groupId>com.softwaresano</groupId>
+      <version>37</version>
+   </parent>
+   <artifactId>sonar-runner</artifactId>
+   <name>sonar-runner</name>
+   <description>Cliente para análisis de código con Sonar</description>
+   <build>
+      <plugins>
+         <plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+               <execution>
+                  <id>sonar</id>
+                  <phase>process-classes</phase>
+                  <goals>
+                     <goal>run</goal>
+                  </goals>
+                  <configuration>
+                    <tasks>
+                        <property name="external.tools.dir" value="${external.tools.dir}"/>
+                        <property name="sonar.runner.version" value="${sonar.runner.version}" />
+                        <unzip
+                          src="${external.tools.dir}/sonar-runner-dist-${sonar.runner.version}.zip"
+                           dest="${project.build.directory}/../../target/platform" />
+                          <move file="${project.build.directory}/../../target/platform/sonar-runner-${sonar.runner.version}"
+                                tofile="${project.build.directory}/../../target/platform/sonar-runner"/>
+                          <move file="${project.build.directory}/../../target/platform/sonar-runner/conf/sonar-runner.properties"
+                                tofile="${project.build.directory}/../../target/platform/sonar-runner/conf/sonar-runner.properties.sample"/>
+                     </tasks>
+                  </configuration>
+               </execution>
+            </executions>
+         </plugin>
+      </plugins>
+   </build>
+</project>

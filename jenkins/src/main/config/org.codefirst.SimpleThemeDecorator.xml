@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<org.codefirst.SimpleThemeDecorator plugin="simple-theme-plugin@0.3">
+  <cssUrl>/docs/jenkins/skin/ss_css.php</cssUrl>
+  <jsUrl>/docs/jenkins/skin/ss_js.php</jsUrl>
+</org.codefirst.SimpleThemeDecorator>

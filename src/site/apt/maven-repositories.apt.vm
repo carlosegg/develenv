@@ -1,0 +1,109 @@
+#macro ( developers $developers )
+  #set ( $counter = 0 )
+  #set ( $listDeveloper = "" )
+  #foreach( $item in $developers )
+    #set ( $counter = $counter + 1 )
+    #set ( $listDeveloper =  $listDeveloper + $counter + ":" + $item.name + " "  )
+  #end
+#end
+#developers ( ${project.developers} )
+ -----
+ Instalación y configuración de maven
+ -----
+ ${developerName} -- ${developerMail}
+ -----
+ 
+
+Repositorios de maven
+~~~~~~~~~~~~~~~~
+
+  La {{{./maven-configuration.html}configuración de maven}} realizada implica la utilización de un proxy
+  de repositorios de maven, es decir, que mediante la utilización de este proxy se pueden acceder tanto a 
+  repositorios externos a ${project.organization.name}, como a repositorios internos. 
+  Este proxy está disponible en: {{{${mavenManagerBaseUrl}}${mavenManagerBaseUrl}}}. A continuación se describen
+  los diferentes repositorios de maven que se utilizan en ${project.organization.name}.
+  
+*----------+--------------+----------------+
+| <<Repositorio>>  | <<URL>>     | <<Descripción>>  
+*----------+--------------+----------------+
+${repoMavenId} | ${repoMavenUrl} | Repositorio de releases de componentes
+*----------+--------------+----------------+
+${repoMavenSnapshotId} | ${repoMavenSnapshotUrl} | Repositorio de snapshots de componentes
+*----------+--------------+----------------+
+${repoMavenArchetypeId} | ${repoMavenArchetypeUrl} | Repositorio de releases de arquetipos
+*----------+--------------+----------------+
+${repoMavenArchetypeSnapshotId} | ${repoMavenArchetypeSnapshotUrl} | Repositorio de snapshots de arquetipos
+*----------+--------------+----------------+
+${repoMavenThirdPartyId} | ${repoMavenThirdPartyUrl} | Repositorio de releases de componentes de terceros
+*----------+--------------+----------------+
+${repoMavenThirdPartySnapshotId} | ${repoMavenThirdPartySnapshotUrl} | Repositorio de snapshots de componentes de terceros
+*----------+--------------+----------------+
+
+{Desplegar un componente de un tercero en maven}
+~~~~~~~~~~~~~~~~
+
+ <<Versiones estables (releases)>>
+ ~~~~~~~~~~~~~~~~
+
+ Para añadir un componente al repositorio de maven de terceros. Por ejemplo desplegar la versión 11.1.0.7.0 del driver jdbc de oracle
+
+
++-----------------+
+ carlosg@ironman:~/workspace$ mvn deploy:deploy-file -DgroupId=com.oracle \
+  -DartifactId=ojdbc6 \
+  -Dversion=11.1.0.7.0 \
+  -Dpackaging=jar \
+  -Dfile=/temp/ojdbc6.jar \
+  -DrepositoryId=${repoMavenThirdPartyId} \
+  -Durl=${repoMavenThirdPartyUrl}
++-----------------+
+ 
+ En el caso de que un plugin sea sólo válido para una determinada versión del jdk (Supongamos jdk15). Añadir la propiedad classifier. Por ejemplo:
+ 
++-----------------+
+ carlosg@ironman:~/workspace$ mvn deploy:deploy-file -DgroupId=com.oracle \
+  -DartifactId=ojdbc \
+  -Dversion=11.1.0.7.0 \
+  -Dclassifier=jdk15 \
+  -Dpackaging=jar \
+  -Dfile=/temp/ojdbc6.jar \
+  -DrepositoryId=${repoMavenThirdPartyId} \
+  -Durl=${repoMavenThirdPartyUrl}
++-----------------+
+
+ <<Versiones en desarrollo (Snapshots)>>
+ ~~~~~~~~~~~~~~~~
+
+ Para añadir un componente al repositorio de maven de terceros. Por ejemplo desplegar la versión 11.1.0.7.0 del driver jdbc de oracle
+
+
++-----------------+
+ carlosg@ironman:~/workspace$ mvn deploy:deploy-file -DgroupId=com.oracle \
+  -DartifactId=ojdbc6 \
+  -Dversion=12.1.0.7.0-SNAPSHOT \
+  -Dpackaging=jar \
+  -Dfile=/temp/ojdbc6.jar \
+  -DrepositoryId=${repoMavenThirdPartySnapshotId} \
+  -Durl=${repoMavenThirdPartyUrl}
++-----------------+
+
+ En el caso de que un plugin sea sólo válido para una determinada versión del jdk (Supongamos jdk15). Añadir la propiedad classifier. Por ejemplo:
+
++-----------------+
+ carlosg@ironman:~/workspace$ mvn deploy:deploy-file -DgroupId=com.oracle \
+  -DartifactId=ojdbc \
+  -Dversion=12.1.0.7.0-SNAPSHOT \
+  -Dclassifier=jdk15 \
+  -Dpackaging=jar \
+  -Dfile=/temp/ojdbc6.jar \
+  -DrepositoryId=${repoMavenThirdPartySnapshotId} \
+  -Durl=${repoMavenThirdPartyUrl}
++-----------------+
+
+  
+ En la {{{http://maven.apache.org/guides/mini/guide-3rd-party-jars-remote.html}guía de despliegue de componentes de terceros}} se amplia
+ la información de como desplegar componentes de terceros.
+ 
+ 
+
+  

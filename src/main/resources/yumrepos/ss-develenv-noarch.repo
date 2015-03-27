@@ -1,0 +1,6 @@
+# Repositorio de rpms ${project.artifactId}
+[ss-${project.artifactId}-noarch]
+name=ss-${project.artifactId}-noarch
+baseurl=http://REPO_HOST/${project.artifactId}/rpms/noarch
+enabled=1
+gpgcheck=0

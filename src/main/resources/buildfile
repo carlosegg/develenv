@@ -1,0 +1,371 @@
+<project name="develenv" default="build-all" basedir=".">
+   <target name="replaceUser" depends="build-all">
+      <!-- Configurando el usuario administrador para hudson -->
+      <move todir="../app/jenkins/users/${administrator.id}/">
+         <fileset dir="../app/jenkins/users/admin/"/>
+      </move>
+   </target>
+   <target name="build-all" >
+      <delete dir="../temp/developer"/>
+      <mkdir dir="../temp/developer" />
+      <copy toDir="../temp/developer/maven">
+         <fileset dir="../platform/maven"/>
+      </copy>
+      <copy toDir="../temp/developer" overwrite="true">
+         <fileset dir="../install/developer"/>
+      </copy>
+      <!-- Eliminar problema de una mÃ¡quina con IP pÃºblica e IP privada -->
+      <replace encoding="UTF-8" dir="../" propertyFile="/opt/ss/develenv/install/conf/${env}.properties" >
+         <include name="**/*.html"/>
+         <replacefilter
+            token="href=&quot;http://develenv_host:11111/jenkins"
+            value="href=&quot;/jenkins"/>
+         <replacefilter
+            token="href=&quot;http://develenv_host:11111/hudson"
+            value="href=&quot;/hudson"/>
+         <replacefilter
+            token="href=&quot;http://develenv_host/nexus"
+            value="href=&quot;/nexus"/>
+         <replacefilter
+            token="href=&quot;http://develenv_host:11111/sonar"
+            value="href=&quot;/sonar"/>
+         <replacefilter
+            token="href=&quot;http://develenv_host:11111/sites"
+            value="href=&quot;/sites"/>
+       </replace>
+       <replace encoding="UTF-8" dir="../" propertyFile="/opt/ss/develenv/install/conf/${org}.properties" >
+            <exclude name="app/plugins/**/*.*" />
+            <exclude name="app/jenkins/plugins/**/*.*"/>
+            <exclude name="app/jenkins/queue.xml" />
+            <exclude name="conf/jenkins/queue.xml" />
+            <exclude name="app/jenkins/queue.xml" />
+            <exclude name="app/jenkins/jobs/**/workspace/**/*.*" />
+            <exclude name="app/jenkins/jobs/**/builds/**/*.*" />
+            <exclude name="app/jenkins/jobs/**/configurations/**/*.*" />
+            <exclude name="app/jenkins/jobs/**/htmlreports/**/*.*" />
+            <exclude name="app/jenkins/jobs/**/cobertura/**/*.*" />
+            <exclude name=".jenkins/**/*.*" />
+            <exclude name=".hudson/**/*.*" />
+            <exclude name="sonatype-work/nexus/indexer/**/*.*" />
+            <exclude name="sonatype-work/nexus/logs/**/*.*" />
+            <exclude name="sonatype-work/nexus/plugin-repository/**/*.*" />
+            <exclude name="sonatype-work/nexus/proxy/**/*.*" />
+            <exclude name="sonatype-work/nexus/storage/**/*.*" />
+            <exclude name="sonatype-work/nexus/timeline/**/*.*" />
+            <exclude name="app/repositories/**/*.*" />
+            <exclude name="app/sites/**/*.*" />
+            <exclude name="app/maven/.m2/repository/**/*.*" />
+            <exclude name="app/jenkins/queue.xml" />
+            <exclude name="conf/jenkins/queue.xml" />
+         <include name="**/*.xml"/>
+         <include name="**/*.html"/>
+         <include name="**/*.sh" />
+         <include name="**/*.bat"/>
+         <include name="**/*.conf"/>
+         <include name="**/*.sql"/>
+         <include name="**/*.rpmnew"/>
+         <include name="**/sonar.properties"/>
+         <include name="**/sonar-runner.properties"/>
+         <include name="**/logback.properties"/>
+         <include name="**/README"/>
+         <replacefilter
+            token="@hudson.develenv.java.home@"
+            value="@develenv.java.home@"/>
+         <replacefilter
+                token="* * * * *"
+                value="${develenv.crond} * * *"/>
+            <replacefilter
+                token="hudson.develenv_host"
+                value="develenv.host"/>
+            <replacefilter
+                token=":22222"
+                value="11111"/>
+            <replacefilter
+               token="[INLINECODE] -->"
+               value=" "/>
+            <replacefilter
+               token="&lt;!-- [INLINECODE]"
+               value=" "/>
+            <replacefilter
+               token="&lt;img src=&quot;img/develenv.jpg&quot; alt=&quot;develenv&quot; />" 
+               value="&lt;script type=&quot;text/javascript&quot; src=&quot;http://www.softwaresano.com/widgets/head.php&quot;>&lt;/script>&lt;script type=&quot;text/javascript&quot; src=&quot;/widgets/head.php&quot;>&lt;/script>"/>
+            <replacefilter
+               token="&lt;img src=&quot;img/develenv.png&quot; alt=&quot;Arquitectura L&amp;#xf3;gica&quot; />" 
+               value="&lt;script type=&quot;text/javascript&quot; src=&quot;http://www.softwaresano.com/widgets/right.php&quot;>&lt;/script>&lt;script type=&quot;text/javascript&quot; src=&quot;/widgets/right.php&quot;>&lt;/script>"/>
+            <replacefilter
+               token="&lt;img class=&quot;poweredBy&quot;  alt=&quot;pimpam&quot; src=&quot;http://pimpam.googlecode.com/files/builtByPimpam.png&quot;    />" 
+               value="&lt;script type=&quot;text/javascript&quot; src=&quot;http://www.softwaresano.com/widgets/builtBy.php&quot;>&lt;/script>&lt;script type=&quot;text/javascript&quot; src=&quot;/widgets/builtBy.php&quot;>&lt;/script>"/>
+           <replacefilter
+                  token="&lt;/body>" 
+                  value="&lt;script type=&quot;text/javascript&quot; src=&quot;http://www.softwaresano.com/widgets/foot.php&quot;>&lt;/script>&lt;script type=&quot;text/javascript&quot; src=&quot;/widgets/foot.php&quot;>&lt;/script>&lt;/body>"/>
+            <replacefilter 
+                    token="$${project.artifactId}" 
+                    value="${develenv.projectName}"/>
+           <replacefilter 
+                    token="$${project.version}" 
+                    value="${develenv.projectVersion}"/>
+           <replacefilter 
+                    token="$${administrator.id}" 
+                    value="${administrator.id}"/>
+           <replacefilter
+                token="@hudson.develenv.prefix@"
+                value="@hudson.develenv.prefix@"/>
+           <replacefilter
+                token="@hudson.administrator.id@"
+                value="@administrator.id@"/>
+            <replacefilter
+                token="@develenv.java.home@"
+                value="${develenv.java.home}"/>
+            <replacefilter
+                token="develenv_host"
+                value="${develenv.host}"/>
+            <replacefilter
+                token="$${develenv.host}"
+                value="${develenv.host}"/>
+            <replacefilter
+                token="$${develenv.port}"
+                value="${develenv.port}"/>
+            <replacefilter
+                token=":11111"
+                value="${develenv.port}"/>
+            <replacefilter
+                token="@develenv.prefix@"
+                value="${develenv.prefix}"/>
+           <replacefilter
+                token="@administrator.id@"
+                value="${administrator.id}"/>
+            <replacefilter
+                token="${projectName}"
+                property="projectName"/>
+            <replacefilter
+                token="${hudson.security.realm}"
+                property="hudson.security.realm"/>
+            <replacefilter
+                token="${hudson.authorization.extra}"
+                property="hudson.authorization.extra"/>
+            <replacefilter
+                token="${nexus.security.ldap}"
+                property="nexus.security.ldap"/>
+            <replacefilter
+                token="${nexus.security.configuration}"
+                property="nexus.security.configuration"/>
+            <replacefilter
+                token="${sonar.admin.password}"
+                property="sonar.admin.password"/>
+            <replacefilter
+                token="${nexus.admin.password}"
+                property="nexus.admin.password"/>
+            <replacefilter
+                token="${nexus.authorization.extra}"
+                property="nexus.authorization.extra"/>
+            <replacefilter
+                token="${nexus.security.source}"
+                property="nexus.security.source"/>
+            <replacefilter
+                token="${mail.prefix}"
+                property="mail.prefix"/>    
+            <replacefilter
+                token="${scm.url.connection}"
+                property="scm.url.connection"/>
+            <replacefilter
+                token="${scm.url.developer.connection}"
+                property="scm.url.developer.connection"/>
+            <replacefilter
+                token="${scm.user}"
+                property="scm.user"/>
+            <replacefilter
+                token="${central.http.host}"
+                property="central.http.host"/>
+            <replacefilter
+                token="${central.http.port}"
+                property="central.http.port"/>
+            <replacefilter
+                token="${mail.sufix}"
+                property="mail.sufix"/>
+            <replacefilter
+                token="${smtp.host}"
+                property="smtp.host"/>
+            <replacefilter
+                token="${smtp.port}"
+                property="smtp.port"/>
+            <replacefilter
+                token="${hudson.mailer}"
+                property="hudson.mailer"/>
+            <replacefilter
+                token="${jenkins.model.JenkinsLocationConfiguration}"
+                property="jenkins.model.JenkinsLocationConfiguration"/>
+            <replacefilter
+                token="${central.http}"
+                property="central.http"/>
+            <replacefilter
+                token="${central.nexus.url}"
+                property="central.nexus.url"/>
+           <replacefilter
+                token="${central.nexus.user}"
+                property="central.nexus.user"/>
+           <replacefilter
+                token="${central.nexus.password}"
+                property="central.nexus.password"/>
+           <replacefilter
+                token="${central.maven.mirrors}"
+                property="central.maven.mirrors"/>
+           <replacefilter
+                token="${other.nexus.repositories}"
+                property="other.nexus.repositories"/>
+           <replacefilter
+                token="${other.nexus.repositories.ids}"
+                property="other.nexus.repositories.ids"/>
+           <replacefilter
+                token="${other.nexus.snapshots.repositories.ids}"
+                property="other.nexus.snapshots.repositories.ids"/>
+            <replacefilter
+                token="${other.nexus.snapshots.repositories}"
+                property="other.nexus.snapshots.repositories"/>
+           <replacefilter
+                token="${developer.hudson.url}"
+                property="developer.hudson.url"/>
+           <replacefilter
+                token="${sonar.authenticator.class}"
+                property="sonar.authenticator.class"/>
+           <replacefilter
+                token="${sonar.security.realm}"
+                property="sonar.security.realm"/>
+           <replacefilter
+                token="${sonar.openid.providerUrl}"
+                property="sonar.openid.providerUrl"/>
+           <replacefilter
+                token="${sonar.openid.providerLogoutUrl}"
+                property="sonar.openid.providerLogoutUrl"/>
+           <replacefilter
+                token="${sonar.openid.sonarServerUrl}"
+                property="sonar.openid.sonarServerUrl"/>
+           <replacefilter
+                token="${sonar.ldap.url}"
+                property="sonar.ldap.url"/>
+           <replacefilter
+                token="${sonar.ldap.baseDN}"
+                property="sonar.ldap.baseDN"/>
+           <!-- WORKAROUND MAVEN-SITE-PLUGIN -->
+           <replacefilter
+                token="../developer/developer/"
+                value="./developer/"/>
+            <replacefilter
+                token="../sonar/sonar/"
+                value="./sonar/"/>
+             <replacefilter
+                token="../jenkins/jenkins/"
+                value="./jenkins/"/>
+            <replacefilter
+                token="../hudson/hudson/"
+                value="./hudson/"/>
+            <replacefilter
+                token="../nexus/nexus/"
+                value="./nexus/"/>
+            <replacefilter
+                token="../selenium/selenium/"
+                value="./selenium/"/>
+            <replacefilter
+                token="../jmeter/jmeter/"
+                value="./jmeter/"/>
+            <replacefilter
+                token="../soapui/soapui/"
+                value="./soapui/"/>
+            <replacefilter
+                token="../../develenv/maven-repositories.html"
+                value="../maven-repositories.html"/>
+            <replacefilter
+                token="../../develenv/team-list.html"
+                value="../team-list.html"/>
+            <replacefilter
+                token="../../develenv/index.html"
+                value="../index.html"/>
+            <replacefilter
+                token="../../../sites/"
+                value="http://${develenv.host}/sites/"/>
+            <replacefilter
+                token="../../../sonar/"
+                value="http://${develenv.host}/sonar/"/>
+            <replacefilter
+               token="&lt;img src=&quot;../../develenv/img/develenv.jpg&quot; alt=&quot;develenv&quot; />" 
+               value="&lt;script type=&quot;text/javascript&quot; src=&quot;http://www.softwaresano.com/widgets/head.php&quot;>&lt;/script>&lt;script type=&quot;text/javascript&quot; src=&quot;/widgets/head.php&quot;>&lt;/script>"/>
+       </replace>
+       <replace encoding="UTF-8" dir="../" propertyFile="/opt/ss/develenv/install/conf/${env}.properties" >
+            <exclude name="app/plugins/**/*.*" />
+            <exclude name="app/jenkins/plugins/**/*.*"/>
+            <exclude name="app/jenkins/queue.xml" />
+            <exclude name="conf/jenkins/queue.xml" />
+            <exclude name="app/jenkins/queue.xml" />
+            <exclude name="app/jenkins/jobs/**/workspace/**/*.*" />
+            <exclude name="app/jenkins/jobs/**/builds/**/*.*" />
+            <exclude name="app/jenkins/jobs/**/configurations/**/*.*" />
+            <exclude name="app/jenkins/jobs/**/htmlreports/**/*.*" />
+            <exclude name="app/jenkins/jobs/**/cobertura/**/*.*" />
+            <exclude name=".jenkins/**/*.*" />
+            <exclude name=".hudson/**/*.*" />
+            <exclude name="sonatype-work/nexus/indexer/**/*.*" />
+            <exclude name="sonatype-work/nexus/logs/**/*.*" />
+            <exclude name="sonatype-work/nexus/plugin-repository/**/*.*" />
+            <exclude name="sonatype-work/nexus/proxy/**/*.*" />
+            <exclude name="sonatype-work/nexus/storage/**/*.*" />
+            <exclude name="sonatype-work/nexus/timeline/**/*.*" />
+            <exclude name="app/repositories/**/*.*" />
+            <exclude name="app/sites/**/*.*" />
+            <exclude name="app/maven/.m2/repository/**/*.*" />
+            <exclude name="app/jenkins/queue.xml" />
+            <exclude name="conf/jenkins/queue.xml" />
+            <include name="**/*.xml"/>
+            <include name="**/*.html"/>
+            <include name="**/*.sh" />
+            <include name="**/*.bat"/>
+            <include name="**/*.conf"/>
+            <include name="**/*.sql"/>
+            <include name="**/*.rpmnew"/>
+            <include name="**/sonar.properties"/>
+            <include name="**/sonar-runner.properties"/>
+            <include name="**/README"/>
+            <replacefilter
+                token="@hudson.password"
+                value="@password"/>
+            <replacefilter
+                token="@password"
+                value="${password}"/>
+            <replacefilter
+                token="${sonar.jdbc.password}"
+                value="${password}"/>
+            <replacefilter
+                token="${sonar.jdbc.url.base}"
+                property="sonar.jdbc.url.base"/>
+            <replacefilter
+                token="${sonar.jdbc.url}"
+                property="sonar.jdbc.url"/>
+            <replacefilter
+                token="${sonar.jdbc.driverClassName}"
+                property="sonar.jdbc.driverClassName"/>
+            <replacefilter
+                token="${sonar.jdbc.validationQuery}"
+                property="sonar.jdbc.validationQuery"/>
+            <replacefilter
+                token="${tomcat.connector.http}"
+                property="tomcat.connector.http"/>
+           <replacefilter
+                token="${install.script}"
+                property="install.script"/>
+            <replacefilter
+                token="${tomcat.contexts}"
+                property="tomcat.contexts"/>
+            <replacefilter
+                token="../../../sites/"
+                value="http://${develenv.host}/sites/"/>
+            <replacefilter
+                token="../../../sonar/"
+                value="http://${develenv.host}/sonar/"/>
+       </replace>
+      <tar destfile="../docs/com.softwaresano/develenv/developer/maven.tar.gz" compression="gzip">
+         <tarfileset dir="../temp/developer" mode="755" />
+      </tar>
+      <zip destfile="../docs/com.softwaresano/develenv/developer/maven.zip"
+         update="true"
+         basedir="../temp/developer" />
+      <delete dir="../temp/developer"/>
+   </target>
+</project>

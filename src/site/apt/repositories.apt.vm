@@ -1,0 +1,139 @@
+~~Generado con el arquetipo: standalone-archetype
+~~http://www.softwaresano.com
+ -----
+ Instalación y configuración de maven
+ -----
+ ${userName}
+ -----
+
+Repositorios de componentes
+~~~~~~~~~~~~~~~~
+ En {{{http://${project.artifactId}.softwaresano.com}<<${project.artifactId}>>}} existen diferentes tipos de 
+ repositorios de componentes:
+
+ * {{{./repositories.html#Repositorios_maven}Repositorios maven}}
+
+ * {{{./repositories.html#Repositorios_de_paquetes_Redhat_CentOS_RedHat_y_Fedora}Repositorios de paquetes Redhat (CentOS, RedHat y Fedora)}}
+
+ * {{{./repositories.html#Repositorios_de_paquetes_Debian_Ubuntu_y_Debian}Repositorios de paquetes Debian (Ubuntu y Debian)}}
+
+
+* {Repositorios maven}
+~~~~~~~~~~~~~~~~
+
+  La {{{./maven-configuration.html}configuración de maven}} realizada implica la utilización de un proxy
+  de repositorios de maven, es decir, que mediante la utilización de este proxy se pueden acceder tanto a 
+  repositorios externos a ${project.organization.name}, como a repositorios internos. 
+  Este proxy está disponible en: {{{${mavenManagerBaseUrl}}${mavenManagerBaseUrl}}}. A continuación se describen
+  los diferentes repositorios de maven que se utilizan en ${project.organization.name}.
+
+*--------------------------------+-----------------------------------+-------------------------------------------------------+
+| <<Repositorio>>                |  <<URL>>                          | <<Descripción>>  
+*--------------------------------+-----------------------------------+-------------------------------------------------------+
+${repoMavenId}                   | ${repoMavenUrl}                   | Repositorio de releases de componentes
+*--------------------------------+-----------------------------------+-------------------------------------------------------+
+${repoMavenSnapshotId}           | ${repoMavenSnapshotUrl}           | Repositorio de snapshots de componentes
+*--------------------------------+-----------------------------------+-------------------------------------------------------+
+${repoMavenArchetypeId}          | ${repoMavenArchetypeUrl}          | Repositorio de releases de arquetipos
+*--------------------------------+-----------------------------------+-------------------------------------------------------+
+${repoMavenArchetypeSnapshotId}  | ${repoMavenArchetypeSnapshotUrl}  | Repositorio de snapshots de arquetipos
+*--------------------------------+-----------------------------------+-------------------------------------------------------+
+${repoMavenThirdPartyId}         | ${repoMavenThirdPartyUrl}         | Repositorio de releases de componentes de terceros
+*--------------------------------+-----------------------------------+-------------------------------------------------------+
+${repoMavenThirdPartySnapshotId} | ${repoMavenThirdPartySnapshotUrl} | Repositorio de snapshots de componentes de terceros
+*--------------------------------+-----------------------------------+-------------------------------------------------------+
+
+{Desplegar un componente de un tercero en maven}
+~~~~~~~~~~~~~~~~
+
+ <<Versiones estables (releases)>>
+ ~~~~~~~~~~~~~~~~
+
+ Para añadir un componente al repositorio de maven de terceros. Por ejemplo desplegar la versión 11.1.0.7.0 del driver jdbc de oracle
+
+
++-----------------+
+ carlosg@develenv_host:~/workspace$ mvn deploy:deploy-file -DgroupId=com.oracle \
+  -DartifactId=ojdbc6 \
+  -Dversion=11.1.0.7.0 \
+  -Dpackaging=jar \
+  -Dfile=/temp/ojdbc6.jar \
+  -DrepositoryId=${repoMavenThirdPartyId} \
+  -Durl=${repoMavenThirdPartyUrl}
++-----------------+
+ 
+ En el caso de que un plugin sea sólo válido para una determinada versión del jdk (Supongamos jdk15). Añadir la propiedad classifier. Por ejemplo:
+ 
++-----------------+
+ carlosg@develenv_host:~/workspace$ mvn deploy:deploy-file -DgroupId=com.oracle \
+  -DartifactId=ojdbc \
+  -Dversion=11.1.0.7.0 \
+  -Dclassifier=jdk15 \
+  -Dpackaging=jar \
+  -Dfile=/temp/ojdbc6.jar \
+  -DrepositoryId=${repoMavenThirdPartyId} \
+  -Durl=${repoMavenThirdPartyUrl}
++-----------------+
+
+ <<Versiones en desarrollo (Snapshots)>>
+ ~~~~~~~~~~~~~~~~
+
+ Para añadir un componente al repositorio de maven de terceros. Por ejemplo desplegar la versión 11.1.0.7.0 del driver jdbc de oracle
+
+
++-----------------+
+ carlosg@develenv_host:~/workspace$ mvn deploy:deploy-file -DgroupId=com.oracle \
+  -DartifactId=ojdbc6 \
+  -Dversion=12.1.0.7.0-SNAPSHOT \
+  -Dpackaging=jar \
+  -Dfile=/temp/ojdbc6.jar \
+  -DrepositoryId=${repoMavenThirdPartySnapshotId} \
+  -Durl=${repoMavenThirdPartyUrl}
++-----------------+
+
+ En el caso de que un plugin sea sólo válido para una determinada versión del jdk (Supongamos jdk15). Añadir la propiedad classifier. Por ejemplo:
+
++-----------------+
+ carlosg@develenv_host:~/workspace$ mvn deploy:deploy-file -DgroupId=com.oracle \
+  -DartifactId=ojdbc \
+  -Dversion=12.1.0.7.0-SNAPSHOT \
+  -Dclassifier=jdk15 \
+  -Dpackaging=jar \
+  -Dfile=/temp/ojdbc6.jar \
+  -DrepositoryId=${repoMavenThirdPartySnapshotId} \
+  -Durl=${repoMavenThirdPartyUrl}
++-----------------+
+
+  
+ En la {{{http://maven.apache.org/guides/mini/guide-3rd-party-jars-remote.html}guía de despliegue de componentes de terceros}} se amplia
+ la información de como desplegar componentes de terceros.
+ 
+ 
+
+* {Repositorios de paquetes Redhat (CentOS, RedHat y Fedora)}
+~~~~~~~~~~~~~~~~
+
+ Los paquetes rpms generados por los diferentes jobs de {{{/jenkins}Jenkins}}, se publican en un repositorio de rpms (http://develenv_host/${project.artifactId}/repos/rpms/).
+
+ Para acceder a este repositorio desde otras máquinas(por ejemplo: en la máquina <triatlon>) basta con instalar el paquete <<${project.artifactId}-repo>>
+
++---------------------------------------------------------------------------------------------------------------------------------------------+
+carlosg@triatlon:~$  sudo yum install wget
+carlosg@triatlon:~$  sudo rpm -Uvh http://develenv_host/${project.artifactId}/repos/rpms/noarch/ss-${project.artifactId}-repo-1.0-0.0.noarch.rpm
++---------------------------------------------------------------------------------------------------------------------------------------------+
+
+ <<NOTA>>: Una vez instalado <<ss-${project.artifactId}-repo-1.0-0.0.noarch.rpm>> comprobar que las urls de los directorios son accesibles. Para ello comprobar el contenido de los ficheros </etc/yum/repos.d/${project.artifactId}-repo-noarch.repo>, </etc/yum/repos.d/${project.artifactId}-repo-i686.repo> y </etc/yum/repos.d/${project.artifactId}-repo-x86_64.repo>.   
+
+ Si la instalación del repositorio ha sido correcta, se podría instalar el rpm generado por el {{{/jenkins/job/web-calculator/}job web-calculator}}. Para ello basta con ejecutar:
+
++-----------------------------------------------------+
+carlosg@triatlon:~$  sudo yum install web-calculator
++-----------------------------------------------------+
+
+ Cuando se haya completado la instalación de web-calculator, se puede acceder a él en la url http://triatlon:8080/web-calculator
+
+* {Repositorios de paquetes Debian (Ubuntu y Debian)}
+~~~~~~~~~~~~~~~~  
+
+ TO DO
+

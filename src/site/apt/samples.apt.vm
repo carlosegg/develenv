@@ -1,0 +1,288 @@
+ -----
+ ${project.artifactId}  ${project.Version}
+ -----
+ ${userName}
+ -----
+ 
+
+Aplicaciones de ejemplo  con {{{http://${project.artifactId}.softwaresano.com}<<${project.artifactId}>>}}
+~~~~~~~~~~~~
+  
+  La instalación de {{{http://${project.artifactId}.softwaresano.com}<<${project.artifactId}>>}} viene con unos {{{/jenkins/view/develenv%20samples}ejemplos de prueba}}, 
+  para demostrar la utilización conjunta de las herramientas que forman {{{http://${project.artifactId}.softwaresano.com}<<${project.artifactId}>>}}
+     		 
+* test-${project.artifactId}
+~~~~~~~~~~~~~~~~
+  
+  Esta tarea controla que todos los ejemplos de la vista <<${project.artifactId} samples>> se ejecutan correctamente. Se trata de un test de aceptación
+  de la {{{http://${project.artifactId}.softwaresano.com}<<${project.artifactId}>>}} 
+  
+  ~~[INLINECODE] <script type="text/javascript" src="/jenkins/view/develenv%20samples/job/test-develenv/jswidgets/health"></script> [INLINECODE]
+  
+ Resumen:
+  
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+| Herramientas  | {{{/jenkins/view/${project.artifactId}%20samples/job/test-${project.artifactId}}Jenkins}} | 
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+|  Tecnologías  | Shell Script                                                                                              |
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+
+* backupDevelenv
+~~~~~~~~~~~~~~~~
+  
+  Esta tarea realiza un backup de toda la configuración de {{{http://${project.artifactId}.softwaresano.com}<<${project.artifactId}>>}}, almacenando todos los cambios en subversion. Por defecto esta tarea está desactiva. Una vez activada se deberían configurar las propiedades SCM_URL_BASE, SCM_USER y SCM_PASSWORD, para que se puedan almacenar en el subversion.
+  
+  ~~[INLINECODE] <script type="text/javascript" src="/jenkins/view/develenv%20samples/job/backupDevelenv/jswidgets/health"></script> [INLINECODE]
+  
+ Resumen:
+  
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+| Herramientas  | {{{/jenkins/view/${project.artifactId}%20samples/job/backupDevelenv}Jenkins}} | 
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+|  Tecnologías  | Shell Script                                                                                              |
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+
+
+* ${project.artifactId}
+~~~~~~~~~~~~~~~~
+  
+  Es la tarea que se utiliza para construir {{{http://${project.artifactId}.softwaresano.com}<<${project.artifactId}>>}} cuando se realiza una entrega al {{{./source-repository.html}repositorio de fuentes}} 
+  
+  ~~[INLINECODE] <script type="text/javascript" src="/jenkins/view/develenv%20samples/job/develenv/jswidgets/health"></script> [INLINECODE]
+  
+ Resumen:
+  
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+| Herramientas  | {{{/jenkins/view/${project.artifactId}%20samples/job/${project.artifactId}}Jenkins}}, {{{/sonar/project/index/${project.groupId}:${project.artifactId}}sonar}},{{{/sites/${project.groupId}/${project.artifactId}}site}} | 
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+|  Tecnologías  | Java, Maven, Shell Script                                                                                              |
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+
+
+* standalone-artechype
+~~~~~~~~~~~~~~~~
+
+ Plantilla para creación de proyectos maven, java utilizando {{{http://${project.artifactId}.softwaresano.com}<<${project.artifactId}>>}}
+
+~~[INLINECODE] <script type="text/javascript" src="/jenkins/view/develenv%20samples/job/standalone-archetype/jswidgets/health"></script> [INLINECODE]
+  
+ Resumen:
+  
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+| Herramientas  | {{{/jenkins/view/${project.artifactId}%20samples/job/standalone-archetype}Jenkins}}, {{{/sonar/project/index/com.softwaresano.archetypes:standalone-archetype}sonar}},{{{/sites/com.softwaresano.archetypes/standalone-archetype}site}} | 
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+|  Tecnologías  | Java, Maven, Shell Script                                                                                              |
+*---------------+------------------------------------------------------------------------------------------------------------------------+|  Tecnologías  | Java, Maven, Shell Script                                                                                              |
+
+
+
+* test-calculator
+~~~~~~~~~~~~~~~~
+
+  Aplicación de ejemplo utilizando <<standalone-archetype>>
+  
+~~[INLINECODE] <script type="text/javascript" src="/jenkins/view/develenv%20samples/job/test-calculator/jswidgets/health"></script> [INLINECODE]
+  
+ Resumen:
+  
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+| Herramientas  | {{{/jenkins/view/${project.artifactId}%20samples/job/test-calculator}Jenkins}}, {{{/sonar/project/index/com.softwaresano.examples.calculator:test-calculator}sonar}},{{{/sites/com.softwaresano.examples.calculator/test-calculator}site}} |
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+|  Tecnologías  | Java, Maven, Shell Script, Concordion, Acceptance Test TDD                                                             |
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+
+* SeleniumGridExample
+~~~~~~~~~~~~~~~~
+
+  Aplicación de ejemplo (sumadora web). Se utiliza {{{./selenium/index.html}Selenium Grid}} para probar la aplicación en diferentes navegadores (firefox y google-chrome). Si la ejecuciónha sido correcta se invocará al ejemplo {{{./samples.html#web-calculator}web-calculator}}, que se utilizará para extraer el site y calcular las métricas.
+
+  NOTA: Este ejemplo no funciona en Centos 6.0, por problemas en la instanciación de firefox. Se puede probar su funcionamiento añadiendo al grid navegadores que se ejecuten en otros
+sistemas operativos, tal y como se explica {{{./selenium/newBrowser}aquí}}.
+  
+~~[INLINECODE] <script type="text/javascript" src="/jenkins/view/develenv%20samples/job/SeleniumGridExample/jswidgets/health"></script> [INLINECODE]
+  
+ Resumen:
+  
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+| Herramientas  | {{{/jenkins/view/${project.artifactId}%20samples/job/SeleniumGridExample}Jenkins}}  |
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+|  Tecnologías  | Java, Maven, Shell Script, Concordion, Acceptance Test TDD, Selenium Grid.                                                  |
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+
+
+
+* {web-calculator}
+~~~~~~~~~~~~~~~~
+
+  Aplicación de ejemplo (sumadora web). En la implementación de esta aplicación se demuestra la técnica {{{http://www.javaworld.com/javaworld/jw-08-2011/110823-atdd-for-web-apps.html}ATDD(Acceptance Test Driven Development)}} utilizando {{{http://concordion.org/}concordion}}. Además se utiliza {{{./selenium/index.html}Selenium Grid}} para probar la aplicación en diferentes navegadores 
+  
+~~[INLINECODE] <script type="text/javascript" src="/jenkins/view/develenv%20samples/job/web-calculator/jswidgets/health"></script> [INLINECODE]
+  
+ Resumen:
+  
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+| Herramientas  | {{{/jenkins/view/${project.artifactId}%20samples/job/web-calculator}Jenkins}}, {{{/sonar/project/index/com.softwaresano.examples.calculator:web-calculator}sonar}},{{{/sites/com.softwaresano.examples.calculator/web-calculator}site}} |
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+|  Tecnologías  | Java, Maven, Shell Script, Concordion, Acceptance Test TDD, Selenium                                                   |
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+
+* j2meSample
+~~~~~~~~~~~~~~~~
+  
+  Ejemplo desarrollo de un proyecto J2ME
+  
+~~[INLINECODE] <script type="text/javascript" src="/jenkins/view/develenv%20samples/job/j2meSample/jswidgets/health"></script> [INLINECODE]
+  
+ Resumen:
+  
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+| Herramientas  | {{{/jenkins/view/${project.artifactId}%20samples/job/j2meSample}Jenkins}}, {{{/sonar/project/index/com.softwaresano.examples:j2meSample}sonar}},{{{/sites/ccom.softwaresano.examples/j2meSample}site}} |
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+|  Tecnologías  | Java, Maven, Shell Script, TDD, J2ME                                                                                              |
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+
+
+* CppSample
+~~~~~~~~~~~~~~~~
+  
+  Ejemplo en C++ cortesía de Toni Cebrián(www.tonicebrian.com/2010/10/15/continuous-integration-for-c-using-hudson/). De momento sólo se realiza el análisis estático de código utilizando sonar
+  
+~~[INLINECODE] <script type="text/javascript" src="/jenkins/view/develenv%20samples/job/CppSample/jswidgets/health"></script> [INLINECODE]
+  
+ Resumen:
+  
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+| Herramientas  | {{{/jenkins/view/${project.artifactId}%20samples/job/CppSample}Jenkins}}, {{{/sonar/project/index/com.softwaresano.develenv:CSample}sonar}},{{{/sites/com.softwaresano.develenv/CppSample}site}} |
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+|  Tecnologías  | C++                                                                                              |
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+
+
+* CSample
+~~~~~~~~~~~~~~~~
+  
+  Ejemplo desarrollo de un proyecto en C
+  
+~~[INLINECODE] <script type="text/javascript" src="/jenkins/view/develenv%20samples/job/CSample/jswidgets/health"></script> [INLINECODE]
+  
+ Resumen:
+  
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+| Herramientas  | {{{/jenkins/view/${project.artifactId}%20samples/job/CSample}Jenkins}}, {{{/sonar/project/index/com.softwaresano.develenv:CSample}sonar}},{{{/sites/com.softwaresano.develenv/CSample}site}} |
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+|  Tecnologías  | C                                                                                              |
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+
+
+* flexSample
+~~~~~~~~~~~~~~~~
+  
+  Ejemplo desarrollo de un proyecto en Flex
+  
+~~[INLINECODE] <script type="text/javascript" src="/jenkins/view/develenv%20samples/job/flexSample/jswidgets/health"></script> [INLINECODE]
+  
+ Resumen:
+  
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+| Herramientas  | {{{/jenkins/view/${project.artifactId}%20samples/job/flexSample}Jenkins}}, {{{/sonar/project/index/com.softwaresano.develenv:flexSample}sonar}},{{{/sites/com.softwaresano.develenv/flexSample}site}} |
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+|  Tecnologías  | Flex                                                                                                                   |
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+
+* JSSample
+~~~~~~~~~~~~~~~
+  
+  Ejemplo desarrollo de un proyecto en JavaScript
+  
+~~[INLINECODE] <script type="text/javascript" src="/jenkins/view/develenv%20samples/job/JSSample/jswidgets/health"></script> [INLINECODE]
+  
+ Resumen:
+  
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+| Herramientas  | {{{/jenkins/view/${project.artifactId}%20samples/job/JSSample}Jenkins}}, {{{/sonar/project/index/com.softwaresano.develenv:JSSample}sonar}},{{{/sites/com.softwaresano.develenv/JSSample}site}} |
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+|  Tecnologías  | Javascript                                                                                                                   |
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+
+* GroovySample
+~~~~~~~~~~~~~~~
+  
+  Ejemplo desarrollo de un proyecto en Groovy
+  
+~~[INLINECODE] <script type="text/javascript" src="/jenkins/view/develenv%20samples/job/GroovySample/jswidgets/health"></script> [INLINECODE]
+  
+ Resumen:
+  
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+| Herramientas  | {{{/jenkins/view/${project.artifactId}%20samples/job/GroovySample}Jenkins}}, {{{/sonar/project/index/com.softwaresano.develenv:GroovySample}sonar}},{{{/sites/com.softwaresano.develenv/GroovySample}site}} |
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+|  Tecnologías  | Groovy                                                                                                                   |
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+
+
+* JMeterExample
+~~~~~~~~~~~~~~~
+  
+  Ejemplo de pruebas de prestaciones utilizando JMeter. Las urls que se están invocando en las pruebas de prestaciones son las urls de ${project.artifactId}
+  
+~~[INLINECODE] <script type="text/javascript" src="/jenkins/view/develenv%20samples/job/JMeterExample/jswidgets/health"></script> [INLINECODE]
+  
+ Resumen:
+  
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+| Herramientas  | {{{/jenkins/view/${project.artifactId}%20samples/job/JMeterExample}Jenkins}}                                          |
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+|  Tecnologías  | JMeter                                                                                                                 |
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+
+* PythonExample
+~~~~~~~~~~~~~~~
+  
+  Ejemplo de desarrollo(pruebas unitarias, generación y publicación de rpms, extracción de métricas de calidad software) de una aplicación en Python
+  
+~~[INLINECODE] <script type="text/javascript" src="/jenkins/view/develenv%20samples/job/PythonExample/jswidgets/health"></script> [INLINECODE]
+  
+ Resumen:
+  
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+| Herramientas  | {{{/jenkins/view/${project.artifactId}%20samples/job/PythonExample}Jenkins}}, {{{/sonar/project/index/PythonExample}sonar}}                                          |
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+|  Tecnologías  | Python                                                                                                                |
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+
+* DjangoExample
+~~~~~~~~~~~~~~~
+  
+  Ejemplo de desarrollo(pruebas unitarias, generación y publicación de rpms, extracción de métricas de calidad software) de una aplicación en Django
+  
+~~[INLINECODE] <script type="text/javascript" src="/jenkins/view/develenv%20samples/job/DjangoExample/jswidgets/health"></script> [INLINECODE]
+  
+ Resumen:
+  
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+| Herramientas  | {{{/jenkins/view/${project.artifactId}%20samples/job/DjangoExample}Jenkins}}, {{{/sonar/project/index/DjangoExample}sonar}}                                          |
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+|  Tecnologías  | Django (python)                                                                                                                  |
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+
+
+* Otros ejemplos
+~~~~~~~~~~~~~~~~
+
+  Dentro de esta sección se recogen otros ejemplos que se instalan con <${project.artifactId}>, pero que vienen como ejemplo en la instalación
+  de algún {{{http://code.google.com/p/develenv-plugins/}plugin de ${project.artifactId}}}.  
+    
+
+~~[INLINECODE] <script type="text/javascript" src="/jenkins/view/develenv%20samples/job/PHPSample/jswidgets/health"></script> [INLINECODE]
+
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+| Herramientas  | {{{/jenkins/view/${project.artifactId}%20samples/job/PHPSample}Jenkins}}, {{{/sonar/project/index/${project.groupId}:PHPSample}sonar}},{{{/sites/${project.groupId}/PHPSample}site}} |
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+|  Tecnologías  | Java, Maven, Shell Script, TDD, PHP, PhpUnit, PDepend                                                                  |
+*---------------+------------------------------------------------------------------------------------------------------------------------+
+
+   
+
+
+
+

@@ -1,0 +1,621 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generado con el arquetipo: standalone-archetype http://develenv.googlecode.com -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+   <!-- Identificador del componente -->
+   <groupId>com.softwaresano</groupId>
+   <artifactId>develenv</artifactId>
+   <version>37</version>
+   <packaging>pom</packaging>
+   <name>develenv</name>
+   <description>Entorno común de trabajo para desarrollo de un proyecto software, utilizando las herramientas
+               Jenkins, Maven, Nexus y Sonar. La integración de dichas herramientas permiten la implementación
+               de un software utilizando algunas de las mejores prácticas utilizadas en el desarrollo
+               de aplicaciones.
+  </description>
+   <organization>
+      <name>SoftwareSano</name>
+      <url>http://develenv.softwaresano.com</url>
+   </organization>
+   <!-- [MODIFICAR] la URL del proyecto. Ojo no suprimir la URL, ya que es
+      obligatoria para el maven-changes-plugin -->
+   <url>${project.organization.url}/${project.artifactId}/</url>
+   <!-- [MODIFICAR] La licencia bajo la que se distribuye el componente -->
+   <licenses>
+      <license>
+         <name>GNU GENERAL PUBLIC LICENSE</name>
+         <url>http://www.gnu.org/licenses/gpl-3.0.txt</url>
+         <distribution>GPL 3.0</distribution>
+      </license>
+   </licenses>
+   <!-- [MODIFICAR] Fijar el desarrollador por defecto y añadir el resto de
+      desarrolladores -->
+   <developers>
+      <developer>
+         <id>${userId}</id>
+         <name>Carlos E. Gómez Gómez</name>
+         <email>${userMail}</email>
+         <roles>
+            <role>${userRole}</role>
+         </roles>
+         <organization>${userOrganization}</organization>
+         <timezone>+1</timezone>
+      </developer>
+   </developers>
+   <!-- Entorno de integración contínua -->
+   <ciManagement>
+      <system>Hudson</system>
+      <url>${continousIntegrationSystemUrl}job/develenv</url>
+      <notifiers>
+         <notifier>
+            <type>mail</type>
+            <sendOnError>true</sendOnError>
+            <sendOnFailure>true</sendOnFailure>
+            <sendOnSuccess>false</sendOnSuccess>
+            <sendOnWarning>false</sendOnWarning>
+            <configuration>
+               <address>carlosg@softwaresano.com</address>
+            </configuration>
+         </notifier>
+      </notifiers>
+   </ciManagement>
+   <scm>
+      <connection>scm:svn:http://develenv.googlecode.com/svn/trunk/develenv</connection>
+      <developerConnection>scm:svn:https://develenv.googlecode.com/svn/trunk/develenv</developerConnection>
+      <url>http://develenv.googlecode.com/svn/trunk/develenv</url>
+   </scm>
+   <build> 
+      <plugins>
+
+         <!-- Generar una release. Es necesario tener instalado un cliente de SVN -->
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-release-plugin</artifactId>
+            <version>2.0-beta-9</version>
+            <configuration>
+               <username>carlosegg</username>
+               <tagBase>https://develenv.googlecode.com/svn/tags</tagBase>
+            </configuration>
+         </plugin>
+         <!-- modificar las opciones del compilador -->
+         <plugin>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>2.5.1</version>
+            <configuration>
+               <source>1.6</source>
+               <target>1.6</target>
+               <encoding>${project.build.sourceEncoding}</encoding>
+               <debug>${compilerInfoDebug}</debug>
+               <optimize>${compilerOptimize}</optimize>
+               <showWarnings>${compilerShowWarnings}</showWarnings>
+               <showDeprecation>${compilerShowDeprecation}</showDeprecation>
+               <verbose>${compilerVerbose}</verbose>
+            </configuration>
+         </plugin>
+         <!-- Definición del empaquetado del proyecto -->
+         <plugin>
+            <inherited>false</inherited>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <version>2.2-beta-2</version>
+            <configuration>
+               <filters>
+                  <filter>src/main/filters/common.properties</filter>
+               </filters>
+               <descriptors>
+                  <!--descriptor>src/main/assembly/install-var.xml</descriptor-->
+                  <descriptor>src/main/assembly/install.xml</descriptor>
+                  <descriptor>src/main/assembly/offline.xml</descriptor>
+               </descriptors>
+               <outputDirectory>${project.build.directory}/site/assemblies</outputDirectory>
+            </configuration>
+         </plugin>
+         <!-- Copiar assembly al site -->
+         <plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>1.7</version>
+            <inherited>false</inherited>
+            <executions>
+               <execution>
+                  <id>platform</id>
+                  <phase>package</phase>
+                  <goals>
+                     <goal>run</goal>
+                  </goals>
+                  <configuration>
+                     <tasks>
+                        <property name="ant.version" value="${ant.version}" />
+                        <property name="tomcat.version" value="${tomcat.version}" />
+                        <property name="maven.version" value="${maven.version}" />
+                        <property name="maven2.version" value="${maven2.version}" />
+                        <property name="statsvn.version" value="${statsvn.version}" />
+                         <property name="external.tools.dir" 
+                                   value="${external.tools.dir}"/>
+                        <mkdir dir="${project.build.directory}/app/maven/repository" />
+                        <mkdir dir="${project.build.directory}/platform" />
+                        <mkdir dir="${project.build.directory}/app/repositories/nexus/groups" />
+                        <mkdir dir="${project.build.directory}/app/repositories/rpms/i686" />
+                        <exec dir="${project.build.directory}/app/repositories/rpms/i686"
+                             executable="createrepo">
+                             <arg value="."/>
+                        </exec>
+                        <mkdir dir="${project.build.directory}/app/repositories/rpms/x86_64" />
+                        <exec dir="${project.build.directory}/app/repositories/rpms/x86_64"
+                             executable="createrepo">
+                             <arg value="."/>
+                        </exec>
+                        <mkdir dir="${project.build.directory}/app/repositories/rpms/noarch" />
+                        <exec dir="${project.build.directory}/app/repositories/rpms/noarch"
+                             executable="createrepo">
+                             <arg value="."/>
+                        </exec>
+                        <mkdir dir="${project.build.directory}/app/repositories/rpms/src" />
+                        <exec dir="${project.build.directory}/app/repositories/rpms/src"
+                             executable="createrepo">
+                             <arg value="."/>
+                        </exec>
+                        
+                        <mkdir dir="${project.build.directory}/app/repositories/debs" />
+                        <mkdir dir="${project.build.directory}/internal-site" />
+                        <untar src="${external.tools.dir}/apache-ant-${ant.version}-bin.tar.gz"
+                           compression="gzip" dest="${project.build.directory}/platform" />
+                        <untar src="${external.tools.dir}/apache-maven-${maven.version}-bin.tar.gz"
+                           compression="gzip" dest="${project.build.directory}/platform" />
+                         <untar src="${external.tools.dir}/apache-maven-${maven2.version}-bin.tar.gz"
+                           compression="gzip" dest="${project.build.directory}/platform" />
+                        <untar src="${external.tools.dir}/apache-tomcat-${tomcat.version}.tar.gz"
+                           compression="gzip" dest="${project.build.directory}/platform" />
+                        <delete>
+                           <fileset
+                              dir="${project.build.directory}/platform/apache-tomcat-${tomcat.version}/webapps"
+                              excludes="manager/"/>
+                        </delete>
+                        <copy file="${external.tools.dir}/ant-contrib-1.0b3.jar"
+                           todir="${project.build.directory}/platform/apache-ant-${ant.version}/lib" />
+                        <copy file="${external.tools.dir}/jsch-0.1.42.jar"
+                           todir="${project.build.directory}/platform/apache-ant-${ant.version}/lib" />
+                        <untar src="${external.tools.dir}/wtk-2.5.2.tar.gz" compression="gzip"
+                           dest="${project.build.directory}/platform" />
+                        <unzip src="${external.tools.dir}/statsvn-${statsvn.version}.zip"
+                          dest="${project.build.directory}/platform" />
+                        <!--Deploy jenkins in tomcat -->
+                        <mkdir dir="${project.build.directory}/platform/apache-tomcat-${tomcat.version}/webapps/jenkins"/>
+                        <unzip src="jenkins/${external.tools.dir}/jenkins.war"
+                           dest="${project.build.directory}/platform/apache-tomcat-${tomcat.version}/webapps/jenkins" />
+                        <!--Deploy nexus in tomcat-->
+                        <mkdir dir="${project.build.directory}/platform/apache-tomcat-${tomcat.version}/webapps/nexus"/>
+                        <unzip src="nexus/${external.tools.dir}/nexus.war"
+                           dest="${project.build.directory}/platform/apache-tomcat-${tomcat.version}/webapps/nexus" />
+                     </tasks>
+                  </configuration>
+               </execution>
+            </executions>
+         </plugin>
+         <!-- En modo SNAPSHOT se hace coincidir con el número de revisión del
+               SVN -->
+         <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>buildnumber-maven-plugin</artifactId>
+            <version>1.2</version>
+            <executions>
+               <execution>
+                  <phase>validate</phase>
+                  <goals>
+                     <goal>create</goal>
+                  </goals>
+               </execution>
+            </executions>
+            <configuration>
+               <format>{0,date,yyyy-MM-dd}</format>
+               <items>
+                  <item>timestamp</item>
+               </items>
+               <doCheck>true</doCheck>
+               <doUpdate>true</doUpdate>
+               <providerImplementations>
+                  <svn>javasvn</svn>
+               </providerImplementations>
+            </configuration>
+            <dependencies>
+               <dependency>
+               <groupId>com.google.code.maven-scm-provider-svnjava</groupId>
+               <artifactId>maven-scm-provider-svnjava</artifactId>
+               <version>2.0.5</version>
+               </dependency>
+               <dependency>
+               <groupId>org.tmatesoft.svnkit</groupId>
+               <artifactId>svnkit</artifactId>
+               <version>1.7.8</version>
+               </dependency>
+            </dependencies>
+         </plugin>
+         <!-- generar el site del proyecto en español -->
+         <plugin>
+            <inherited>true</inherited>
+            <artifactId>maven-site-plugin</artifactId>
+            <version>3.3</version>
+            <configuration>
+               <locales>es</locales>
+               <generateSitemap>true</generateSitemap>
+               <outputEncoding>${project.reporting.outputEncoding}</outputEncoding>
+               <inputEncoding>${project.build.sourceEncoding}</inputEncoding>
+               <reportPlugins>
+                  <plugin>
+                     <groupId>org.apache.maven.plugins</groupId>
+                     <artifactId>maven-project-info-reports-plugin</artifactId>
+                     <version>2.7</version>
+                     <configuration>
+                        <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
+                        <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+                     </configuration>
+                  </plugin>
+                  <!-- plugin para reports de sonar -->
+                  <plugin>
+                     <groupId>org.codehaus.sonar-plugins</groupId>
+                     <artifactId>maven-report</artifactId>
+                     <version>0.1</version>
+                  </plugin>
+                  <!-- Plugin para generar los informes de entregas al SVN por desarrollador -->
+                  <plugin>
+                     <groupId>org.apache.maven.plugins</groupId>
+                     <artifactId>maven-changelog-plugin</artifactId>
+                     <version>2.2</version>
+                  </plugin>
+                  <plugin>
+                     <groupId>org.apache.maven.plugins</groupId>
+                     <artifactId>maven-plugin-plugin</artifactId>
+                     <version>3.1</version>
+                  </plugin>
+
+                  <!-- Plugin para analizar las tags en el código, por ejemplo para generar
+                     un informe con todos los TODO -->
+                  <plugin>
+                     <groupId>org.codehaus.mojo</groupId>
+                     <artifactId>taglist-maven-plugin</artifactId>
+                     <version>2.4</version>
+                     <configuration>
+                        <tags>
+                           <tag>TODO</tag>
+                           <tag>FIXME</tag>
+                           <tag>@todo</tag>
+                           <tag>@deprecated</tag>
+                        </tags>
+                     </configuration>
+                  </plugin>
+                  <!-- Plugin para generar el control de cambios -->
+                  <plugin>
+                     <groupId>org.apache.maven.plugins</groupId>
+                     <artifactId>maven-changes-plugin</artifactId>
+                     <version>2.7.1</version>
+                     <reportSets>
+                        <reportSet>
+                           <reports>
+                              <report>changes-report</report>
+                           </reports>
+                        </reportSet>
+                     </reportSets>
+                  </plugin>
+                  <!-- Plugin generación estadísticas SVN -->
+                  <plugin>
+                     <groupId>net.sf</groupId>
+                     <artifactId>stat-scm</artifactId>
+                     <version>1.2.0</version>
+                  </plugin>
+               </reportPlugins>
+
+            </configuration>
+         </plugin>
+         <!-- Enviar un mail con las releases notes descritas en el src/changes/changes.xml -->
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-changes-plugin</artifactId>
+            <version>2.1</version>
+            <executions>
+               <execution>
+                  <phase>package</phase>
+                  <goals>
+                     <goal>changes-report</goal>
+                     <goal>announcement-generate</goal>
+                  </goals>
+                  <id>announcement-generate</id>
+               </execution>
+               <execution>
+                  <phase>release</phase>
+                  <goals>
+                     <goal>announcement-mail</goal>
+                  </goals>
+                  <id>announcement-mail</id>
+               </execution>
+            </executions>
+            <!-- [MODIFICAR] Modificar la configuración del servidor de correo, así
+               como quién envía el correo y quiénes lo reciben. -->
+            <configuration>
+               <mailSender>
+                  <name>${userName}</name>
+                  <email>${userMail}</email>
+               </mailSender>
+               <smtpHost>${smtpHost}</smtpHost>
+               <toAddresses>
+                  <toAddress implementation="java.lang.String">
+                     ${userMail}
+                  </toAddress>
+               </toAddresses>
+            </configuration>
+         </plugin>
+      </plugins>
+   </build>
+
+   <distributionManagement>
+      <!-- Repositorio para hacer el deploy de las releases -->
+      <repository>
+         <id>${repoMavenId}</id>
+         <name>${repoMavenName}</name>
+         <url>${repoMavenUrl}</url>
+      </repository>
+      <!-- Repositorio de snapshot -->
+      <snapshotRepository>
+         <id>${repoMavenSnapshotId}</id>
+         <name>${repoMavenSnapshotName}</name>
+         <url>${repoMavenSnapshotUrl}</url>
+      </snapshotRepository>
+      <!-- Máquina donde se publica el site del proyecto -->
+      <site>
+         <id>repo-site</id>
+         <name>repo-site</name>
+         <url>${repoSiteUrl}/com.softwaresano/develenv
+            </url>
+      </site>
+   </distributionManagement>
+   <properties>
+      <!-- Forzamos a los plugins a utilizar UTF-8, para evitar problemas con
+         los encodings por defectos de los diferentes sistemas operativos -->
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+      <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+      <copyright.year>2015</copyright.year>
+      <maven.version>3.2.5</maven.version>
+      <maven2.version>2.2.1</maven2.version>
+      <ant.version>1.9.4</ant.version>
+      <tomcat.version>8.0.20</tomcat.version>
+      <jenkins.version>1.605</jenkins.version>
+      <nexus.version>2.11.2</nexus.version>
+      <sonar.version>5.0.1</sonar.version>
+      <sonar.runner.version>2.4</sonar.runner.version>
+      <selenium.version>2.45.0</selenium.version>
+      <selenium.chrome.version>26.0.1383.0</selenium.chrome.version>
+      <jmeter.version>2.12</jmeter.version>
+      <soapui.version>5.0.0</soapui.version>
+      <statsvn.version>0.7.0</statsvn.version>
+      <companyBlog>${project.organization.url}</companyBlog>
+      <userName>Carlos Enrique Gómez Gómez</userName>
+      <userMail>carlosg@softwaresano.com</userMail>
+      <organization.acronym>ss</organization.acronym>
+      <userId>carlosg</userId>
+      <userRole>developer</userRole>
+      <userOrganization>${project.organization.name}</userOrganization>
+      <companyName>${project.organization.name}</companyName>
+      <companyUrl>${project.organization.url}</companyUrl>
+      <external.tools.dir>src/main/rpm/SOURCES</external.tools.dir>
+   </properties>
+   <modules>
+      <module>jenkins</module>
+      <module>nexus</module>
+      <module>sonar</module>
+      <module>sonar-runner</module>
+      <module>selenium</module>
+      <module>jmeter</module>
+      <module>soapui</module>
+      <module>deploymentPipeline</module>
+      <module>devpi</module>
+      <module>screenshot</module>
+      <module>docker-registry</module>
+      <module>developer</module>
+   </modules>
+   <pluginRepositories>
+      <pluginRepository>
+         <id>java.net</id>
+         <name>java.net</name>
+         <url>http://download.java.net/maven/2/</url>
+      </pluginRepository>
+      <pluginRepository>
+         <id>codehaus</id>
+         <name>codehaus</name>
+         <url>http://repository.codehaus.org</url>
+      </pluginRepository>
+   </pluginRepositories>
+   <profiles>
+         <profile>
+         <id>site</id>
+         <activation>
+            <file>
+               <exists>${basedir}</exists>
+            </file>
+         </activation>
+         <pluginRepositories>
+            <pluginRepository>
+               <id>stat-scm</id>
+               <name>stat-scm</name>
+               <url>http://stat-scm.sourceforge.net/maven2/</url>
+            </pluginRepository>
+         </pluginRepositories>
+         <!-- generar el site del proyecto en español -->
+         <build>
+            <plugins>
+               <plugin>
+                  <inherited>true</inherited>
+                  <artifactId>maven-site-plugin</artifactId>
+                  <version>3.3</version>
+                  <dependencies>
+                     <dependency>
+                        <groupId>org.apache.maven.doxia</groupId>
+                        <artifactId>doxia-module-markdown</artifactId>
+                        <version>1.3</version>
+                     </dependency>
+                  </dependencies>
+                  <configuration>
+                     <locales>es</locales>
+                     <generateSitemap>true</generateSitemap>
+                     <outputEncoding>${project.reporting.outputEncoding}</outputEncoding>
+                     <inputEncoding>${project.build.sourceEncoding}</inputEncoding>
+                     <reportPlugins>
+                        <plugin>
+                           <groupId>org.apache.maven.plugins</groupId>
+                           <artifactId>maven-project-info-reports-plugin</artifactId>
+                           <version>2.7</version>
+                           <configuration>
+                              <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
+                              <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+                           </configuration>
+                        </plugin>
+                        <!-- plugin para reports de sonar -->
+                        <plugin>
+                           <groupId>org.codehaus.sonar-plugins</groupId>
+                           <artifactId>maven-report</artifactId>
+                           <version>0.1</version>
+                        </plugin>
+                        <!-- Plugin para generar los informes de entregas al SVN por desarrollador -->
+                        <plugin>
+                           <groupId>org.apache.maven.plugins</groupId>
+                           <artifactId>maven-changelog-plugin</artifactId>
+                           <version>2.2</version>
+                        </plugin>
+                        <plugin>
+                           <groupId>org.apache.maven.plugins</groupId>
+                           <artifactId>maven-plugin-plugin</artifactId>
+                           <version>3.2</version>
+                        </plugin>
+
+                        <!-- Plugin para analizar las tags en el código, por ejemplo para
+                           generar un informe con todos los TODO -->
+                        <plugin>
+                           <groupId>org.codehaus.mojo</groupId>
+                           <artifactId>taglist-maven-plugin</artifactId>
+                           <version>2.4</version>
+                           <configuration>
+                              <tags>
+                                 <tag>TODO</tag>
+                                 <tag>FIXME</tag>
+                                 <tag>@todo</tag>
+                                 <tag>@deprecated</tag>
+                              </tags>
+                           </configuration>
+                        </plugin>
+                        <!-- Plugin para generar el control de cambios -->
+                        <plugin>
+                           <groupId>org.apache.maven.plugins</groupId>
+                           <artifactId>maven-changes-plugin</artifactId>
+                           <version>2.7.1</version>
+                           <reportSets>
+                              <reportSet>
+                                 <reports>
+                                    <report>changes-report</report>
+                                 </reports>
+                              </reportSet>
+                           </reportSets>
+                        </plugin>
+                     </reportPlugins>
+                  </configuration>
+               </plugin>
+            </plugins>
+         </build>
+      </profile>
+      <profile>
+         <id>stat-scm</id>
+         <activation>
+            <activeByDefault>false</activeByDefault>
+         </activation>
+         <pluginRepositories>
+            <pluginRepository>
+               <id>stat-scm</id>
+               <name>stat-scm</name>
+               <url>http://stat-scm.sourceforge.net/maven2/</url>
+            </pluginRepository>
+         </pluginRepositories>
+         <!-- generar el site del proyecto en español -->
+         <build>
+            <plugins>
+               <plugin>
+                  <inherited>true</inherited>
+                  <artifactId>maven-site-plugin</artifactId>
+                  <version>3.3</version>
+                  <dependencies>
+                     <dependency>
+                        <groupId>org.apache.maven.doxia</groupId>
+                        <artifactId>doxia-module-markdown</artifactId>
+                        <version>1.3</version>
+                     </dependency>
+                  </dependencies>
+                  <configuration>
+                     <locales>es</locales>
+                     <generateSitemap>true</generateSitemap>
+                     <outputEncoding>${project.reporting.outputEncoding}</outputEncoding>
+                     <inputEncoding>${project.build.sourceEncoding}</inputEncoding>
+                     <reportPlugins>
+                        <plugin>
+                           <groupId>org.apache.maven.plugins</groupId>
+                           <artifactId>maven-project-info-reports-plugin</artifactId>
+                           <version>2.7</version>
+                           <configuration>
+                              <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
+                              <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+                           </configuration>
+                        </plugin>
+                        <!-- plugin para reports de sonar -->
+                        <plugin>
+                           <groupId>org.codehaus.sonar-plugins</groupId>
+                           <artifactId>maven-report</artifactId>
+                           <version>0.1</version>
+                        </plugin>
+                        <!-- Plugin para generar los informes de entregas al SVN por desarrollador -->
+                        <plugin>
+                           <groupId>org.apache.maven.plugins</groupId>
+                           <artifactId>maven-changelog-plugin</artifactId>
+                           <version>2.2</version>
+                        </plugin>
+                        <plugin>
+                           <groupId>org.apache.maven.plugins</groupId>
+                           <artifactId>maven-plugin-plugin</artifactId>
+                           <version>3.2</version>
+                        </plugin>
+
+                        <!-- Plugin para analizar las tags en el código, por ejemplo para
+                           generar un informe con todos los TODO -->
+                        <plugin>
+                           <groupId>org.codehaus.mojo</groupId>
+                           <artifactId>taglist-maven-plugin</artifactId>
+                           <version>2.4</version>
+                           <configuration>
+                              <tags>
+                                 <tag>TODO</tag>
+                                 <tag>FIXME</tag>
+                                 <tag>@todo</tag>
+                                 <tag>@deprecated</tag>
+                              </tags>
+                           </configuration>
+                        </plugin>
+                        <!-- Plugin para generar el control de cambios -->
+                        <plugin>
+                           <groupId>org.apache.maven.plugins</groupId>
+                           <artifactId>maven-changes-plugin</artifactId>
+                           <version>2.7.1</version>
+                           <reportSets>
+                              <reportSet>
+                                 <reports>
+                                    <report>changes-report</report>
+                                 </reports>
+                              </reportSet>
+                           </reportSets>
+                        </plugin>
+                        <!-- Plugin generación estadísticas SVN -->
+                        <plugin>
+                           <groupId>net.sf</groupId>
+                           <artifactId>stat-scm</artifactId>
+                           <version>1.2.0</version>
+                        </plugin>
+                     </reportPlugins>
+                  </configuration>
+               </plugin>
+            </plugins>
+         </build>
+      </profile>
+   </profiles>
+</project>

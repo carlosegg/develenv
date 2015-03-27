@@ -1,0 +1,22 @@
+~~Generado con el arquetipo: standalone-archetype
+~~http://www.softwaresano.com
+ -----
+ ${project.artifactId}  ${project.Version}
+ -----
+ ${userName}
+ -----
+ 
+
+Introducción
+~~~~~~~~~~~~
+  
+  {{{http://nexus.sonatype.org/}Nexus}} es un repositorio de componentes java
+
+* Acceso
+~~~~~~~~~~~~~~~~
+  
+  El {{{${mavenManagerBaseUrl}}acceso}} en modo lectura a <<nexus>> es público.
+
+  Para la instalación por defecto de {{{http://${project.artifactId}.softwaresano.com}<<develenv>>}} se pueden subir componentes al repositorio con el usuario y el password <<develenv>> / <<develenv>>
+
+[../img/nexus.png] nexus

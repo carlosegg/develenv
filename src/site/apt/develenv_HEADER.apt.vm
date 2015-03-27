@@ -1,0 +1,13 @@
+~~Generado con el arquetipo: standalone-archetype
+~~http://www.softwaresano.com
+ -----
+ ${project.artifactId}  ${project.Version}
+ -----
+ ${userName}
+ -----
+ 
+
+{{{http://${project.artifactId}.softwaresano.com}<<${project.artifactId}>>}}
+~~~~~~~~~~~~
+
+  

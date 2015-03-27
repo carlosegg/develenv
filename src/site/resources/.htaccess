@@ -1,0 +1,12 @@
+AddDefaultCharset UTF-8
+Options -Indexes
+Satisfy any
+ErrorDocument 404 http://develenv.softwaresano.com/notFound.html
+ErrorDocument 401 http://develenv.softwaresano.com/notAuthorized.html
+ErrorDocument 500 http://develenv.softwaresano.com/notAvailable.html
+<FilesMatch "\.(html|txt|css|js|zip|tgz|tar.gz)$">
+	Header set Cache-Control "max-age=43200, proxy-revalidate"
+</FilesMatch>
+<FilesMatch "\.(jpg|png)$">
+	Header set Cache-Control "max-age=86400, proxy-revalidate"
+</FilesMatch>

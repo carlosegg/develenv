@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<hudson.plugins.sidebar__link.SidebarLinkPlugin>
+  <links>
+    <hudson.plugins.sidebar__link.LinkAction>
+      <url>http://www.softwaresano.com</url>
+      <text>softwaresano.com</text>
+      <icon>monitor.gif</icon>
+    </hudson.plugins.sidebar__link.LinkAction>
+    <hudson.plugins.sidebar__link.LinkAction>
+      <url>../nexus</url>
+      <text>nexus</text>
+      <icon>gear2.gif</icon>
+    </hudson.plugins.sidebar__link.LinkAction>
+    <hudson.plugins.sidebar__link.LinkAction>
+      <url>../sonar</url>
+      <text>sonar</text>
+      <icon>document.gif</icon>
+    </hudson.plugins.sidebar__link.LinkAction>
+    <hudson.plugins.sidebar__link.LinkAction>
+      <url>../sites</url>
+      <text>Sites</text>
+      <icon>document.gif</icon>
+    </hudson.plugins.sidebar__link.LinkAction>
+    <hudson.plugins.sidebar__link.LinkAction>
+      <url>http://code.google.com/p/develenv-plugins</url>
+      <text>Plugins develenv</text>
+      <icon>monitor.gif</icon>
+    </hudson.plugins.sidebar__link.LinkAction>
+    <hudson.plugins.sidebar__link.LinkAction>
+      <url>../docs</url>
+      <text>Ayuda ${project.artifactId}</text>
+      <icon>help.gif</icon>
+    </hudson.plugins.sidebar__link.LinkAction>
+  </links>
+</hudson.plugins.sidebar__link.SidebarLinkPlugin>

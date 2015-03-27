@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Generado con el arquetipo: standalone-archetype
+    http://www.softwaresano.com
+-->
+<project name="develenv">
+    <poweredBy>
+        <logo name="pimpam" href="http://www.softwaresano.com/"
+            img="http://pimpam.googlecode.com/files/builtByPimpam.png" />
+    </poweredBy>
+    <bannerLeft>
+        <name>develenv</name>
+        <src>
+           ${project.url}/img/develenv.jpg
+        </src>
+        <href>http://www.softwaresano.com</href>
+    </bannerLeft>
+    <body>
+        <head>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-8116005-4']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+   </head>
+      <menu name="Descargas">
+         <item name="Releases" href="../downloads/releases.html" />
+         <item name="Snapshot" href="../downloads/snapshots.html" />
+         <item name="M&aacute;quina Virtual con develenv" href="../virtualMachines.html" />
+         <item name="Release Notes" href="../changes-report.html" />
+         <item name="Licencia" href="license.html" />
+      </menu>
+      <menu name="Introducci&oacute;n">
+         <item name="Introducci&oacute;n" href="index.html#INTRODUCCIN" />
+      </menu>
+      <menu ref="reports" />
+      <menu ref="parent" />
+      <menu ref="modules" />
+   </body>
+</project>

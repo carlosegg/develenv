@@ -1,0 +1,98 @@
+~~Generado con el arquetipo: standalone-archetype
+~~http://www.softwaresano.com/
+ -----
+ Construir un aplicación a partir de ${project.artifactId} Version ${project.version} 
+ -----
+ carlosg@softwaresano.com
+ -----
+ 
+ 
+Construir un aplicación a partir de {{{http://${project.artifactId}.softwaresano.com}${project.artifactId}}}
+~~~~~~~~~~~
+
+ Para construir una aplicación nueva utilizando {{{http://${project.artifactId}.softwaresano.com}<<${project.artifactId}>>}} se han de seguir los siguientes pasos:
+ 
+ * {{{Creación_de_la_aplicación}Creación de la aplicación}}
+ 
+ * {{{Inclusión_dependencia}Inclusión dependencia}}
+ 
+ * {{{Configuración_de_la_aplicación}Configuración de la aplicación}}
+ 
+ * {{{Configuración_trazas}Configuración trazas}} 
+ 
+ * {{{Desarrollo_de_la_aplicacin}Desarrollo de la aplicación}}
+ 
+
+* {Creación de la aplicación}
+~~~~~~~~~~~ 
+ 
+ Crear una nueva aplicación a partir del {{{${repoPublicSiteUrl}/${groupIdArchetypes}/${standaloneArchetype}}${standaloneArchetype}}}. Supongamos que queremos generar la aplicación <<iucalculator>>
+ 
+   
++-----+  
+carlosg@develenv_host:~/workspace$ mvn -Durl=${repoMavenArchetypeUrl} \
+-DarchetypeGroupId=${groupIdArchetypes} -DarchetypeArtifactId=${standaloneArchetype} -DarchetypeVersion=${archetypeVersion} \
+    -DgroupId=com.foo.calculator -DartifactId=iucalculator -Dpackage=com.foo.calculator.iucalculator -Dversion=0.0.1-SNAPSHOT \
+    -DinteractiveMode=false archetype:generate
++-----+
+  
+  donde:
+  
+  * <<$\{archetypeVersion\}>> se sustituye por la {{{${repoMavenArchetypeUrl}/$groupIdArchetypes.replace(".","/")/$standaloneArchetype.replace(".","/")}versión del arquetipo}} correspondiente.
+
+* {Inclusión dependencia}
+~~~~~~~~~~~ 
+  Incluir en el pom.xml la dependencia correspondiente:
+
++-----------+
+<dependency>
+ <groupId>${project.groupId}</groupId>
+ <artifactId>${project.artifactId}</artifactId>
+ <version>${project.version}</version>
+ <scope>compile</scope>
+</dependency>
++-----------+
+
+* {Configuración de la aplicación}
+~~~~~~~~~~~
+ Como la aplicación que se ha creado se ha hecho a partir del {{{../../${groupIdArchetypes}/${standaloneArchetype}}${standaloneArchetype}}} 
+ se han de añadir las propiedades definidas en el fichero {{{$project.scm.connection.replace("scm:svn:","")/src/main/resources/main.properties}${project.artifactId}/src/main/resources/main.properties}}
+ al fichero iucalculator/src/main/resources/main.properties.
+ 
+ Como las propiedades definidas dependen del entorno de ejecución (desarrollo, integración y producción), 
+ también se tendrá que añadir el contenido de los ficheros: {{{$project.scm.connection.replace("scm:svn:","")/src/main/filters/development.properties}development.properties}},
+ {{{$project.scm.connection.replace("scm:svn:","")/src/main/filters/integration.properties}integration.properties}} y {{{$project.scm.connection.replace("scm:svn:","")/src/main/filters/production.properties}production.properties}}
+ a los ficheros <iucalculator/src/main/filters/development.properties>, <iucalculator/src/main/filters/integration.properties> y <iucalculator/src/main/filters/production.properties>,
+
+* {Configuración trazas}
+~~~~~~~~~~~ 
+
+ Añadir en el <iucalculator/src/main/resources/log4j.xml> de la nueva aplicación
+ 
++------------------+
+    <appender name="develenv" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="com.softwaresano.develenv.log.file" />
+		<param name="datePattern" value="'.'yyyy-MM-dd" />
+		    <layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%-5p] %d{dd-MMM-yyyy HH:mm:ss} [%t] %c.%M(%L) | %m%n" />
+		</layout>
+	</appender>
+	<!-- Component logger -->
+	<logger name="com.softwaresano.develenv">
+		<level value="com.softwaresano.develenv.log.level" />
+		<appender-ref ref="iucalculator" />
+	</logger>
++------------------+
+
+* {Desarrollo de la aplicación}
+~~~~~~~~~~~
+
+ En el método {{{./xref/$project.groupId.replace( ".", "/" )/main/Bootstrap.html}start}} de la clase {{{./xref/$project.groupId.replace( ".", "/" )/main/Bootstrap.html}${project.groupId}.main.Bootstrap}} 
+ exite un ejemplo de uso de {{{http://${project.artifactId}.softwaresano.com}<<${project.artifactId}>>}}. El resto de fuentes de la aplicación están {{{./xref/$project.groupId.replace( ".", "/" )}aquí}}.   
+ 
+ 
+ Una vez realizados los pasos anteriores se puede seguir el desarrollo de la aplicación según la  
+ {{{../../${groupIdArchetypes}/${standaloneArchetype}/user_guide.html}guía de usuario}} del 
+ {{{../../${groupIdArchetypes}/${standaloneArchetype}}${standaloneArchetype}}}
+
+ 

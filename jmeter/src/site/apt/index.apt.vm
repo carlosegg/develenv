@@ -1,0 +1,14 @@
+~~Generado con el arquetipo: standalone-archetype
+~~http://pimpam.googlecode.com
+ -----
+ ${project.artifactId}  ${project.Version}
+ -----
+ ${userName}
+ -----
+ 
+
+Introducción
+~~~~~~~~~~~~
+  
+ {{{http://jakarta.apache.org/jmeter/}Jmeter}} es una herramienta para realizar pruebas de carga
+

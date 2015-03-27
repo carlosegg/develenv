@@ -1,0 +1,80 @@
+#rpmbuild -v  --clean  --define '_buildshell '/bin/bash' --define '_topdir '/home/carlosg/workspace/develenv/target/.rpm --define 'versionModule '1 --define 'releaseModule '2  -bb /var/tmp/rpm/ss-develenv-allInOne-1-2/ss-develenv-allInOne.spec
+
+%define project_name develenv
+%define org_acronynm ss
+Name:      allInOne
+Summary:   Ecosistema de integración contínua (Todo en un único paquete)
+Version:   %{versionModule}
+Release:   %{releaseModule}
+License:   GPL 3.0
+Packager:  ss
+Group:     develenv
+BuildArch: noarch
+BuildRoot: %{_topdir}/BUILDROOT
+Requires:  %{org_acronynm}-%{project_name}-repo,jdk >= 1.6,bind-utils,subversion,mercurial,git,httpd,mysql-server,php,wget,xorg-x11-server-Xvfb curl,openssh-clients,rpm-build, rpmdevtools,createrepo,firefox,lcov,google-chrome-stable,sloccount
+Vendor:    SoftwareSano.com
+
+%define _binaries_in_noarch_packages_terminate_build 0
+%define package_name allInOne
+
+%description
+%{project_name} proporciona una solución para la automatización del proceso de construcción, testing y despliegue de software.
+Consulta http://develenv.softwaresano.com
+
+%prep
+_log "Building package %{name}-%{version}-%{release}"
+source_file="`find $PWD/../../site/assemblies/ -name \"%{project_name}-*.sh\"`"
+[ "${source_file}" == "" ] && _log "[ERROR] $PWD/../../site/assemblies/%{project_name}-*.sh doesn't exit" && exit 1
+head -n50 $source_file|egrep "size|tail"|grep -v /dev/null|sed s:"\$0":"$source_file":g > .rpmDecompress.sh
+chmod 755 .rpmDecompress.sh
+./.rpmDecompress.sh
+rm -Rf .rpmDecompress.sh
+rm -Rf $RPM_BUILD_ROOT
+%{__mkdir_p} $RPM_BUILD_ROOT/
+baseFile=`basename $source_file|sed s:"\.sh":"":g`
+cd $RPM_BUILD_ROOT
+tar xvfz $RPM_BUILD_DIR/$baseFile/${baseFile}-install.tar.gz
+rm -Rf $RPM_BUILD_DIR/$baseFile/${baseFile}-install.tar.gz
+# Deleting etc/yum.repos. because this package depends of ss-develenv-repo.
+rm -Rf etc/yum.repos.d
+cp $(ls -t %{_rpmdir}/noarch/%{org_acronynm}-%{project_name}-repo*.rpm|head -n1) var/%{project_name}/repositories/rpms/noarch
+
+%install
+
+%files
+%defattr(-,%{project_name},%{project_name},-)
+/home/%{project_name}
+/var/
+/opt/
+%config(noreplace) /etc
+%config(noreplace) /home/%{project_name}/app/jenkins/config.xml
+%config(noreplace) /home/%{project_name}/app/jenkins/backup.xml
+%config(noreplace) /home/%{project_name}/app/jenkins/thinBackup.xml
+
+%pre
+[ "`grep \"^%{project_name}:\" /etc/passwd`" == "" ] && useradd %{project_name}
+sed -i s:"/home/%{project_name}\:/bin/sh":"/home/%{project_name}\:/bin/bash":g /etc/passwd
+
+%post
+cd /opt/%{org_acronynm}/%{project_name}/bin/
+if ! [ -f /etc/%{project_name}/%{project_name}.properties ]; then
+   _log "[WARNING] Aplicando Configuración por defecto de %{project_name}"
+   _log "[WARNING]    administrator.id=%{project_name}"
+   _log "[WARNING]    password=%{project_name}"
+   _log "[WARNING]    organization=default_organization"
+   echo "-Dadministrator.id=\"%{project_name}\" -Dpassword=\"%{project_name}\"" > /etc/%{project_name}/%{project_name}.properties
+fi
+./install.sh -DrpmPhase=postInstall
+if [ "$?" != "0" ]; then
+   _log "[ERROR] install.sh has failed in post-install phase but RPM has been installed"
+fi
+
+%preun 
+cd /opt/%{org_acronynm}/%{project_name}/bin/
+./uninstall.sh -DrpmPhase=preUninstall
+if [ "$?" != "0" ]; then
+   _log "[ERROR] uninstall.sh has failed in pre-un install phase but RPM has been removed"
+fi
+
+%clean
+[ ${RPM_BUILD_ROOT} != "/" ] && rm -rf ${RPM_BUILD_ROOT}/*

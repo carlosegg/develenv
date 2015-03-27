@@ -1,0 +1,29 @@
+==========================
+= Develenv Puppet Module =
+==========================
+
+Installs and configures a Devel Environment:
+
+developer               Maven preparado para acceder a develenv
+nexus                   Repositorio de componentes java
+sonar                   Herramienta para el analisis de codigo
+jenkins                 Servidor de integracion continua
+selenium                Herramienta para hacer pruebas de aceptacion aplicaciones web
+jmeter                  Herramienta para realizar pruebas de carga
+soapui                  Herramienta para probar aplicaciones SOAP y REST
+Deployment Pipeline     Despues cada commit el software debe estar preparado para ser instalado en cualquier entorno conocido
+
+Only CentOS is supported
+
+Simple default usage. Always put the LDAP user of the guy who has requested the machine:
+  class { 'develenv':
+    administrator => 'jorgelg',
+  }
+
+By default the TIDprofile is used. You can change that if you like (only if you know what you're doing!):
+  class { 'develenv':
+    administrator => 'jorgelg',
+    profile       => 'googleProfile',
+  }
+
+check out manifets/init.pp for further information

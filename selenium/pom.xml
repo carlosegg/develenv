@@ -1,0 +1,70 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>develenv</artifactId>
+    <groupId>com.softwaresano</groupId>
+    <version>37</version>
+  </parent>
+  <artifactId>selenium</artifactId>
+  <name>selenium</name>
+  <description>Herramienta para hacer pruebas de aceptación de aplicaciones web</description>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+            <execution>
+              <id>selenium</id>
+              <phase>process-classes</phase>
+              <goals>
+                <goal>run</goal>
+              </goals>
+              <configuration>
+                <tasks>
+                  <property name="external.tools.dir" value="${external.tools.dir}"/>
+                  <property name="selenium.version" value="${selenium.version}"/>
+                  <mkdir dir="${project.build.directory}/selenium" />
+                  <copy file="${external.tools.dir}/selenium-server-standalone-${selenium.version}.jar"
+                        todir="${project.build.directory}/selenium" />
+                  <move file="${project.build.directory}/selenium/selenium-server-standalone-${selenium.version}.jar"
+                        tofile="${project.build.directory}/selenium/selenium-server-standalone.jar"/>
+                  <mkdir dir="${project.build.directory}/selenium/drivers" />
+                  <unzip src="${external.tools.dir}/drivers/chromedriver_linux64_${selenium.chrome.version}.zip"
+                         dest="${project.build.directory}/selenium/drivers" />
+                  <move file="${project.build.directory}/selenium/drivers/chromedriver"
+                        tofile="${project.build.directory}/selenium/drivers/chromedriver-x86_64"/>
+                  <unzip src="${external.tools.dir}/drivers/chromedriver_mac_${selenium.chrome.version}.zip"
+                         dest="${project.build.directory}/selenium/drivers" />
+                  <move file="${project.build.directory}/selenium/drivers/chromedriver"
+                        tofile="${project.build.directory}/selenium/drivers/chromedriver-mac"/>
+                  <unzip src="${external.tools.dir}/drivers/chromedriver_linux32_${selenium.chrome.version}.zip"
+                         dest="${project.build.directory}/selenium/drivers/" />
+                  <unzip src="${external.tools.dir}/drivers/chromedriver_win_${selenium.chrome.version}.zip"
+                         dest="${project.build.directory}/selenium/drivers/" />
+                  <mkdir dir="${project.build.directory}/site"/>
+                  <mkdir dir="${project.build.directory}/selenium/bin" />
+                  <copy todir="${project.build.directory}/selenium/bin">
+                    <fileset dir="src/main/scripts">
+                      <exclude name="hub.sh"/>
+                      <exclude name="configureHttpSelenium.sh"/>
+                      <exclude name="selenium.sh"/>
+                      <include name="*.*"/>
+                    </fileset>
+                  </copy>
+                  <move file="${project.build.directory}/selenium/bin/node-localhost.sh"
+                        tofile="${project.build.directory}/selenium/bin/node-client.sh"/>
+                  <mkdir dir="${project.build.directory}/selenium/log" />
+                  <zip destfile="${project.build.directory}/site/seleniumGridClient.zip">
+                    <zipfileset dir="${project.build.directory}/" filemode="755">
+                      <include name="**/selenium/**"/>
+                    </zipfileset>
+                  </zip>
+                  <delete dir="${project.build.directory}/selenium/bin"/>
+                </tasks>
+              </configuration>
+            </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

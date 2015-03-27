@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<org.jvnet.hudson.plugins.backup.BackupConfig>
+  <targetDirectory>${hudson.backups}</targetDirectory>
+  <verbose>false</verbose>
+  <fileNameTemplate>backup_hudson@date@.@extension@</fileNameTemplate>
+  <archiveType>TARGZIP</archiveType>
+  <keepWorkspaces>false</keepWorkspaces>
+  <keepFingerprints>false</keepFingerprints>
+  <keepBuilds>false</keepBuilds>
+  <keepArchives>false</keepArchives>
+  <jobIncludes></jobIncludes>
+  <jobExcludes></jobExcludes>
+  <caseSensitive>false</caseSensitive>
+  <customExclusions/>
+</org.jvnet.hudson.plugins.backup.BackupConfig>

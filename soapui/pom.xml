@@ -1,0 +1,42 @@
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>develenv</artifactId>
+        <groupId>com.softwaresano</groupId>
+   <version>37</version>
+    </parent>
+    <artifactId>soapui</artifactId>
+    <name>soapui</name>
+    <description>Herramienta para probar aplicaciones SOAP y REST</description>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>soapui</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <property name="soapui.version" 
+                                          value="${soapui.version}"/>
+                                <property name="external.tools.dir" 
+                                          value="${external.tools.dir}"/>
+                                <mkdir dir="${project.build.directory}" />
+                                <untar src="${external.tools.dir}/SoapUI-${soapui.version}-linux-bin.tar.gz"
+                                       compression="gzip" dest="${project.build.directory}" />
+                                <move todir="${project.build.directory}/soapui">
+                                    <fileset dir="${project.build.directory}/SoapUI-${soapui.version}"/>
+                                </move>
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

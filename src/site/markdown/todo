@@ -1,0 +1,15 @@
+29/01/2014
+===========
+
+Version 27
+----------
+Links deployment pipeline en el caso de instalación sin rpms
+
+
+Version 28
+-----------
+* Empaquetar los smokeTests y acceptanceTest para que se puedan ejecutar en las instalaciones de develenv
+* Los scripts son configurables por lo tanto irán al /etc/develenv/bin/.... y así sólo se tendrá que reconfigurar el /etc/develenv en las actualizaciones
+* La configuración del selinux se hará en la fase de build del rpm (por tanto sólo se podrá constuir en entorno redhat)
+* Arreglar paquete developer (no hace bien las sustituciones)
+* Publicar el resultado de la deployment pipeline de develenv

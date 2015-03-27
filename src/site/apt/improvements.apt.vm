@@ -1,0 +1,47 @@
+~~Generado con el arquetipo: standalone-archetype
+~~http://www.softwaresano.com/
+ -----
+ ${project.artifactId}  ${project.Version}
+ -----
+ ${userName}
+ -----
+ 
+#if( $project.parent.groupId )
+  #set( $isParent = "../../" )
+#else
+  #set( $isParent = "../" )
+#end
+
+Mejoras
+~~~~~~~~
+
+#set( $improvements = [
+         "Reducir el tiempo de actualización de develenv",
+         "Instalación mediante docker",
+         "Instalación con puppet utilizando hiera",
+         "Develenv compatible con RH7",
+         "Deployment pipeline multi-slave",
+         "Deployment pipeline con puppet (en la fase de instalación",
+         "Los plugins de develenv deverían instalarse como rpms",
+         "configurar https para el acceso a nexus, sonar y jenkins",
+         "Crear un video en youtube con la instalación de develenv y otro con la creación de un proyecto",
+         "Los plugins de develenv dar la posibilidad de que se instalen como plugins de jenkins",
+         "Guía del admimistrador",
+         "Documentación en inglés",
+         "Presentación de develenv en 3 pasos (Get Started)",
+         "Añadir .htaccess para /config y /logs",
+         "Añadir función help a todos los scripts de la carpeta bin",
+         "Pasar a git el plugin de la pipeline",
+         "Pasar a git develenv completo",
+         "Verificar los .sh necesarios mediante bash -n",
+         "Instalar y distribuir fog conjuntamente con develenv"
+                       ] )
+*----------+
+| Descripción
+*----------+
+#foreach( $i in $improvements )
+| $i
+*----------+
+#end
+
+

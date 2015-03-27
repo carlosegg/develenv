@@ -1,0 +1,59 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <artifactId>develenv</artifactId>
+      <groupId>com.softwaresano</groupId>
+      <version>37</version>
+   </parent>
+   <artifactId>sonar</artifactId>
+   <name>sonar</name>
+   <description>Herramienta para el análisis de código</description>
+   <build>
+      <plugins>
+         <plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+               <execution>
+                  <id>sonar</id>
+                  <phase>process-classes</phase>
+                  <goals>
+                     <goal>run</goal>
+                  </goals>
+                  <configuration>
+                    <tasks>
+                        <property name="external.tools.dir" value="${external.tools.dir}"/>
+                        <property name="sonar.version" value="${sonar.version}" />
+                        <delete dir="${project.build.directory}/sonarqube-${sonar.version}"/>
+                        <unzip
+                          src="${external.tools.dir}/sonarqube-${sonar.version}.zip"
+                           dest="${project.build.directory}/" />
+                        <exec
+                           dir="${project.build.directory}/sonarqube-${sonar.version}/"
+                           executable="mv">
+                           <arg line="web sonar" />
+                        </exec>
+                        <copy
+                           file="${project.build.directory}/classes/sonar.properties"
+                           toDir="${project.build.directory}/sonarqube-${sonar.version}/conf" />
+
+                        <copy
+                           toDir="${project.build.directory}/sonarqube-${sonar.version}/extensions/plugins">
+                           <fileset dir="${external.tools.dir}/plugins">
+                              <include name="**/*.jar" />
+                           </fileset> 
+                        </copy>
+                        <copy
+                           toDir="${project.build.directory}/sonarqube-${sonar.version}/extensions/rules">
+                           <fileset dir="${external.tools.dir}/rules">
+                              <include name="**/*.jar" />
+                           </fileset>
+                        </copy>
+                     </tasks>
+                  </configuration>
+               </execution>
+            </executions>
+         </plugin>
+      </plugins>
+   </build>
+</project>

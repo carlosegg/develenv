@@ -1,0 +1,45 @@
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>develenv</artifactId>
+        <groupId>com.softwaresano</groupId>
+   <version>37</version>
+    </parent>
+    <artifactId>jmeter</artifactId>
+    <name>jmeter</name>
+    <description>Herramienta para realizar pruebas de carga</description>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>jmeter</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <property name="jmeter.version" 
+                                          value="${jmeter.version}"/>
+                                <property name="external.tools.dir" 
+                                          value="${external.tools.dir}"/>
+                                <mkdir dir="${project.build.directory}" />
+                                <untar src="${external.tools.dir}/apache-jmeter-${jmeter.version}.tgz"
+                                       dest="${project.build.directory}"
+                                       compression="gzip"/>
+                                 <move todir="${project.build.directory}/jmeter">
+                                    <fileset dir="${project.build.directory}/apache-jmeter-${jmeter.version}"/>
+                                 </move>
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+
+</project>

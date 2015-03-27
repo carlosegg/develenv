@@ -1,0 +1,23 @@
+User-agent: *
+Disallow: /notAuthorized.html
+Disallow: /notAvailable.html 
+Disallow: /notFound.html 
+Disallow: /downloading.php
+Disallow: /develenvNotFound.php
+Disallow: /css/
+Disallow: /images/
+Disallow: /hudson/css/
+Disallow: /hudson/images/ 
+Disallow: /jenkins/view/
+Disallow: /jenkins/static/
+Disallow: /jmeter/css/
+Disallow: /jmeter/images/ 
+Disallow: /nexus/css/
+Disallow: /nexus/images/ 
+Disallow: /developer/css/
+Disallow: /developer/images/ 
+Disallow: /sonar/css/
+Disallow: /sonar/images/ 
+Disallow: /widgets/
+Disallow: /assemblies/ 
+

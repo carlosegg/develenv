@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<hudson.plugins.emailext.ExtendedEmailPublisherDescriptor plugin="email-ext@2.38.2">
+  <adminAddress>address not configured yet &lt;nobody&gt;</adminAddress>
+  <useSsl>false</useSsl>
+  <defaultContentType>text/plain</defaultContentType>
+  <defaultSubject>[$PROJECT_NAME] - $JOB_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!</defaultSubject>
+  <defaultBody>$JOB_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS: $CAUSE&#xd;
+&#xd;
+Check console output at $BUILD_URL to view the results.&#xd;
+&#xd;
+${FAILED_TESTS}&#xd;
+&#xd;
+${CHANGES_SINCE_LAST_SUCCESS}&#xd;
+&#xd;
+&#xd;
+</defaultBody>
+  <defaultPresendScript></defaultPresendScript>
+  <maxAttachmentSize>-1</maxAttachmentSize>
+  <recipientList></recipientList>
+  <defaultReplyTo></defaultReplyTo>
+  <excludedCommitters></excludedCommitters>
+  <overrideGlobalSettings>false</overrideGlobalSettings>
+  <precedenceBulk>false</precedenceBulk>
+  <debugMode>false</debugMode>
+  <enableSecurity>false</enableSecurity>
+  <enableWatching>false</enableWatching>
+</hudson.plugins.emailext.ExtendedEmailPublisherDescriptor>

@@ -1,0 +1,254 @@
+~~Generado con el arquetipo: standalone-archetype
+~~http://www.softwaresano.com
+ -----
+ Instalación
+ -----
+ ${userName}
+ -----
+
+
+
+Máquina virtual con {{{http://${project.artifactId}.softwaresano.com}<<${project.artifactId}>>}}
+~~~~~~~~~~~
+
+ Se puede poner a funcionar {{{http://${project.artifactId}.softwaresano.com}<<${project.artifactId}>>}} en una máquina virtual. En la tabla siguiente se detallan las diferentes versiones
+
+*---------------------------------------------+--------------------------------+---------+------------+-------------------+
+| <<Version ${project.artifactId}>>           |<<Distribución Sist. Operativo>>| Memoria | Disco Duro | Version VirtualBox 
+*---------------------------------------------+--------------------------------+---------+------------+-------------------+
+| {{{./centosvm.html}20}}                     | Centos (6.3)         (64 bits) | 2GB     |   20Gb     | 4.1.22
+*---------------------------------------------+--------------------------------+---------+------------+-------------------+ 
+| {{{./centosvm13.html}13}}                   | Centos (6.3)         (64 bits) | 2GB     |   20Gb     | 4.1.20
+*---------------------------------------------+--------------------------------+---------+------------+-------------------+ 
+| {{{./ubuntuvm.html}1.9.7}}                  | Ubuntu Server(11.10) (64 bits) | 2GB     |   7Gb      | 4.1.8
+*---------------------------------------------+--------------------------------+---------+------------+-------------------+
+
+    
+
+ La máquina ha sido creada para la versión de 4.1 de {{{http://www.virtualbox.org}virtualbox}}.
+
+ Los pasos a seguir para poner en funcionamiento la máquina virtual son:
+  
+   * {{{./virtualMachines.html#Importacin_mquina_virtual}Importación máquina virtual}}
+
+   * {{{./virtualMachines.html#Urls_de_acceso_a_develenv}Urls de acceso a develenv}}   
+
+   * {{{./virtualMachines.html#Configuracin_de_red_de_la_mquina_virtual}Configuración de red de la máquina virtual}}
+
+   * {{{./virtualMachines.html#Configuracin_proxy_para_acceso_a_Internet}Configuración proxy para acceso a Internet}}
+   
+   * {{{./virtualMachines.html#Ampliacin_de_disco_duro}Ampliación de disco duro}}
+
+   * {{{./virtualMachines.html#Acceso_desde_internet}Acceso desde internet}}
+
+* Importación máquina virtual
+~~~~~~~~~~~~~~
+ 
+ Se han de realizar los pasos que se muestran en las siguientes capturas de pantalla.
+
+** Pantalla inicial de virtualbox 
+~~~~~~~~~~~~~~
+
+ En la pantalla principal aparecen todas las máquinas virtuales asociadas a virtualbox. 
+
+[img/vm/vb1.png] Pantalla inicial VirtualBox
+
+
+** Importar máquina virtual 
+~~~~~~~~~~~~~~
+
+ Pulsar la combinación de teclas <<Ctrl + I>>. 
+
+[img/vm/vb2.png] Asistente importación de servicio
+
+** Seleccionar máquina virtual a importar 
+~~~~~~~~~~~~~~
+
+ Selecciona la máquina virtual que deseas importar. 
+
+[img/vm/vb3.png] Selección fichero con máquina vitual.
+
+** Confirmar la selección de la máquina virtual a importar 
+~~~~~~~~~~~~~~
+
+ Pulsar el botón siguiente para confirmar la máquina virtual que se desea importar. 
+
+[img/vm/vb4.png] Confirmación de máquina virtual a importar
+
+** Realizar la importación 
+~~~~~~~~~~~~~~
+
+ Pulsa el botón <<terminar>> para empezar con la importación de la máquina virtual. 
+
+[img/vm/vb5.png] Inicializar importación máquina virtual.
+
+** Máquina virtual importada correctamente 
+~~~~~~~~~~~~~~
+
+ Se volverá a la pantalla inicial de virtualbox donde aparece la máquina virtual importada correctamente. 
+
+[img/vm/vb6.png] Máquina virutal importada correctamente
+
+ Haciendo doble-click sobre el icono de la máquina virtual importada. Se arrancará la máquina virtual. Esta máquina es accesible con usuario <<root>> y password {{{http://${project.artifactId}.softwaresano.com}<<${project.artifactId}>>}}
+
+[img/vm/vb7.png]
+
+* Urls de acceso a develenv
+~~~~~~~~~~~~~~
+
+
++-----------+
+Los usuarios/password para ${project.artifactId} son:
+Admin ${project.artifactId}:
+   Usuario=${project.artifactId} 
+   Password=${project.artifactId}
+   Role=Administrador de tomcat
+   Url=http://develenv_host/${project.artifactId}/admin/
+Jenkins:
+   Usuario=${project.artifactId} 
+   Password=${project.artifactId}
+   Role= Administrador de jenkins
+Url=http://develenv_host/jenkins
+Nexus:
+   Usuario=${project.artifactId}
+   Password=${project.artifactId}
+   Role=Administrador de nexus
+   Url=http://develenv_host/nexus
+Sonar:
+   Usuario=${project.artifactId} 
+   Password=${project.artifactId}
+   Role= Administrador de sonar
+   Url=http://develenv_host/sonar
+Selenium Grid:
+   Url=http://develenv_host/grid
+${project.artifactId}: Manuales de ${project.artifactId}
+   Usuario=anonymous 
+   Password=
+   Url=http://develenv_host/docs
+Logs de ${project.artifactId} 
+   Usuario=anonymous 
+   Password=
+   Descripción=Acceso a los logs de ${project.artifactId}
+   Url=http://develenv_host/${project.artifactId}/logs
+Configuración de ${project.artifactId}
+   Usuario=anonymous 
+   Password=
+   Descripción=Acceso en modo lectura a los ficheros de configuración de ${project.artifactId}
+   Url=http://develenv_host/${project.artifactId}/config
+Repositorios de componentes software
+   Usuario=anonymous 
+   Password=
+   Descripción=Descripción=Repositorios con los componentes(maven, rpms, debian, ...) generados por los diferentes jobs de jenkins
+   Url=http://develenv_host/${project.artifactId}/repos/
+[NOTAS]
+  [1] El arranque de ${project.artifactId} puede tardar varios minutos debido al arranque de sonar. Esto significa que durante el arranque al acceder a cualquier herramienta de ${project.artifactId}, el servidor devolverá 'Service Temporarily Unavailable' 
+  [2] En  http://code.google.com/p/develenv-plugins/ existe una lista con los plugins disponibles para ${project.artifactId} (PHP, android, ...)  
+  [3] En  http://code.google.com/p/develenv/wiki/newProject existe una guía para desarrollar tu primer proyecto con ${project.artifactId}
+  [4] Las herramientas que componen ${project.artifactId}(sobre todo jenkins y sonar) utilizan plugins para ampliar la funcionalidad de las mismas. Estos plugins pueden consumir bastante memoria. Si ${project.artifactId} no arranca comprobar la memoria que queda libre en la máquina utilizando el comando free -m
+  [5] Si no se va a utilizar Selenium Grid, puede desactivarse para rebajar el consumo de memoria. Consulta como hacerlo en http://develenv_host/docs/selenium/seleniumGridOff.html
+  [6] ${project.artifactId} puede introducir algunos problemas de seguridad en el sistema. Para saber cuáles son y como elminarlos consulte http://develenv_host/docs/security.html
+  [7] Consulta las últimas versiones disponibles de ${project.artifactId} en http://develenv.softwaresano.com
+  [8] Cualquier error/sugerencia sobre ${project.artifactId} enviar un mail a ${project.artifactId}@softwaresano.com
++-----------+
+
+* Configuración de red de la máquina virtual
+~~~~~~~~~~~~~~
+   Inicialmente la máquina virtual está configurada con el tipo de conexión adaptador puente para la interfaz eth0(si se utiliza un interfaz diferente de red (por ejemplo si estamos accediendo a la red por wifi, seguramente se haya de cambiar el interfaz de red a eth1). Si la red donde va a funcionar 
+la máquina virtual es una red con IP dinámicas, que no necesita ningún tipo de autenticación, al arrancar la máquina virtual
+se asignará una IP dinámica.
+
+[img/vm/vb9.png]
+   
+   En este caso no se ha asignado una IP. Dos posibilidades:
+
+** Autenticación en 802.1X
+~~~~~~~~~~~~~~
+
+  Si se necesita autenticación  IEEE802.1x, es necesario editar fichero </etc/network/interfaces> tal y como se ve en la siguiente figura.
+
+[img/vm/vb10.png]
+
+   Una vez configurado el fichero </etc/network/interfaces>, se reinicia la conexión de red.
+
+[img/vm/vb11.png]
+
+
+
+** Crear tunnel ssh para acceso a la máquina virtual 
+~~~~~~~~~~~~~~
+
+  Se puede conseguir una IP, cambiando el adaptador de red de la máquina virtual al tipo NAT. 
+
+[img/vm/vb12.png]
+
+ Con esto se consigue una IP, desde la cual se puede acceder a cualquier máquina de la intranet, pero no se puede acceder desde la intranet a esta máquina. Para conseguir este acceso se puede crear un tunel ssh.
+
+[img/vm/vb13.png]
+
+
+  En el ejemplo anterior hemos hecho un tunel ssh con la máquina cuya IP es 10.95.137.43, de forma que para acceder por ssh a la máquina virtual se ha de hacer de la siguiente forma.
+
++-----------+
+carlosg@ironman:~$ ssh -p 5000 -l root@10.95.137.43
++-----------+
+
+  También se ha de realizar un tunnel ssh para acceder a la interfaz web de {{{http://${project.artifactId}.softwaresano.com}<<${project.artifactId}>>}} desde la IP 10.95.137.43, para ello basta con crear un nuevo tunel pero esta vez en el puerto 80
+
++-----------+
+root@${project.artifactId}#: ssh -R 5001:localhost:80 carlosg@10.95.137.43
++-----------+
+
+  Una vez creado el tunel se puede acceder a la interfaz web a partir de la url <<http://localhost:5001>>
+
+
+* Configuración proxy para acceso a Internet
+~~~~~~~~~~~~~~
+  La máquina virtual supone tener acceso a Internet, en caso que el acceso a internet sea a través de un proxy hay que configurarlo, mediante la utilización de la variable <http_proxy>. Para ello hay que editar el fichero </home/${project.artifactId}/bin/startupAll.sh>
+
++------------------------+
+#!/bin/sh
+. ${PROJECT_HOME}/bin/setEnv.sh
+ echo +++++++++++++++++++++++++++++++
+ echo   Inicializando ${project.artifactId}
+ echo +++++++++++++++++++++++++++++++
+su - develenv -c "Xvfb :20 -ac -screen 0 1024x768x8 2>/dev/null &"
+su - develenv -c "export http_proxy=http://carlosg:mipassword@proxy.softwaresano.com;export DISPLAY=":20.0";$PROJECT_HOME/bin/startupTomcat.sh"
++------------------------+
+
+* Ampliación de disco duro
+~~~~~~~~~~~~~~
+  La máquina virtual viene con un disco duro reducido de 3.5GB, donde está instalado {{{http://${project.artifactId}.softwaresano.com}<<${project.artifactId}>>}} con los ejemplos. Esta máquina virtual preparada para importar 4 discos(sdb, sdc, sdd y sde) de 5GB cada uno. En esta máquina virtual se ha 
+utilizado LVM, para poder ir incrementando el espacio en el disco duro a medida que haga falta. 
+
+   Ampliar 5GB el disco /dev/sdb:
+
++------------------------+
+root@ironman:# #Comprobar el disco duro libre
+root@ironman:# df -h
+root@ironman:# cd /home/${project.artifactId}/bin/expandHD.sh sdb
+root@ironman:# #Si la ejecución es correcta en la partición la partición /dev/mapper/${project.artifactId}-root debe tener al menos 5GB de espacio en disco
+root@ironman:# df -h
+S.ficheros            Tam.  Usado Disp. % Uso Montado en 
+/dev/mapper/${project.artifactId}-root
+                      7,7G  1,2G  6,1G  16% /
+none                  239M  220K  239M   1% /dev
+none                  247M     0  247M   0% /dev/shm
+none                  247M   40K  247M   1% /var/run
+none                  247M     0  247M   0% /var/lock
+/dev/sda1             228M   45M  172M  21% /boot
++------------------------+
+
+
+* {Acceso desde internet}
+~~~~~~~~~~~~~~
+  
+   Si la máquina donde se ha instalado {{{http://${project.artifactId}.softwaresano.com}<<${project.artifactId}>>}}, sólo es accesible a partir del puerto ssh (puerto 22), desde internet. Se debería realizar un tunnel ssh para acceder a la interfaz web de {{{http://${project.artifactId}.softwaresano.com}<<${project.artifactId}>>}}  para ello basta con crear un nuevo tunel en el puerto 80 en la máquina cliente (máquina desde donde se va acceder a {{{http://${project.artifactId}.softwaresano.com}<<${project.artifactId}>>}}.
+
+   Por ejemplo si la IP de de la máquina donde está instalado  {{{http://${project.artifactId}.softwaresano.com}<<${project.artifactId}>>}} es <193.145.50.174> y accedo desde la máquina <micasa.com>
+
++-----------+
+root@micasa.com#: ssh -L 5001:localhost:80 root@193.145.50.174
++-----------+
+
+  Una vez creado el tunel se puede acceder a la interfaz web a partir de la url <<http://localhost:5001>>
+

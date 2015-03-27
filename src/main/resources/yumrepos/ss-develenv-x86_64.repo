@@ -1,0 +1,7 @@
+# Repositorio de rpms de ${project.artifactId}
+
+[ss-${project.artifactId}-x86_64]
+name=ss-${project.artifactId}-x86_64
+baseurl=http://REPO_HOST/${project.artifactId}/rpms/x86_64
+enabled=1
+gpgcheck=0

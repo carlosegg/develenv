@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Generado con el arquetipo: standalone-archetype
+    http://pimpam.googlecode.com
+-->
+<project name="develenv">
+    <poweredBy>
+        <logo name="softwaresano" href="http://www.softwaresano.com/"
+            img="http://pimpam.googlecode.com/files/builtByPimpam.png" />
+    </poweredBy>
+    <bannerLeft>
+        <name>develenv</name>
+        <src>
+           ${project.url}/img/develenv.jpg
+        </src>
+        <href>http://www.softwaresano.com</href>
+    </bannerLeft>
+    <body>
+        <head>
+<meta http-equiv="cache-control" content="no-cache"/>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-8116005-4']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<link href="http://pimpam.googlecode.com/files/favicon.ico" rel="shortcut icon" />
+    </head>
+        <links>
+            <item name="Contacto" href="team-list.html" />
+            <item name="Blog" href="${companyBlog}" />
+            <item name="Repositorios de componentes"
+                  href="repositories.html" />
+            <item name="Sites" href="${repoPublicSiteUrl}/" />
+            <item name="Jenkins" href="${continousIntegrationSystemUrl}" />
+            <item name="Sonar" href="${sonarUrl}" />
+            <item name="Nexus" href="${mavenManagerBaseUrl}" />
+            <item name="Selenium" href="./selenium/index.html" />
+        </links>
+        <menu name="Descargas">
+            <item name="Releases" href="downloads/releases.html" />
+            <item name="Máquina Virtual con develenv" href="virtualMachines.html" />
+            <item name="Release Notes" href="changes-report.html" />
+            <item name="Licencia" href="license.html" />
+        </menu>
+        <menu name="Instalaci&oacute;n">
+            <item name="Instalaci&oacute;n" href="installation.html" />
+            <item name="Instalaci&oacute;n en vagrant " href="deployInVagrant.html" />
+        </menu>
+        <menu name="develenv">
+            <item name="Introducci&oacute;n" href="index.html" />
+            <item name="Compilaci&oacute;n" href="development.html" />
+            <item name="Manual del administrador" href="administrationGuide.html" />
+            <item name="Gu&iacute;a del desarrollador" href="developerGuide.html" />
+            <item name="Plugins" href="plugins.html" />
+            <item name="Ejemplos" href="samples.html" />
+            <item name="Futuros desarrollos" href="improvements.html" />
+        </menu>
+        <menu name="Desarrollo">
+            <item name="Desarrollo" href="development.html" />
+            <item name="Fuentes" href="source-repository.html" />
+            <item name="Integraci&oacute;n continua" href="integration.html" />
+            <item name="Control de cambios" href="changelog.html" />
+        </menu>
+        <menu ref="reports" />
+        <menu ref="parent" />
+   <menu ref="modules" />
+    </body>
+</project>

@@ -1,0 +1,136 @@
+~~Generado con el arquetipo: standalone-archetype
+~~http://www.softwaresano.com
+ -----
+ ${project.artifactId}  ${project.Version}
+ -----
+ ${userName}
+ -----
+ 
+
+Ejemplo de utilización de selenium grid
+~~~~~~~~
+
+ La instalación de {{{http://develenv.softwaresano.com}<<develenv>>}} viene con unos {{{/jenkins/view/develenv%20samples}ejemplos de prueba}}, 
+  para demostrar la utilización conjunta de las herramientas que forman {{{http://develenv.softwaresano.com}<<develenv>>}}. 
+
+  El ejemplo {{{/jenkins/view/${project.artifactId}%20samples/job/web-calculator}web-calculator}} demuestra la utilización de {{{http://develenv_host/grid}Selenium Grid}}. Los pasos para ejecutar este ejemplo son:
+
+* Definición de los tests de aceptación 
+
+  La aplicación web diseñada ha de cumplir estos {{{http://pimpam.googlecode.com/svn/trunk/web-calculator/src/test/resources/com/softwaresano/examples/calculator/test/acceptance/WebCalculator.html}tests de aceptación}} definidos en {{{http://concordion.org}concordion}}.
+
+* Implementación de los tests
+
+  La {{{http://pimpam.googlecode.com/svn/trunk/web-calculator/src/test/java/com/softwaresano/examples/calculator/test/acceptance/WebCalculator.java}implementación de los tests}} utilizando {{{./index.html}selenium}}
+
++---------------+
+...
+    @Test
+    public void test() throws IOException {
+        new ConcordionBuilder().build().process(this).assertIsSatisfied();
+    }
+    public String add(String firstOperand, String secondOperand, String addResult){
+    	driver.get("http://localhost:8080/web-calculator/index.html");
+    	driver.findElement(By.id("firstOperand")).sendKeys(firstOperand);
+    	driver.findElement(By.id("secondOperand")).sendKeys(secondOperand);
+    	driver.findElement(By.name("action")).click();
+    	System.out.println(driver.findElement(By.id("result")).getText());
+    	if 	(driver.findElement(By.id("result")).getText().equals(addResult)){
+            return "OK";
+        } else {
+            return "ERROR";
+        }
+
+...
++---------------+
+
+* Ejecución con Selenium
+
+  La ejecución de los tests está controlada por el plugin maven-surefire-plugin y por el 
+
++------------------+
+<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.5</version>
+
+				<executions>
+					<execution>
+						<id>unit-test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>test</goal>
+						</goals>
+						<configuration>
+
+							<excludes>
+								<exclude>**/test/acceptance/**</exclude>
+								<exclude>**/test/utils/**</exclude>
+							</excludes>
+							<includes>
+								<include>**/test/Component.java</include>
+							</includes>
+						</configuration>
+
+					</execution>
+					<execution>
+						<id>it-test</id>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>test</goal>
+						</goals>
+						<configuration>
+							<excludes>
+								<exclude>**/test/Component.java</exclude>
+							</excludes>
+							<includes>
+								<include>**/test/acceptance/*.java</include>
+							</includes>
+							<systemPropertyVariables>
+								<concordion.output.dir>target/site/concordion</concordion.output.dir>
+							</systemPropertyVariables>
+
+						</configuration>
+					</execution>
+
+				</executions>
+			</plugin>
++------------------+
+
+
++------------------+
+                        <plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>7.0.0.pre5</version>
+				<configuration>
+					<port>8080</port>
+					<scanIntervalSeconds>5</scanIntervalSeconds>
+					<stopPort>9966</stopPort>
+					<stopKey>foo</stopKey>
+					<contextPath>/${project.artifactId}</contextPath>
+					<scanTargetPatterns>
+						<scanTargetPattern>
+							<directory>src/main/webapp
+                            </directory>
+						</scanTargetPattern>
+					</scanTargetPatterns>
+				</configuration>
+				<executions>
+					<execution>
+						<id>start-jetty</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<scanIntervalSeconds>0</scanIntervalSeconds>
+							<daemon>true</daemon>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
++------------------+
+
+* Ejecución en Jenkins utilizando Selenium Grid

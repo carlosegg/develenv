@@ -1,0 +1,6 @@
+[http]
+        sslVerify = false
+
+[user]
+        name = develenv
+        email = develenv@softwaresano.com

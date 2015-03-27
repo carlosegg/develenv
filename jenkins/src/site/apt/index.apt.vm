@@ -1,0 +1,31 @@
+~~Generado con el arquetipo: standalone-archetype
+~~http://www.softwaresano.com
+ -----
+ ${project.artifactId}  ${project.Version}
+ -----
+ ${userName}
+ -----
+ 
+
+Introducción
+~~~~~~~~~~~~
+  
+  Jenkins es el sistema de integración contínua utilizado en {{{http://develenv.softwaresano.com}<<develenv>>}}
+
+* Acceso
+~~~~~~~~~~~~~~~~
+  
+  El {{{${continousIntegrationSystemUrl}}acceso}} en modo lectura a Jenkins es público, mientras que para realizar operaciones de introducir, quitar, configurar
+proyectos en Jenkins se hace a través de usuario y contraseña.
+
+  Para la instalación por defecto de {{{http://${project.artifactId}.softwaresano.com}<<develenv>>}} se puede acceder con el usuario <<develenv>> y con password <<develenv>>
+
+[../img/hudson.png] Jenkins
+
+* Últimas ejecuciones
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   A continuación se muestran todos los builds que se han ejecutado en {{{${continousIntegrationSystemUrl}}Jenkins}}
+  
+   ~~[INLINECODE] <script type="text/javascript" src="/jenkins/jswidgets/runs"></script> [INLINECODE]	
+	
+

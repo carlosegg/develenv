@@ -1,0 +1,11 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>develenv</artifactId>
+    <groupId>com.softwaresano</groupId>
+    <version>37</version>
+  </parent>
+  <artifactId>screenshot</artifactId>
+  <name>screenshot</name>
+  <description>Captura de pantallas web completas, así como porciones de la misma</description>
+</project>

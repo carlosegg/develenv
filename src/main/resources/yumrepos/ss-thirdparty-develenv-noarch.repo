@@ -1,0 +1,12 @@
+# Repositorio de rpms para componentes thirdParty
+# NOTA: Si el acceso a ${project.artifactId} es desde una red diferente
+#       Comprueba que la url (baseurl) es accesible desde la máquina
+#       donde se instala este rpm. En caso de que se modifique la URL
+#       antes de instalar un paquete borrar el contenido del directorio
+#       /var/cache/yum/ (rm -Rf /var/cache/yum/*)
+
+[ss-thirdparty-${project.artifactId}-noarch]
+name=ss-thirdparty-${project.artifactId}-noarch
+baseurl=${url.external.repo}/src/site/resources/tools/rpms/noarch
+enabled=1
+gpgcheck=0

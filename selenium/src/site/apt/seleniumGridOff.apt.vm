@@ -1,0 +1,30 @@
+~~Generado con el arquetipo: standalone-archetype
+~~http://www.softwaresano.com
+ -----
+develenv  ${project.Version}
+ -----
+ ${userName}
+ -----
+
+Desactivar grid de Selenium
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+ Selenium Grid se activa tras la instalación dedevelenv. Si no se va a utilizar
+y se quiere bajar el consumo de memoria se puede desactivar.
+
+
+ * Parar selenium grid
+
++-----------------------------------------------------------------------------------+
+carlosg@develenv_host:~$ cd /home/develenv/platform/selenium/bin
+carlosg@develenv_host:/home/develenv/platform/selenium/bin$ sudo ./selenium.sh stop
++-----------------------------------------------------------------------------------+
+
+
+ * Desactivar Selenium Grid en el arranque de develenv
+
++----------------------------------------------------------------------------------------------------------+
+carlosg@develenv_host:~$ # Poner a off la propiedad selenium
+carlosg@develenv_host:~$ sudo sed -i s:"^selenium=.*":"selenium=\"off\"":g /home/develenv/bin/startupAll.sh
++----------------------------------------------------------------------------------------------------------+
+

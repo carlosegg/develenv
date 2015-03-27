@@ -1,0 +1,246 @@
+
+                 ========================================
+                  ${project.artifactId} Versión - ${project.version}
+                 ========================================
+                 
+1. Introducción
+================
+${project.artifactId} proporciona una solución para la automatización del proceso de construcción, testing y despliegue de software.
+
+Esta solución implementa un servidor de integración continua completo que permite hacer una entrega rápida de software y con el menor 
+número de errores posible. Esto significa que cada vez que se construya proyecto se deben realizar una serie de comprobaciones 
+(tests unitarios, test de aceptación, extracción de métricas de calidad de código, ...) que permitan la detección temprana de 
+un error y que el software esté siempre disponible para ser instalado.
+
+2. Build
+========
+${project.artifactId} puede ser construido a partir de los fuentes, utilizando
+máquinas vagrant.
+
+
+
+3. Instalación
+================
+ 
+3.1 Requisitos Previos
+======================
+Hardware:
+     1.5GB RAM libre--> (Recomendado 2GB)
+     2.5GB HD --> (Recomendado 3Gb para que se puedan ejecutar todos los ejemplos)
+S.O: 
+   - La instalación ha sido probada para Ubuntu 11.10 y  Centos 6.2. Para ubuntu (9.10,10.04,10.10,11.04),  Centos (5.6, 6.0 y 6.1) y RedHat (6.0), no se ha probado probado el funcionamiento.
+   
+    Instalar  Java 6(http://www.oracle.com/technetwork/java/javase/downloads/index.html).
+    
+3.2 Instalación ${project.artifactId} 
+=====================================
+
+   <<${project.artifactId}>> puede ser instalado con la configuración que viene por defecto, o por el contrario puede ser adaptado 
+   a los sistemas de la organización (LDAP utilizado para la autenticación y autorización en algunas de las herramientas(jenkins, sonar y nexus)
+    que forman parte de ${project.artifactId} o por ejemplo el servidor de correo saliente,...). 
+
+3.2.1 Instalación por defecto (Para <${project.organization.name}> saltar al siguiente item)
+===========================================================================================
+ 
++-----+
+root@ironman:/tmp$ # Dar permisos de ejecución
+root@ironman:/tmp$ chmod u+x ${project.artifactId}-${project.version}.sh
+root@ironman:/tmp$ ${project.artifactId}-${project.version}.sh -Dadministrator.id=<usuario_administrador_para_${project.artifactId}> -Dpassword=<contraseña_de_administración_para_${project.artifactId}>
++-----+
+ 
+ donde:
+
+*-----------------------------+------------------------------------------------------------+
+| <<Campo>>                   |	<<Descripción>>
+*-----------------------------+------------------------------------------------------------+
+| administrator.id            | Usuario administrador para ${project.artifactId}
+*-----------------------------+------------------------------------------------------------+
+| password                    | Password de administrador para ${project.artifactId}. Se utilizará como password para la BD de sonar y para la administración de tomcat
+*-----------------------------+------------------------------------------------------------+
+
+ ej:
+
++-----------+
+root@ironman:/tmp$ ${project.artifactId}-${project.version}.sh -Dadministrator.id=carlosg -Dpassword=develenv
++-----------+
+
+
+3.2.2 Instalación para <${project.organization.name}>
+=====================================================
+
+	A modo de ejemplo se ha puesto la configuración para {{{http://develenv.googlecode.com/svn/trunk/develenv/src/main/filters/softwaresano.properties}${project.organization.name}}}. En la {{{./administrationGuide.html#Nueva_organizacin}guía del administrador}} 
+ 
++-----+
+root@ironman:/tmp$ chmod u+x ${project.artifactId}-${project.version}.sh
+root@ironman:/tmp$ ${project.artifactId}-${project.version}.sh -Dadministrator.id=<usuario_del_ldap_corporativo> -Dpassword=<contraseña_de_administración_para_${project.artifactId}> -Dorg=<url_organizacion>
++-----+
+
+ donde:
+
+*-----------------------------+------------------------------------------------------------+
+| <<Campo>>                   |	<<Descripción>>
+*-----------------------------+------------------------------------------------------------+
+| administrator.id            | Usuario administrador para ${project.artifactId}. Este usuario ha de estar dado de alta en el ldap_corporativo
+*-----------------------------+------------------------------------------------------------+
+| password                    | Password de administrador para ${project.artifactId}. (NOTA: Este password no ha de coincidir con el del LDAP corporativo) 
+*-----------------------------+------------------------------------------------------------+
+| org			              | Url con la configuración para ${project.organization.name}
+*-----------------------------+------------------------------------------------------------+
+
+ ej:
+
++-----------+
+root@ironman:/tmp$ ${project.artifactId}-${project.version}.sh -Dadministrator.id=carlosg -Dpassword=develenv -Dorg=http://develenv.googlecode.com/svn/trunk/develenv/src/main/filters/softwaresano.properties
++-----------+
+
+
+ NOTA: Con la configuración para ${project.organization.name}, inicialmente sólo 
+       se autorizará a acceder al jenkins en modo escritura al usuario que se 
+       haya definido con el parámetro administrator.id.Los nuevos usuarios deberán 
+       ser añadidos por el usuario que se ha definido como <administrator.id> 
+       ( Gestionar Jenkins --> Configurar Sistema --> Authorization ) 
+
+
+4. Arranque
+============
+
+   Con el usuario root:
+   +------+
+   $ /etc/init.d/${project.artifactId} start
+   +------+
+   
+
+5. Parada
+=========
+   Con el usuario root:
+   +------+
+   $ /etc/init.d/${project.artifactId} stop
+   +------+
+
+6. Testeo de la aplicación
+==========================
+
+6.1 Comprobar que funcionan todas las url's
+-------------------------------------------
+
+   Para asegurar que todos los elementos de ${project.artifactId} funcionan correctamente dentro de jenkins se ha creado el job test-develenv.
+   Este Job, comprueba que todos los jobs de jenkins están funcionando y además comprueba que todas las urls que forman parte de ${project.artifactId}
+   también funcionan. 
+
+6.2 Ejemplo de uso
+------------------
+
+   Se creará una aplicación siguiendo el arquetipo standalone-archetype que está disponible en ${maven.site.url}/guide. 
+   
+   Ejemplo: Crear una calculadora
+
+   $ cd $HOME/temp
+   $ mvn -DarchetypeRepository=${developer.nexus.url}/content/repositories/tidArchetypeSnapshot/ \
+    -DarchetypeGroupId=${archetypeGroupId} -DarchetypeArtifactId=${archetypeArtifactId} -DarchetypeVersion=${archetypeVersion} \
+    -DgroupId=${project.groupId} -DartifactId=calculator -Dpackage=${project.groupId}.calculator -Dversion=0.0.1-SNAPSHOT \
+    -DinteractiveMode=false archetype:generate
+   $ ## Entregar al SVN la aplicación
+   $ cd calculator
+   $ mvn clean install site:site site:deploy hudson:add-job
+
+   Si todo ha ido correctamente se podrá:
+       - Buscar en ${developer.nexus.url} la aplicación calculator
+       - Buscar en ${developer.sonar.url} la aplicación calculator
+       - Consultar el site de calculator en ${maven.site.url}/${project.groupId}/calculator
+        
+7. Gestión de usuarios
+======================
+
+7.1 Jenkins
+-----------
+
+   Jenkins se ha instalado con acceso anónimo en modo lectura. Para modo escritura sólo se ha creado para el
+   usuario que se ha definido como <<administrator.id>>. Para dar acceso escritura a otros usuarios se han
+   de seguir los siguientes pasos, dependiendo el perfil que se ha elegido.
+   
+   7.1.1 Organización por defecto
+   ------------------------------
+   
+      El password de <<administrator.id>> es el que se ha elegido con la opción <<-Dpassword>> cuando se ha hecho
+    la instalación.
+    
+   
+   7.1.2 ${project.organization.name}
+   -------------------------------------------
+   
+     El password de <<administrator.id>> es el password que este usuario tiene asignado en el LDAP corporativo.
+     
+     Navegar por Jenkins de la siguiente manera:
+     	 Gestionar Jenkins --> Configurar Sistema --> Authorization --> Añadir los usuarios del proyecto con 
+     	 los permisos correspondientes
+    
+
+7.2 Sonar
+---------
+	
+	 La autenticación por defecto en sonar es con el usuario <${project.artifactId}> y password <${project.artifactId}>. 
+	 
+	 
+	 Para añadir autenticación con LDAP hay que seguir los siguientes pasos:
+	 
+	 1.- Añadir en sonar un usuario con permisos de administración. Este usuario debe estar dado de alta
+	     en el LDAP. (Como todavía no está hecha la conexión con el LDAP inventarse el password para este 
+	     usuario administrador).
+	 
+	    ${sonar.url} --> Login (${project.artifactId}/${project.artifactId}) --> Configuration --> Users --> Add new User
+	 
+	 2.- Editar el fichero ${PROJECT_HOME}/platform/tomcat/webapps/sonar/WEB-INF/classes/sonar.properties
+			 Descomentar 
+			 	#sonar.authenticator.class: org.sonar.plugins.ldap.LdapAuthenticator
+			 Revisar los valores de las propiedades
+			     ldap.url y ldap.baseDn 
+			     
+	 3.- Reniciar ${project.artifactId}
+	         /etc/init.d/${project.artifactId} stop
+	         /etc/init.d/${project.artifactId} start
+	 
+
+7.3 Nexus
+---------
+
+     El password por defecto en nexus es  ${project.artifactId}/${project.artifactId}. Para cambiar el password seleccionar Security --> ChangePassword.
+     (NOTA: Si se cambia este password en nexus también es necesario modificar el settings.xml de maven donde se configuran
+     los passowrd para el acceso a nexus)
+
+
+8. Documentación
+================
+Toda la documentación del proyecto está disponible en ${maven.site.url}/${project.groupId}/${project.artifactId}
+
+9. Posibles problemas
+======================
+
+* Acceso al repositorios de fuentes mediante https y con usuario y password
+
+   Para evitar problemas con el acceso https y usuario y password se recomienda entrar a ${develenv.host} con el usuario 
+   ${PROJECT_USER} donde se ha instalado hudson y ejecutar:
+   
+   cd /tmp
+   svn co ${scm.url.connection}
+   
+   Esto pedirá aceptación del Certificado, y además el usuario y el password para acceso al svn. Todos estos datos se quedarán 
+   guardados en el directorio /home/${PROJECT_USER}/.subversion y los utilizará hudson cada vez que acceda al repositorio de fuentes
+   
+   El plugin de maven net-sf:stat-scm se utiliza para extraer estadísticas de acceso al SVN y pedirá aceptar el certificado. Si es 
+   hudson quien ha lanzado el proyecto, el proyecto se quedará esperando a aceptar el certificado. La solución es entrar por consola
+   
+   
+9 Advertencias
+===============
+
+   1.- El arranque por primera vez de ${project.artifactId} y ejecución de los diferentes proyectos de ejemplo puede 
+   tardar alrededor de 15 minutos. Esto es debido a que se deben descargar los plugins de maven de los repositorios
+   remotos. En las ejecuciones posteriores, el tiempo se reducirá notablemente.
+   
+   2.- Los proyectos de ejemplo utilizan el plugin stat-scm, para recoger toda la información relativa al SVN. La ejecución
+   de este plugin puede llegar a consumir 3GB de RAM y hacer que la construcción del proyecto en concreto sea mucho más
+   lenta. Para ello editar el fichero:
+   
+   	/home/develenv/platform/maven/conf/settings.xml.
+   	y desactivar el perfil <scm>
+

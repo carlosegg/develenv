@@ -1,0 +1,32 @@
+~~Generado con el arquetipo: standalone-archetype
+~~http://www.softwaresano.com
+ -----
+ Instalación
+ -----
+ ${userName}
+ -----
+
+Auditoría de seguridad
+~~~~~~~~~~~
+
+ Se ha realizado una auditoría de seguridad utilizando {{{http://www.nessus.org/}nessus}} sobre las siguientes configuraciones: 
+ 
+  * {{{./SecAuditory-${project.artifactId}1.9.1-centos62.pdf}${project.artifactId}-1.9.1 sobre centos 6.2 (64 bits)}}
+
+  * {{{./SecAuditory-${project.artifactId}1.9.3-ubuntu11_10.pdf}${project.artifactId}-1.9.3 sobre ubuntu 11.10 (64 bits)}}
+
+ El resultado de estas auditorías ha sido que no hay ningún problema de seguridad importante, aunque se debería utilizar https ya que se está utilizando autenticación para acceder a las diferentes herramientas que forman  {{{http://${project.artifactId}.softwaresano.com}<<${project.artifactId}>>}}.
+ 
+ A parte de los resultados extraidos por {{{http://www.nessus.org/}nessus}} se han de considerar 
+ los siguientes temas, ya que pueden provocar un problema de seguridad. El objetivo 
+ que se tiene es el de compartir al máximo el conocimiento de cada una de las herramientas
+ que forman ${project.artifactId}
+ 
+  * Desde el usuario ${project.artifactId} de la máquina ese puede acceder via ssh a cualquier otra máquina donde se tenga instalado el usuario ${project.artifactId}. Para eliminar esta característica basta con borrar la clave pública de ${project.artifactId} del fichero /home/${project.artifactId}/.ssh/<authorized_keys>
+  
+  * Por defecto se ha configurado el acceso anónimos a todos los workspaces de jenkins
+  
+  * Se puede acceder (modo sólo lectura) a la configuración de todas las herramientas que forman develenv via http (http://develenv_host/${project.artifactId}/config). Para evitar esto basta con reconfigurar la configuración de apache (<Alias /${project.artifactId}/config>). También se puede acceder en modo lectura a todas las configuraciones directamente desde jenkins.
+  
+  * Jenkins se ejecuta con la opción -Dhudson.model.Api.INSECURE=true, para poder tener acceso a todo el api rest
+

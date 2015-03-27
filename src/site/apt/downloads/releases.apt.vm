@@ -1,0 +1,51 @@
+~~Generado con el arquetipo: standalone-arquetipo
+~~http://www.softwaresano.com
+ -----
+ Releases
+ -----
+ carlosg@softwaresano.com
+ -----
+
+#if( $project.parent.groupId )
+  #set( $isParent = "../../" )
+#else
+  #set( $isParent = "../" )
+#end
+
+Releases
+~~~~~~~~
+
+ Si la instalación se realiza en RedHat o en Centos, se recomienda hacerlo a través
+ del sistema de paquetería de {{{../rpmInstallation.html}rpms}}, tal y como se 
+ explica {{{../rpmInstallation.html}aquí}}. También existe la posibliad de {{{../deployInVagrant.html}instalar}}
+ develenv en una máquina {{{../deployInVagrant.html}vagrant}},
+ 
+ 
+ Pulsa {{{http://downloads.softwaresano.com/last.php?artifactId=${project.artifactId}}aquí}} para descargarte la {{{http://downloads.softwaresano.com/last.php?artifactId=${project.artifactId}}última versión}}. También existe una {{{../virtualMachines.html}máquina virtual}} con {{{../virtualMachines.html}develenv}} instalado. 
+ 
+ En la siguiente tabla se muestran algunas versiones del componente: 
+## Añade las versiones que se van creando, en orden inverso a como se crean
+## Ejemplo:
+#set( $versiones = ["37","36","35","34","33","31","30","29","28","27","26","24","23","22","21","20","19","18","17","16","15","14","13","12","11","10","9","8","7","6","5","4","3","2","1.9.9","1.9.8","1.9.7","1.9.6","1.9.5","1.9.4","1.9.3","1.9.2","1.9.1","1.9.0","1.8.5","1.8.4","1.8.3","1.8.2","1.8.1","1.8.0","1.7.10", "1.7.9","1.7.8", "1.7.7","1.7.6", "1.7.5", "1.7.4", "1.7.4","1.7.3", "1.7.2", "1.7.1", "1.7.1", "1.7.0", "1.6.0","1.5.16", "1.5.15", "1.5.14", "1.5.13", "1.5.12", "1.5.11", "1.5.10", "1.5.9", "1.5.8", "1.5.7", "1.5.6","1.5.5", "1.5.4", "1.5.3", "1.5.2", "1.5.1", "1.5.0", "1.4.2", "1.4.1", "1.4.0", "1.3.5", "1.3.4", "1.3.3", "1.3.2", "1.3.1", "1.3.0", "1.2.1", "1.2.0", "1.1.0", "1.0.6", "1.0.5", "1.0.4","1.0.3","1.0.2"] )
+
+*----------*--------------+----------------+
+| Versión  | Binarios     | Fuentes        |
+*----------*--------------+----------------+
+#set ( $j=0 )
+#foreach( $i in $versiones )
+#if ($j == 0 )
+| {{{${isParent}changes-report.html#a$i}$i}} | {{{http://develenv.softwaresano.com/download.php?artifactId=${project.artifactId}&version=${i}&classifier=.sh}$i}} | {{{$project.scm.connection.replace("scm:svn:","").replace("/trunk/","/tags/")-${i}/}$i}}
+#else
+| {{{${isParent}changes-report.html#a$i}$i}} | N/A | {{{$project.scm.connection.replace("scm:svn:","").replace("/trunk/","/tags/")-${i}/}$i}}
+#end
+*----------*--------------+----------------+----------------+----------------+
+#set ($j = $j + 1)
+#end
+
+
+
+
+  Las versiones que no esté disponbile (N/A) el binario, se puede obtener el mismo a partir de los fuentes, siguiendo el {{{../development.html}proceso de compilación}}.  
+
+  Para ver los últimos cambios introducidos pulse {{{${isParent}changelog.html}aquí}}
+

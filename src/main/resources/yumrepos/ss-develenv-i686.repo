@@ -1,0 +1,7 @@
+# Repositorio de rpms de ${project.artifactId}
+
+[ss-${project.artifactId}-i686]
+name=ss-${project.artifactId}-i686
+baseurl=http://REPO_HOST/${project.artifactId}/rpms/i686
+enabled=1
+gpgcheck=0

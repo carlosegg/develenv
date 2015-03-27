@@ -1,0 +1,132 @@
+#!/bin/bash
+setEnvFile=/etc/develenv/setEnv.sh
+default_administrator_id=develenv
+default_project_name=develenv
+default_sonar_jdbc_password=develenv
+
+function getAdministratorId(){
+    if [ -z "$ADMINISTRATOR_ID" ]; then
+       echo $default_administrator_id
+    else
+       echo $ADMINISTRATOR_ID
+    fi
+}
+
+function getProjectName(){
+    if [ -z "$PROJECT_NAME" ]; then
+       echo $default_project_name
+    else
+       echo $PROJECT_NAME
+    fi
+}
+
+function getSonarJdbcPassword(){
+    if [ -f /etc/$PROJECT_NAME/$PROJECT_NAME.properties ]; then
+       sonar_password=$(sed s:"-D":"\n":g /etc/$PROJECT_NAME/$PROJECT_NAME.properties 2>/dev/null|grep ^password=|cut -d'=' -f2-)
+       if [ $? == 0 ]; then
+          if [ "$sonar_password" != "" ]; then
+             echo $sonar_password
+             return 0
+          fi
+       fi
+    fi
+    echo $default_sonar_jdbc_password
+
+}
+
+function status_db(){
+   if [[ "$(cat /proc/version|grep -i "Red Hat")" == "" ]]; then
+      #Ubuntu
+      running_filter="process"
+   else
+      #Redhat
+      running_filter="(pid"
+   fi
+   is_running=$(service $mysqlService status|grep $running_filter)
+   sleep 1
+}
+
+function is_running_db(){
+   status_db
+   while [ "$is_running" == "" ]
+   do
+        status_db
+   done
+}
+
+function is_stopped_db(){
+   status_db
+   while [ "$is_running" != "" ]
+   do
+      status_db
+   done
+}
+
+
+ID=`id -u`
+if [ "$ID" == "0" ]; then
+   if [ -f "$setEnvFile" ]; then
+      source $setEnvFile
+   fi
+   projectName=$(getProjectName)
+   administratorId=$(getAdministratorId)
+   [[ "$(cat /proc/version|grep -i "Red Hat")" == "" ]] \
+      && mysqlService="mysql" || mysqlService="mysqld"
+   SQL_SONAR_FILE="scriptDB.sql"
+   lineSeparator=`grep -n "#### $SQL_SONAR_FILE ####" $0|grep -v "grep" |sed s:"\:#### $SQL_SONAR_FILE ####":"":g`
+   sed 1,${lineSeparator}d $0 > $SQL_SONAR_FILE
+   #Update sonar password
+   sed -i s:"#JDBC_PASSWORD":"INSERT INTO user (Host,User,Password)  VALUES('localhost','sonar',PASSWORD('$(getSonarJdbcPassword)'));":g $SQL_SONAR_FILE
+   #Update sonar administrator user
+   echo "UPDATE \`users\` SET login='$administratorId',name='$projectName (Administrator)',crypted_password='997890e6d0e1a6d92d88763b5eec503a7443b60e', salt='df7db2226da21958d8f6a2f42fb73bb41858efce' WHERE id=1;" >> $SQL_SONAR_FILE
+   echo "UPDATE \`properties\` SET text_value='UA-8116005-4' WHERE prop_key='sonar.google-analytics.account';" >> $SQL_SONAR_FILE
+   service ${mysqlService} start
+   is_running_db
+   echo "[INFO] Waiting to create mysql db ..."
+   sleep 20
+   service ${mysqlService} stop
+   is_stopped_db
+   sleep 20
+   mysqld_safe -u mysql --skip-grant-tables &
+   sleep 20
+   /usr/bin/mysql --user=root <$SQL_SONAR_FILE
+   if [[ "$?" != 0 ]]; then
+      echo "[ERROR] Creating sonar db"
+      exit 1
+   fi
+   if [ "$LOCAL_SOFTWARESANO" != "" ]; then
+      cp $SQL_SONAR_FILE /tmp/borrame.sql
+   fi
+   # rm -Rf $SQL_SONAR_FILE
+   kill `ps -ef|grep "mysqld"|grep -v "grep"|grep -v "mysqld_safe"|awk '{print $2}'`
+   sleep 4
+   service ${mysqlService} start
+else
+   echo You must be root to execute $0
+   exit 1
+fi
+exit 0
+
+
+#### scriptDB.sql ####
+DROP DATABASE IF EXISTS sonar;
+CREATE DATABASE sonar CHARACTER SET utf8 COLLATE utf8_general_ci;
+use mysql;
+delete from user
+       where (User="sonar");
+#JDBC_PASSWORD
+delete from db where ((Host="localhost") and (Db="sonar") and (User="sonar"));
+INSERT INTO db
+         (Host,Db,User,Select_priv,Insert_priv,
+         Update_priv,Delete_priv,Create_priv,Drop_priv,Alter_priv, Index_priv)
+         VALUES('localhost','sonar','sonar',
+         'Y','Y','Y','Y','Y','Y','Y','Y');
+delete from db where ((Host="127.0.0.1") and (Db="sonar") and (User="sonar"));
+INSERT INTO db
+         (Host,Db,User,Select_priv,Insert_priv,
+         Update_priv,Delete_priv,Create_priv,Drop_priv,Alter_priv,Index_priv)
+         VALUES('127.0.0.1','sonar','sonar',
+         'Y','Y','Y','Y','Y','Y','Y','Y');
+FLUSH PRIVILEGES;
+commit;
+use sonar;

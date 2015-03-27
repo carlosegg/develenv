@@ -1,0 +1,102 @@
+~~Generado con el arquetipo: standalone-archetype
+~~http://www.softwaresano.com
+ -----
+ ${project.artifactId}  ${project.Version}
+ -----
+ ${userName}
+ -----
+ 
+
+Configuración para el desarrollador
+~~~~~~~~~~~~
+  
+  El desarrollador debe configurar <<{{{http://maven.apache.org}maven}}>> para su utilización en <<develenv>>. El desarrollador implementa
+  el componente o la aplicación. Una vez ésta es estable el desarrollador o el integrador del componente crea una release del mismo 
+  utilizando el {{{http://wiki.jenkins-ci.org/display/JENKINS/M2+Release+Plugin}m2 release plugin}} de Jenkins. Al crearse la release, se creará el tag 
+  correspondiente en el repositorio de fuentes, y la versión compilada de la aplicación o componente se entregará al ({{{../nexus}repositorio de componentes(nexus)}}).
+ 
+
+* Requisitos
+~~~~~~~~~~~~~~~~
+  
+  ** {{{http://java.sun.com} jdk1.6 ó superior}}
+  
+   
+* Instalación de maven
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Dos tipos de instalaciones:
+
+** Independiente de <<develenv>> (<recomendada>)
+  
+ El desarrollador trabaja con la versión {{{http://www.apache.org/dyn/closer.cgi/maven/binaries/apache-maven-3.1.1-bin.tar.gz}3.1.1}} distribución de maven que se ha descargado del {{{http://www.apache.org/dyn/closer.cgi/maven/binaries/apache-maven-2.2.1-bin.tar.gz}site oficial de maven}}. 
+ El desarrollador deberá configurar en el pom.xml de la aplicación:
+
+*** Acceso al  {{{../nexus}repositorio de componentes}}
+
+ Basta con añadir al fichero <pom.xml> de la aplicación
+
++-----------------+
+<!-- Por si no se tiene acceso a nexus -->
+    <repositories>
+        <repository>
+            <id>develenv</id>
+            <name>Repositorio de releases</name>
+            <url>${mavenManagerBaseUrl}/content/groups/public</url>
+        </repository>
+        <repository>
+	    <id>snapshot-develenv</id>
+     	    <name>Repositorio de snapshots</name>
+     	    <url>${mavenManagerBaseUrl}/content/groups/public-snapshots</url>
+        </repository>
+    </repositories>
++-----------------+
+
+*** Configuración de los repositorios de despliegue y publicación de site del proyecto
+
++-----------------+
+ <distributionManagement>
+   <!-- Repositorio para hacer el deploy de las releases -->
+   <repository >
+      <id>\$${repoMavenId}</id>
+      <name>\${repoMavenName}</name>
+      <url>\${repoMavenUrl}</url>
+   </repository>
+  <!-- Repositorio de snapshot donde se hará el deploy de los componentes que estén en desarrollo -->
+  <!-- Las variables repoMavenSnapshotName, repoMavenSnapshotUrl están definidas en la instalación que hace uso Jenkins--> 
+  <snapshotRepository>
+     <id>\${repoMavenSnapshotId}</id>
+     <name>\${repoMavenSnapshotName}</name>
+     <url>\${repoMavenSnapshotUrl}</url>
+  </snapshotRepository>
+  <!-- Máquina donde se publica el site del proyecto -->
+  <site>
+      <id>\${repoSiteId}</id>
+      <name>\${repoSiteName}</name>
+      <url>\${repoSiteUrl}/${groupId}/${artifactId}</url>
+  </site>
+ </distributionManagement>
++-----------------+
+
+** Dependiente de <<develenv>>
+
+   En este tipo de configuración maven ya está configurado para acceder a los {{{../nexus/index.html}repositorios de componentes}}
+   	
+   Descomprimir {{{./maven.zip}maven para windows}} ó {{{./maven.tar.gz}maven para entornos Linux}} en el directorio $PROJECT_HOME.
+
+*** Configuración de maven
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+* Creación de una aplicación
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    El desarrollador puede crear una aplicación utilizando {{{http://${project.artifactId}.softwaresano.com}<<${project.artifactId}>>}} de dos formas:
+
+    ** {{{http://code.google.com/p/develenv/wiki/newProject}Básica}} (<recomendada>). Crear una aplicación paso a paso integrando todos los componentes (repositorio de fuentes, integración contínua, etc.)
+    
+    ** {{{${repoPublicSiteUrl}/${groupIdArchetypes}/${standaloneArchetype}}Avanzada}}. Creada a partir de una plantilla
+
+ Ambas formas de desarrollo siguen el worflow que se muestra en la figura siguiente:
+
+[img/DeveloperFlow2.png] Workflow desarrollo
+

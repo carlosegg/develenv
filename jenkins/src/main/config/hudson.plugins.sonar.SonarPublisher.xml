@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<hudson.plugins.sonar.SonarPublisher_-DescriptorImpl>
+  <helpRedirect/>
+  <installations>
+    <hudson.plugins.sonar.SonarInstallation>
+      <name>DEFAULT_SONAR</name>
+      <disabled>false</disabled>
+      <serverUrl>${developer.sonar.url}</serverUrl>
+      <databaseUrl><![CDATA[${sonar.jdbc.url}]]></databaseUrl>
+      <databaseDriver>com.mysql.jdbc.Driver</databaseDriver>
+      <databaseLogin>sonar</databaseLogin>
+      <databasePassword>${sonar.jdbc.password}</databasePassword>
+      <additionalProperties></additionalProperties>
+      <triggers>
+        <skipScmCause>false</skipScmCause>
+        <skipUpstreamCause>false</skipUpstreamCause>
+      </triggers>
+    </hudson.plugins.sonar.SonarInstallation>
+  </installations>
+</hudson.plugins.sonar.SonarPublisher_-DescriptorImpl>

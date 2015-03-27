@@ -1,0 +1,77 @@
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>develenv</artifactId>
+        <groupId>com.softwaresano</groupId>
+   <version>37</version>
+    </parent>
+    <artifactId>developer</artifactId>
+    <packaging>jar</packaging>
+    <name>developer</name>
+    <description>Maven preparado para ser acceder a develenv</description>
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <filters>
+            <filter>../src/main/filters/common.properties</filter>
+        </filters>
+        <resources>
+            <resource>
+                <!--
+                    Sólo se filtran los contenidos textuales. Si se
+                    filtra una imagen(*.png,*.gif), está quedará
+                    corrupta
+                -->
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*.xml</include>
+                    <include>**/*.txt</include>
+                    <include>**/*.properties</include>
+                    <include>**/configure</include>
+                </includes>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <inherited>false</inherited>
+                <executions>
+                    <execution>
+                        <id>platform</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <property name="maven.version" value ="${maven.version}"/>
+                                <property name="external.tools.dir" 
+                                          value="${external.tools.dir}"/>
+                                <mkdir dir="${project.build.directory}/platform" />
+                                <untar src="../${external.tools.dir}/apache-maven-${maven.version}-bin.tar.gz"
+                                       compression="gzip"
+                   dest="${project.build.directory}/platform" />
+                                <mkdir dir="${project.build.directory}/platform/maven" />
+                                <move toDir="${project.build.directory}/platform/maven">
+                                    <fileset dir="${project.build.directory}/platform/apache-maven-${maven.version}"/>
+                                </move>
+                                <copy toDir="${project.build.directory}/platform/maven">
+                                    <fileset dir="${project.build.directory}/classes/maven"/>
+                                </copy>
+                                <mkdir dir="${project.build.directory}/site"/>
+                                <zip destfile="${project.build.directory}/site/maven.zip"
+                                     basedir="${project.build.directory}/platform" />
+                                <tar destfile="${project.build.directory}/site/maven.tar.gz" compression="gzip">
+                                    <tarfileset dir="${project.build.directory}/platform"  mode="755" />
+                                </tar>
+
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+</project>

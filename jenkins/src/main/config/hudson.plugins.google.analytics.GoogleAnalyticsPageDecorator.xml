@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<hudson.plugins.google.analytics.GoogleAnalyticsPageDecorator>
+  <profileId>UA-8116005-4</profileId>
+  <domainName>develenv.softwaresano.com</domainName>
+</hudson.plugins.google.analytics.GoogleAnalyticsPageDecorator>

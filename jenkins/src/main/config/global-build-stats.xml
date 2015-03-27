@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<hudson.plugins.global__build__stats.GlobalBuildStatsPlugin version="9">
+  <buildStatConfigs>
+    <bsc>
+      <id>5N6skYjBk@jlurQjOrxV0!odKT3LzFZJ</id>
+      <t>Build Stats</t>
+      <w>900</w>
+      <h>500</h>
+      <l>30</l>
+      <s>DAILY</s>
+      <yact>PERCENTAGE</yact>
+      <ds>
+        <GBS__YACD>BUILD_COUNTER</GBS__YACD>
+      </ds>
+      <f>
+        <jf>ALL</jf>
+        <nf>ALL</nf>
+        <lf>ALL</lf>
+        <sbr>15</sbr>
+      </f>
+    </bsc>
+  </buildStatConfigs>
+  <retentionStrategies/>
+</hudson.plugins.global__build__stats.GlobalBuildStatsPlugin>

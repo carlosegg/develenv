@@ -1,0 +1,530 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>&lt;a href=&quot;http://www.softwaresano.com/&quot; title=&quot;SoftwareSano&quot; class=&quot;poweredBy&quot;&gt;&#xd;
+   &lt;img id=&quot;jobJenkins&quot; class=&quot;poweredBy&quot;  alt=&quot;softwaresano&quot; src=&quot;http://pimpam.googlecode.com/files/jobJenkins.png&quot;/&gt;&#xd;
+   &lt;script type=&quot;text/javascript&quot; src=&quot;http://www.softwaresano.com/widgets/jobBuiltyBy.php&quot;&gt;&lt;/script&gt;&#xd;
+   &lt;script type=&quot;text/javascript&quot; src=&quot;/widgets/jobBuiltyBy.php&quot;&gt;&lt;/script&gt;&#xd;
+&lt;/a&gt;&#xd;
+&lt;br/&gt;&#xd;
+Ejemplo en C++ cortesía de Toni Cebrián(www.tonicebrian.com/2010/10/15/continuous-integration-for-c-using-hudson/). Para realizar una análisis dinámico de código, instala el plugin develenv-cpp-plugin (code.google.com/p/develenv-cpp-plugin/)</description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.plugins.googlecode.GoogleCodeProjectProperty/>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>sourceDirectory</name>
+          <description>Directorio con los fuentes de C++</description>
+          <defaultValue>src/main/cpp</defaultValue>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    <hudson.plugins.sidebar__link.ProjectLinks>
+      <links>
+        <hudson.plugins.sidebar__link.LinkAction>
+          <url>../../../sites/com.softwaresano.develenv/CppSample/</url>
+          <text>Site</text>
+          <icon>help.gif</icon>
+        </hudson.plugins.sidebar__link.LinkAction>
+      </links>
+    </hudson.plugins.sidebar__link.ProjectLinks>
+  </properties>
+  <scm class="hudson.plugins.mercurial.MercurialSCM">
+    <source>http://bitbucket.org/tonicebrian/cmake_sample_project</source>
+    <modules></modules>
+    <clean>false</clean>
+    <browser class="hudson.plugins.mercurial.browser.HgWeb">
+      <url>http://bitbucket.org/tonicebrian/cmake_sample_project/</url>
+    </browser>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>#!/bin/bash
+SONAR_FILE=&quot;$WORKSPACE/pom.xml&quot;
+lineSeparator=`grep -n &quot;#### pom.xml ####&quot; $0|grep -v &quot;grep&quot; |sed s:&quot;\:#### pom.xml ####&quot;:&quot;&quot;:g`
+sed 1,${lineSeparator}d $0 &gt; pom.xml
+pushd .&gt;/dev/null
+cd ..
+vName=`basename $PWD`
+popd &gt;/dev/null
+# Se coge la descripción del job de Hudson. Si la descripción está formada por varias líneas sólo se coge la primera&quot;
+CONFIG_XML=$PWD/../config.xml
+ENDLINE=$(expr `cat $CONFIG_XML |grep -n &quot;&lt;/description&gt;&quot;|head -n 1|cut -d &apos;:&apos; -f1` + 1)
+FIRSTLINE=$(expr `cat $CONFIG_XML |grep -n &quot;&lt;description&gt;&quot;|head -n 1|cut -d &apos;:&apos; -f1` - 1)
+vDescription=`sed $ENDLINE,5000d $CONFIG_XML|sed 1,${FIRSTLINE}d |sed s:&quot;&lt;/*description&gt;&quot;:&quot;&quot;:g|sed s:&quot;&amp;lt;.*&amp;gt&quot;:&quot;&quot;:g|sed s:&quot;;&amp;#xd;&quot;:&quot;\n&quot;:g`
+echo $vDescription &gt;.pom.xml.description
+urlSite=&quot;http\://$HOSTNAME/sites/com.softwaresano.develenv/$vName&quot;
+vGroupId=&quot;com.softwaresano.develenv&quot;
+sed -i s:&quot;\${vDescription}&quot;:&quot;`cat .pom.xml.description`&quot;:g pom.xml
+sed -i s:&quot;CppSample&quot;:&quot;$vName&quot;:g pom.xml
+sed -i s:&quot;\${urlSite}&quot;:&quot;$urlSite&quot;:g pom.xml
+sed -i s:&quot;com\.develenv\.softwaresano&quot;:&quot;$vGroupId&quot;:g pom.xml
+sed -i s:&quot;\${urlHudson}&quot;:&quot;http\://$HOSTNAME/jenkins/job/$JOB_NAME&quot;:g pom.xml
+sed -i s:&quot;\${sourceDirectory}&quot;:&quot;$sourceDirectory&quot;:g pom.xml
+scmStats=&quot;false&quot;
+scmType=&quot;none&quot;
+if [ -f .hg/hgrc ]; then
+   scm=$(tail -1 .hg/hgrc|sed s:&quot;.*=&quot;:&quot;&quot;:g)
+   scmType=&quot;hg&quot;
+else
+   if [ -f .git/config ]; then
+      scm=$(grep &quot;url =&quot; .git/config|sed s:&quot;.*=&quot;:&quot;&quot;:g)
+      scmStats=&quot;true&quot;
+      scmType=&quot;git&quot;
+   else
+      if [ -d .svn ]; then
+         scm=$(svn info|grep &quot;URL:&quot;|sed s:&quot;^URL\: &quot;:&quot;&quot;:g)
+         scmStats=&quot;true&quot;
+         scmType=&quot;svn&quot;
+      fi
+   fi
+fi
+[[ &quot;$scmType&quot; != &quot;none&quot; ]] &amp;&amp; [[ scmStats=&quot;true&quot; ]] &amp;&amp; newProperties=$(echo &quot;&lt;sonar.scm-stats.enabled&gt;$scmStats&lt;/sonar.scm-stats.enabled&gt;&lt;sonar.scm.url&gt;scm:$scmType:$scm&lt;/sonar.scm.url&gt;&quot;|sed s:&quot;\:&quot;:&quot;\\\\\:&quot;:g)
+sed -i s:&quot;&lt;properties&gt;&quot;:&quot;&lt;properties&gt;$newProperties&quot;:g pom.xml
+echo POM autogenerado:
+cat pom.xml
+exit 0
+#### pom.xml ####
+&lt;project&gt;
+   &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+   &lt;groupId&gt;com.softwaresano.develenv&lt;/groupId&gt;
+   &lt;artifactId&gt;CppSample&lt;/artifactId&gt;
+   &lt;version&gt;1.0&lt;/version&gt;
+   &lt;packaging&gt;pom&lt;/packaging&gt;
+   &lt;name&gt;CppSample&lt;/name&gt;
+   &lt;description&gt;&lt;![CDATA[${vDescription}]]&gt;&lt;/description&gt;
+   &lt;organization&gt;
+      &lt;name&gt;${companyName}&lt;/name&gt;
+      &lt;url&gt;${companyUrl}&lt;/url&gt;
+   &lt;/organization&gt;
+   &lt;url&gt;&lt;![CDATA[${urlSite}]]&gt;&lt;/url&gt;
+   &lt;ciManagement&gt;
+      &lt;system&gt;Hudson&lt;/system&gt;
+      &lt;url&gt;${urlHudson}&lt;/url&gt;
+   &lt;/ciManagement&gt;
+   &lt;build&gt;
+      &lt;sourceDirectory&gt;${sourceDirectory}&lt;/sourceDirectory&gt;
+   &lt;/build&gt;
+   &lt;distributionManagement&gt;
+      &lt;!-- Repositorio para hacer el deploy de las releases --&gt;
+      &lt;repository&gt;
+         &lt;id&gt;${repoMavenId}&lt;/id&gt;
+         &lt;name&gt;${repoMavenName}&lt;/name&gt;
+         &lt;url&gt;${repoMavenUrl}&lt;/url&gt;
+      &lt;/repository&gt;
+      &lt;!-- Repositorio de snapshot --&gt;
+      &lt;snapshotRepository&gt;
+         &lt;id&gt;${repoMavenSnapshotId}&lt;/id&gt;
+         &lt;name&gt;${repoMavenSnapshotName}&lt;/name&gt;
+         &lt;url&gt;${repoMavenSnapshotUrl}&lt;/url&gt;
+      &lt;/snapshotRepository&gt;
+      &lt;!-- Máquina donde se publica el site del proyecto --&gt;
+      &lt;site&gt;
+         &lt;id&gt;${repoSiteId}&lt;/id&gt;
+         &lt;name&gt;${repoSiteName}&lt;/name&gt;
+         &lt;url&gt;${repoSiteUrl}/${groupId}/${artifactId}&lt;/url&gt;
+      &lt;/site&gt;
+   &lt;/distributionManagement&gt;
+   &lt;properties&gt;
+      &lt;sonar.language&gt;c++&lt;/sonar.language&gt;
+      &lt;sonar.dynamicAnalysis&gt;false&lt;/sonar.dynamicAnalysis&gt;
+   &lt;/properties&gt;
+   &lt;profiles&gt;
+      &lt;profile&gt;
+         &lt;id&gt;maven-2&lt;/id&gt;
+         &lt;activation&gt;
+            &lt;activeByDefault&gt;true&lt;/activeByDefault&gt;
+         &lt;/activation&gt;
+         &lt;build&gt;
+            &lt;pluginManagement&gt;
+               &lt;plugins&gt;
+                  &lt;plugin&gt;
+                     &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                     &lt;artifactId&gt;maven-site-plugin&lt;/artifactId&gt;
+                     &lt;version&gt;2.0.1&lt;/version&gt;
+                  &lt;/plugin&gt;
+               &lt;/plugins&gt;
+            &lt;/pluginManagement&gt;
+            &lt;plugins&gt;
+               &lt;plugin&gt;
+                  &lt;artifactId&gt;maven-site-plugin&lt;/artifactId&gt;
+                  &lt;configuration&gt;
+                     &lt;locales&gt;es&lt;/locales&gt;
+                     &lt;outputEncoding&gt;${project.reporting.outputEncoding}&lt;/outputEncoding&gt;
+                     &lt;inputEncoding&gt;${project.build.sourceEncoding}&lt;/inputEncoding&gt;
+                  &lt;/configuration&gt;
+               &lt;/plugin&gt;
+            &lt;/plugins&gt;
+         &lt;/build&gt;
+         &lt;reporting&gt;
+            &lt;plugins&gt;
+               &lt;!-- plugin para reports de sonar --&gt;
+               &lt;plugin&gt;
+                  &lt;groupId&gt;org.codehaus.sonar-plugins&lt;/groupId&gt;
+                  &lt;artifactId&gt;maven-report&lt;/artifactId&gt;
+                  &lt;version&gt;0.1&lt;/version&gt;
+               &lt;/plugin&gt;
+
+
+
+               &lt;!-- Plugin para generar los referencias cruzadas del código --&gt;
+               &lt;plugin&gt;
+                  &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
+                  &lt;artifactId&gt;jxr-maven-plugin&lt;/artifactId&gt;
+                  &lt;version&gt;2.0-beta-1&lt;/version&gt;
+               &lt;/plugin&gt;
+               &lt;!-- Plugin para generar los reports de calidad de código. Faltaría
+                  definir las métricas a aplicar --&gt;
+               &lt;plugin&gt;
+                  &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                  &lt;artifactId&gt;maven-pmd-plugin&lt;/artifactId&gt;
+                  &lt;version&gt;2.5&lt;/version&gt;
+                  &lt;configuration&gt;
+                     &lt;linkXref&gt;true&lt;/linkXref&gt;
+                     &lt;sourceEncoding&gt;${project.build.sourceEncoding}&lt;/sourceEncoding&gt;
+                     &lt;minimumTokens&gt;100&lt;/minimumTokens&gt;
+                     &lt;targetJdk&gt;${jvm.version}&lt;/targetJdk&gt;
+                     &lt;excludes&gt;
+                        &lt;exclude&gt;**/pojos/*.java&lt;/exclude&gt;
+                        &lt;exclude&gt;**/generated/*.java&lt;/exclude&gt;
+                     &lt;/excludes&gt;
+                  &lt;/configuration&gt;
+               &lt;/plugin&gt;
+               &lt;plugin&gt;
+                  &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
+                  &lt;artifactId&gt;javancss-maven-plugin&lt;/artifactId&gt;
+                  &lt;version&gt;2.0-beta-2&lt;/version&gt;
+               &lt;/plugin&gt;
+               &lt;plugin&gt;
+                  &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
+                  &lt;artifactId&gt;jdepend-maven-plugin&lt;/artifactId&gt;
+                  &lt;version&gt;2.0-beta-2&lt;/version&gt;
+               &lt;/plugin&gt;
+
+               &lt;!-- Plugin para generar los informes del JUNIT --&gt;
+               &lt;plugin&gt;
+                  &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                  &lt;artifactId&gt;maven-surefire-report-plugin&lt;/artifactId&gt;
+                  &lt;version&gt;2.5&lt;/version&gt;
+               &lt;/plugin&gt;
+               &lt;plugin&gt;
+                  &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                  &lt;artifactId&gt;maven-project-info-reports-plugin&lt;/artifactId&gt;
+                  &lt;version&gt;2.1.2&lt;/version&gt;
+               &lt;/plugin&gt;
+               &lt;!-- Plugin para analizar las tags en el código, por ejemplo para generar
+                  un informe con todos los TODO --&gt;
+               &lt;plugin&gt;
+                  &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
+                  &lt;artifactId&gt;taglist-maven-plugin&lt;/artifactId&gt;
+                  &lt;version&gt;2.4&lt;/version&gt;
+                  &lt;configuration&gt;
+                     &lt;tags&gt;
+                        &lt;tag&gt;TODO&lt;/tag&gt;
+                        &lt;tag&gt;FIXME&lt;/tag&gt;
+                        &lt;tag&gt;@todo&lt;/tag&gt;
+                        &lt;tag&gt;@deprecated&lt;/tag&gt;
+                     &lt;/tags&gt;
+                  &lt;/configuration&gt;
+               &lt;/plugin&gt;
+               &lt;!-- Plugin para generar el control de cambios --&gt;
+               &lt;plugin&gt;
+                  &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                  &lt;artifactId&gt;maven-changes-plugin&lt;/artifactId&gt;
+                  &lt;version&gt;2.3&lt;/version&gt;
+                  &lt;reportSets&gt;
+                     &lt;reportSet&gt;
+                        &lt;reports&gt;
+                           &lt;report&gt;changes-report&lt;/report&gt;
+                        &lt;/reports&gt;
+                     &lt;/reportSet&gt;
+                  &lt;/reportSets&gt;
+               &lt;/plugin&gt;
+               &lt;!-- Plugin para generar informes de calidad del código --&gt;
+               &lt;plugin&gt;
+                  &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                  &lt;artifactId&gt;maven-checkstyle-plugin&lt;/artifactId&gt;
+                  &lt;version&gt;2.5&lt;/version&gt;
+               &lt;/plugin&gt;
+               &lt;!-- Genera los informes de Cobertura de los Test --&gt;
+               &lt;plugin&gt;
+                  &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
+                  &lt;artifactId&gt;cobertura-maven-plugin
+                &lt;/artifactId&gt;
+                  &lt;version&gt;2.4&lt;/version&gt;
+               &lt;/plugin&gt;
+               &lt;!-- Genera una agregación de informes --&gt;
+               &lt;plugin&gt;
+                  &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
+                  &lt;artifactId&gt;dashboard-maven-plugin&lt;/artifactId&gt;
+                  &lt;version&gt;1.0.0-beta-1&lt;/version&gt;
+               &lt;/plugin&gt;
+               &lt;plugin&gt;
+                  &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
+                  &lt;artifactId&gt;jdepend-maven-plugin&lt;/artifactId&gt;
+                  &lt;version&gt;2.0-beta-2&lt;/version&gt;
+               &lt;/plugin&gt;
+               &lt;plugin&gt;
+                  &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                  &lt;artifactId&gt;maven-javadoc-plugin&lt;/artifactId&gt;
+                  &lt;version&gt;2.7&lt;/version&gt;
+                  &lt;configuration&gt;
+                     &lt;!-- Default configuration for all reports --&gt;
+                     ...
+                  &lt;/configuration&gt;
+                  &lt;reportSets&gt;
+                     &lt;reportSet&gt;
+                        &lt;id&gt;aggregate&lt;/id&gt;
+                        &lt;configuration&gt;
+                           &lt;!-- Specific configuration for the aggregate report --&gt;
+                        &lt;/configuration&gt;
+                        &lt;reports&gt;
+                           &lt;report&gt;aggregate&lt;/report&gt;
+                        &lt;/reports&gt;
+                     &lt;/reportSet&gt;
+                  &lt;/reportSets&gt;
+               &lt;/plugin&gt;
+            &lt;/plugins&gt;
+         &lt;/reporting&gt;
+      &lt;/profile&gt;
+      &lt;profile&gt;
+         &lt;id&gt;maven-3&lt;/id&gt;
+         &lt;activation&gt;
+            &lt;file&gt;
+               &lt;!-- This employs that the basedir expression is only recognized by
+                  Maven 3.x (see MNG-2363) --&gt;
+               &lt;exists&gt;${basedir}&lt;/exists&gt;
+            &lt;/file&gt;
+         &lt;/activation&gt;
+         &lt;build&gt;
+            &lt;pluginManagement&gt;
+               &lt;plugins&gt;
+                  &lt;plugin&gt;
+                     &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                     &lt;artifactId&gt;maven-site-plugin&lt;/artifactId&gt;
+                     &lt;version&gt;3.3&lt;/version&gt;
+                  &lt;/plugin&gt;
+               &lt;/plugins&gt;
+            &lt;/pluginManagement&gt;
+            &lt;plugins&gt;
+               &lt;plugin&gt;
+                  &lt;artifactId&gt;maven-site-plugin&lt;/artifactId&gt;
+                  &lt;configuration&gt;
+                     &lt;locales&gt;es&lt;/locales&gt;
+                     &lt;outputEncoding&gt;${project.reporting.outputEncoding}&lt;/outputEncoding&gt;
+                     &lt;inputEncoding&gt;${project.build.sourceEncoding}&lt;/inputEncoding&gt;
+
+                     &lt;reportPlugins&gt;
+                        &lt;plugin&gt;
+                           &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                           &lt;artifactId&gt;maven-project-info-reports-plugin&lt;/artifactId&gt;
+                           &lt;version&gt;2.2&lt;/version&gt;
+                           &lt;configuration&gt;
+                              &lt;dependencyDetailsEnabled&gt;false&lt;/dependencyDetailsEnabled&gt;
+                              &lt;dependencyLocationsEnabled&gt;false&lt;/dependencyLocationsEnabled&gt;
+                           &lt;/configuration&gt;
+                        &lt;/plugin&gt;
+                        &lt;plugin&gt;
+                           &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                           &lt;artifactId&gt;maven-javadoc-plugin&lt;/artifactId&gt;
+                           &lt;version&gt;2.7&lt;/version&gt;
+                        &lt;/plugin&gt;
+                        &lt;!-- plugin para reports de sonar --&gt;
+                        &lt;plugin&gt;
+                           &lt;groupId&gt;org.codehaus.sonar-plugins&lt;/groupId&gt;
+                           &lt;artifactId&gt;maven-report&lt;/artifactId&gt;
+                           &lt;version&gt;0.1&lt;/version&gt;
+                        &lt;/plugin&gt;
+                        &lt;!-- Plugin para generar los referencias cruzadas del código --&gt;
+                        &lt;plugin&gt;
+                           &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                           &lt;artifactId&gt;maven-jxr-plugin&lt;/artifactId&gt;
+                           &lt;version&gt;2.2&lt;/version&gt;
+                        &lt;/plugin&gt;
+                        &lt;!-- Plugin para generar los reports de calidad de código. Faltaría
+                           definir las métricas a aplicar --&gt;
+                        &lt;plugin&gt;
+                           &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                           &lt;artifactId&gt;maven-pmd-plugin&lt;/artifactId&gt;
+                           &lt;version&gt;2.5&lt;/version&gt;
+                           &lt;configuration&gt;
+                              &lt;linkXref&gt;true&lt;/linkXref&gt;
+                              &lt;sourceEncoding&gt;${project.build.sourceEncoding}&lt;/sourceEncoding&gt;
+                              &lt;minimumTokens&gt;100&lt;/minimumTokens&gt;
+                              &lt;targetJdk&gt;${jvm.version}&lt;/targetJdk&gt;
+                              &lt;excludes&gt;
+                                 &lt;exclude&gt;**/pojos/*.java&lt;/exclude&gt;
+                                 &lt;exclude&gt;**/generated/*.java&lt;/exclude&gt;
+                              &lt;/excludes&gt;
+                           &lt;/configuration&gt;
+                        &lt;/plugin&gt;
+                        &lt;plugin&gt;
+                           &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                           &lt;artifactId&gt;maven-plugin-plugin&lt;/artifactId&gt;
+                           &lt;version&gt;2.7&lt;/version&gt;
+                        &lt;/plugin&gt;
+                        &lt;plugin&gt;
+                           &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
+                           &lt;artifactId&gt;javancss-maven-plugin&lt;/artifactId&gt;
+                           &lt;version&gt;2.0-beta-2&lt;/version&gt;
+                        &lt;/plugin&gt;
+                        &lt;plugin&gt;
+                           &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
+                           &lt;artifactId&gt;jdepend-maven-plugin&lt;/artifactId&gt;
+                           &lt;version&gt;2.0-beta-2&lt;/version&gt;
+                        &lt;/plugin&gt;
+                        &lt;!-- Plugin para generar los informes del JUNIT --&gt;
+                        &lt;plugin&gt;
+                           &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                           &lt;artifactId&gt;maven-surefire-report-plugin&lt;/artifactId&gt;
+                           &lt;version&gt;2.7.2&lt;/version&gt;
+                        &lt;/plugin&gt;
+                        &lt;!-- Plugin para analizar las tags en el código, por ejemplo para
+                           generar un informe con todos los TODO --&gt;
+                        &lt;plugin&gt;
+                           &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
+                           &lt;artifactId&gt;taglist-maven-plugin&lt;/artifactId&gt;
+                           &lt;version&gt;2.4&lt;/version&gt;
+                           &lt;configuration&gt;
+                              &lt;tags&gt;
+                                 &lt;tag&gt;TODO&lt;/tag&gt;
+                                 &lt;tag&gt;FIXME&lt;/tag&gt;
+                                 &lt;tag&gt;@todo&lt;/tag&gt;
+                                 &lt;tag&gt;@deprecated&lt;/tag&gt;
+                              &lt;/tags&gt;
+                           &lt;/configuration&gt;
+                        &lt;/plugin&gt;
+                        &lt;!-- Plugin para generar el control de cambios --&gt;
+                        &lt;plugin&gt;
+                           &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                           &lt;artifactId&gt;maven-changes-plugin&lt;/artifactId&gt;
+                           &lt;version&gt;2.4&lt;/version&gt;
+                           &lt;reportSets&gt;
+                              &lt;reportSet&gt;
+                                 &lt;reports&gt;
+                                    &lt;report&gt;changes-report&lt;/report&gt;
+                                 &lt;/reports&gt;
+                              &lt;/reportSet&gt;
+                           &lt;/reportSets&gt;
+                        &lt;/plugin&gt;
+                        &lt;!-- Plugin para generar informes de calidad del código --&gt;
+                        &lt;plugin&gt;
+                           &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                           &lt;artifactId&gt;maven-checkstyle-plugin&lt;/artifactId&gt;
+                           &lt;version&gt;2.6&lt;/version&gt;
+                        &lt;/plugin&gt;
+                        &lt;!-- Genera los informes de Cobertura de los Test --&gt;
+                        &lt;plugin&gt;
+                           &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
+                           &lt;artifactId&gt;cobertura-maven-plugin
+                &lt;/artifactId&gt;
+                           &lt;version&gt;2.4&lt;/version&gt;
+                        &lt;/plugin&gt;
+                     &lt;/reportPlugins&gt;
+                  &lt;/configuration&gt;
+               &lt;/plugin&gt;
+
+            &lt;/plugins&gt;
+         &lt;/build&gt;
+      &lt;/profile&gt;
+   &lt;/profiles&gt;
+&lt;/project&gt;</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Maven>
+      <targets>clean site:site site:deploy</targets>
+      <mavenName>DEFAULT_MAVEN</mavenName>
+      <usePrivateRepository>false</usePrivateRepository>
+    </hudson.tasks.Maven>
+    <hudson.tasks.Shell>
+      <command>mkdir -p $WORKSPACE/target/site
+sloccount --duplicates --wide --details .|grep -v &quot;/target/&quot;|grep -v &quot;pom.xml&quot; &gt; $WORKSPACE/target/site/sloccount.sc</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.plugins.chucknorris.CordellWalkerRecorder>
+      <factGenerator/>
+    </hudson.plugins.chucknorris.CordellWalkerRecorder>
+   <hudson.plugins.logparser.LogParserPublisher>
+      <unstableOnWarning>false</unstableOnWarning>
+      <failBuildOnError>false</failBuildOnError>
+      <parsingRulesPath>/home/develenv/app/jenkins/consoleParser.conf</parsingRulesPath>
+   </hudson.plugins.logparser.LogParserPublisher>
+    <hudson.tasks.BuildTrigger>
+      <childProjects>test-develenv</childProjects>
+      <threshold>
+        <name>FAILURE</name>
+        <ordinal>2</ordinal>
+        <color>RED</color>
+      </threshold>
+    </hudson.tasks.BuildTrigger>
+    <hudson.plugins.sloccount.SloccountPublisher>
+      <pattern>target/site/sloccount.sc</pattern>
+      <encoding></encoding>
+    </hudson.plugins.sloccount.SloccountPublisher>
+    <hudson.plugins.sonar.SonarPublisher>
+      <branch></branch>
+      <language></language>
+      <mavenOpts></mavenOpts>
+      <jobAdditionalProperties></jobAdditionalProperties>
+      <triggers>
+        <skipScmCause>false</skipScmCause>
+        <skipUpstreamCause>false</skipUpstreamCause>
+        <envVar></envVar>
+      </triggers>
+      <mavenInstallationName>DEFAULT_MAVEN</mavenInstallationName>
+      <rootPom></rootPom>
+    </hudson.plugins.sonar.SonarPublisher>
+
+    <hudson.plugins.emotional__hudson.EmotionalHudsonPublisher/>
+    <net.hurstfrost.hudson.sounds.HudsonSoundsNotifier>
+      <soundEvents>
+        <net.hurstfrost.hudson.sounds.HudsonSoundsNotifier_-SoundEvent>
+          <soundId>EXPLODE</soundId>
+          <toResult>
+            <name>FAILURE</name>
+            <ordinal>2</ordinal>
+            <color>RED</color>
+          </toResult>
+          <fromResults>
+            <hudson.model.Result>
+              <name>SUCCESS</name>
+              <ordinal>0</ordinal>
+              <color>BLUE</color>
+            </hudson.model.Result>
+            <hudson.model.Result>
+              <name>NOT_BUILT</name>
+              <ordinal>3</ordinal>
+              <color>NOTBUILT</color>
+            </hudson.model.Result>
+            <hudson.model.Result>
+              <name>ABORTED</name>
+              <ordinal>4</ordinal>
+              <color>ABORTED</color>
+            </hudson.model.Result>
+            <hudson.model.Result>
+              <name>FAILURE</name>
+              <ordinal>2</ordinal>
+              <color>RED</color>
+            </hudson.model.Result>
+            <hudson.model.Result>
+              <name>UNSTABLE</name>
+              <ordinal>1</ordinal>
+              <color>YELLOW</color>
+            </hudson.model.Result>
+          </fromResults>
+        </net.hurstfrost.hudson.sounds.HudsonSoundsNotifier_-SoundEvent>
+      </soundEvents>
+    </net.hurstfrost.hudson.sounds.HudsonSoundsNotifier>
+  </publishers>
+  <buildWrappers>
+      <hudson.plugins.ansicolor.AnsiColorBuildWrapper>
+      <colorMapName>xterm</colorMapName>
+    </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
+  </buildWrappers>
+</project>

@@ -1,0 +1,186 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>&lt;a href=&quot;http://www.softwaresano.com/&quot; title=&quot;SoftwareSano&quot; class=&quot;poweredBy&quot;&gt;&#xd;
+   &lt;img id=&quot;jobJenkins&quot; class=&quot;poweredBy&quot;  alt=&quot;softwaresano&quot; src=&quot;http://pimpam.googlecode.com/files/jobJenkins.png&quot;/&gt;&#xd;
+   &lt;script type=&quot;text/javascript&quot; src=&quot;http://www.softwaresano.com/widgets/jobBuiltyBy.php&quot;&gt;&lt;/script&gt;&#xd;
+   &lt;script type=&quot;text/javascript&quot; src=&quot;/widgets/jobBuiltyBy.php&quot;&gt;&lt;/script&gt;&#xd;
+&lt;/a&gt;&#xd;
+&lt;br/&gt;&#xd;
+   Esta tarea hará un backup de toda la configuración completa de develenv. Esto implica hacer backup de la configuración de todas las herramientas que forman parte de develenv. El objetivo de este backup es poder restaurar develenv, a partir de este backup, y de la instalación inicial de develenv. Para que este job funcione correctamente hace falta que esté instalado el cliente de subersion 1.6 ó superior&#xd;
+&#xd;
+   El backup se hará en subversion&#xd;
+&#xd;
+   Para configurar este backup, basta con editar el JOB y configurar los parámetros URL_BASE, SVN_USER, SVN_PASSWORD&#xd;
+&#xd;
+Sí sólo se pretende hacer un backup de jenkins, basta con utilizar el plugin thin backup que viene instalado con Jenkins (http://localhost/jenkins/thinBackup/)&#xd;
+</description>
+  <logRotator>
+    <daysToKeep>100</daysToKeep>
+    <numToKeep>100</numToKeep>
+    <artifactDaysToKeep>1</artifactDaysToKeep>
+    <artifactNumToKeep>1</artifactNumToKeep>
+  </logRotator>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>SCM_URL_BASE</name>
+          <description>Url base del repositorio dónde se almacenarán la configuración de develenv</description>
+          <defaultValue>https://barricada.hi.inet/repositorio/QA/branches/carlosg/branches/develenvConf</defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>SCM_USER</name>
+          <description>Usuario para realizar el acceso al SCM (de momento sólo subversion)</description>
+          <defaultValue>svn_read_only</defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.PasswordParameterDefinition>
+          <name>SCM_PASSWORD</name>
+          <description>Password para realizar el acceso al SCM (de momento sólo subversion)</description>
+          <defaultValue>Oju+Yb/4T8CYFzAJGGEHefMbGucZf0yKzuGpIYs+n9I=</defaultValue>
+        </hudson.model.PasswordParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    <hudson.plugins.disk__usage.DiskUsageProperty/>
+    <hudson.plugins.googlecode.GoogleCodeProjectProperty/>
+  </properties>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>true</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers class="vector">
+    <hudson.triggers.TimerTrigger>
+      <spec>*/15 * * * *</spec>
+    </hudson.triggers.TimerTrigger>
+  </triggers>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>#!/bin/bash
+cd $JENKINS_HOME
+cd ../../
+PROJECT_HOME=$PWD
+cd bin
+. ./setEnv.sh
+VAR_DIR=/var/${PROJECT_NAME}
+CONF_DIR=/etc/${PROJECT_NAME}
+FULL_DIRECTORY=&quot;${CONF_DIR}/nexus ${VAR_DIR}/nexus/storage/releases ${VAR_DIR}/nexus/storage/archetype-releases ${VAR_DIR}/nexus/storage/thirdparty ${PROJECT_HOME}/app/sonar/extensions ${PROJECT_HOME}/platform/tomcat/webapps/sonar/WEB-INF/classes/conf ${CONF_DIR}/hudson ${PROJECT_HOME}app/plugins&quot;
+PARTIAL_DIRECTORY=&quot;${CONF_DIR}/tomcat/ ${VAR_DIR}/hudson/jobs/ ${VAR_DIR}/hudson/plugins ${VAR_DIR}/hudson/users/ ${VAR_DIR}/hudson/userContent&quot;
+URLS=&quot;${FULL_DIRECTORY} ${PARTIAL_DIRECTORY}&quot;
+export LANG=C
+echo p &gt;$WORKSPACE/deleteme
+echo yes&gt;&gt;$WORKSPACE/deleteme
+echo &gt;&gt;$WORKSPACE/deleteme
+echo &gt;&gt;$WORKSPACE/deleteme
+echo &gt;&gt;$WORKSPACE/deleteme
+echo &gt;&gt;$WORKSPACE/deleteme
+
+#Aceptar certificados
+svn info $SCM_URL_BASE --username $SCM_USER --password $SCM_PASSWORD &lt;$WORKSPACE/deleteme 2&gt;/dev/null
+# Si no estaba creada la url base, la creamos.
+if [ &quot;$?&quot; != &quot;0&quot; ]; then
+   svn  mkdir --parents $SCM_URL_BASE --username $SCM_USER --password $SCM_PASSWORD -m &quot;[MINOR] Initial develenv configuration&quot;&lt;deleteme
+   if [ &quot;$?&quot; != &quot;0&quot; ]; then
+      echo &quot;[ERROR] Accediendo a $SCM_URL_BASE&quot;
+      exit 1
+   fi
+
+fi
+rm -Rf deleteme
+for url in $URLS;do
+    svn info $SCM_URL_BASE/$url 2&gt;/dev/null
+    #Si no estaba creado el directorio se crea
+    if [ &quot;$?&quot; != &quot;0&quot; ]; then
+       svn --non-interactive -q mkdir --parents $SCM_URL_BASE/$url -m &quot;[MINOR] Repositories backup&quot;
+    fi
+done;
+echo &quot;Añadiendo subversion a todas las urls&quot;
+for url in $URLS;do
+    if [ -d $url ]; then
+        cd $url
+   echo     svn co $SCM_URL_BASE/$url .
+        svn info 2&gt;/dev/null
+        #Si no está bajo subversion
+        if [ &quot;$?&quot; != &quot;0&quot; ]; then
+           svn co $SCM_URL_BASE/$url .
+        fi
+        svn status | grep &apos;!&apos; | awk &apos;{print $2;}&apos; | xargs -r svn rm
+    fi
+done;
+for url in $FULL_DIRECTORY;do
+    if [ -d $url ]; then
+        cd $url
+        svn add *
+    fi
+done;
+cd ${CONF_DIR}/tomcat
+svn add tomcat-users.xml
+svn add logging.properties
+svn add server.xml
+cd ${VAR_DIR}/hudson
+svn add --parents jobs/*/config.xml
+svn add --parents users/*/config.xml
+svn add --parents userContent/*
+svn add --parents plugins/*.hpi
+svn add --parents plugins/*.jpi
+
+LOG_SVN=&quot;[MINOR] `date +%Y-%m-%d-%H:%M` Update develenv configuration&quot;
+for url in $URLS;do
+    if [ -d $url ]; then
+        cd $url
+   svn ci $url -m $LOG_SVN
+    fi
+done;
+</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <net.hurstfrost.hudson.sounds.HudsonSoundsNotifier>
+      <soundEvents>
+        <net.hurstfrost.hudson.sounds.HudsonSoundsNotifier_-SoundEvent>
+          <soundId>EXPLODE</soundId>
+          <toResult>
+            <name>FAILURE</name>
+            <ordinal>2</ordinal>
+            <color>RED</color>
+          </toResult>
+          <fromResults>
+            <hudson.model.Result>
+              <name>SUCCESS</name>
+              <ordinal>0</ordinal>
+              <color>BLUE</color>
+            </hudson.model.Result>
+            <hudson.model.Result>
+              <name>NOT_BUILT</name>
+              <ordinal>3</ordinal>
+              <color>GREY</color>
+            </hudson.model.Result>
+            <hudson.model.Result>
+              <name>FAILURE</name>
+              <ordinal>2</ordinal>
+              <color>RED</color>
+            </hudson.model.Result>
+            <hudson.model.Result>
+              <name>ABORTED</name>
+              <ordinal>4</ordinal>
+              <color>ABORTED</color>
+            </hudson.model.Result>
+            <hudson.model.Result>
+              <name>UNSTABLE</name>
+              <ordinal>1</ordinal>
+              <color>YELLOW</color>
+            </hudson.model.Result>
+          </fromResults>
+        </net.hurstfrost.hudson.sounds.HudsonSoundsNotifier_-SoundEvent>
+      </soundEvents>
+    </net.hurstfrost.hudson.sounds.HudsonSoundsNotifier>
+</publishers>
+  <buildWrappers>
+    <hudson.plugins.ansicolor.AnsiColorBuildWrapper>
+      <colorMapName>xterm</colorMapName>
+    </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
+  </buildWrappers>
+
+</project>

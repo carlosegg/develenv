@@ -1,0 +1,16 @@
+~~Generado con el arquetipo: standalone-archetype
+~~http://pimpam.googlecode.com
+ -----
+ ${project.artifactId}  ${project.Version}
+ -----
+ ${userName}
+ -----
+ 
+
+Introducción
+~~~~~~~~~~~~
+  
+ {{{http://www.soapui.org/}Soapui}} es una herramienta para realizar pruebas interfaces SOAP e interfaces REST
+
+
+

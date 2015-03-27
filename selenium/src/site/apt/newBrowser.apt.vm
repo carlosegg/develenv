@@ -1,0 +1,157 @@
+~~Generado con el arquetipo: standalone-archetype
+~~http://www.softwaresano.com
+ -----
+ ${project.artifactId}  ${project.Version}
+ -----
+ ${userName}
+ -----
+
+Nuevo Navegador
+~~~~~~~~~~~
+
+* {Añadir nodo de Selenium}
+~~~~~~~~~~~
+
+ Para añadir un nuevo navegador al grid se han de realizar 4 pasos:
+
+ * Instalar el nuevo navegador
+
+ * Editar el fichero de arranque del nodo del grid
+
+ * Reiniciar nodo
+
+ * Comprobar que aparece el nuevo navegador en el grid
+
+
+ Existen tres casos posibles en el que se puede agregar un navegador:
+
+ * {{{./newBrowser.html#Agregar_navegador_en_esta_mquina}Agregar navegador en esta máquina}}
+  
+ * {{{./newBrowser.html#Agregar_navegador_en_una_mquina_Windows}Agregar navegador en una máquina Windows}}
+   
+ * {{{./newBrowser.html#Agregar_navegador_en_una_mquina_Linux_o_Mac}Agregar navegador en una máquina Linux o Mac}}
+
+
+
+** {Agregar navegador en esta máquina}
+~~~~~~~~~~
+  * Instalar nuevo navegador
+
+  * Editar el fichero </home/${project.artifactId}/platform/selenium/bin/node-localhost.sh> y añadir el nuevo navegador (Por ejemplo google-chrome)
+
++-------------------------------+
+#!/bin/bash
+URL_GRID="http://localhost/grid"
+setSeleniumBrowsers(){
+   if [ `arch` == "x86_64" ]; then
+      archSuffix="-x86_64"
+   fi 
+   SELENIUM_BROWSERS="-browser browserName=firefox,version=`firefox --version|sed s:'Mozilla Firefox ':'':g`,maxInstances=2,platform=LINUX
+"
+   # Agregando chrome
+   if [ "`which google-chrome`" != "" ]; then
+      version="`google-chrome -version|sed s:'Google Chrome ':'':g`"
+   else 
+      if [ "`which chromium-browser`" != "" ]; then
+         version="`chromium-browser -version|sed s:'Chromium ':'':g`"
+      fi
+   fi
+   SELENIUM_BROWSERS="$SELENIUM_BROWSERS -browser browserName=chrome,version='$version',maxInstances=2,platform=LINUX"
+   SELENIUM_BROWSERS="$SELENIUM_BROWSERS -Dwebdriver.chrome.driver=\"`readlink -f \"$DIR\"/../drivers`/chromedriver${archSuffix}\""}
+...
++-------------------------------+
+
+  * Reiniciar nodo
+
++-----+
+root@develenv_host:/tmp$ su - develenv  
+develenv@develenv_host:~$ cd /home/develenv/platform/selenium/bin
+develenv@develenv_host:~/platform/bin/selenium$ ./node-localhost.sh restart
++-----+
+
+  * Comprobar que aparece el nuevo navegador en el grid
+
+  Si la agregación ha sido correcta el debe aparecer el icono de google chrome en la siguiente vista del grid console
+
+~~[INLINECODE] <div class="source"><pre><script type="text/javascript" src="./gridConsole.php"></script></pre></div> [INLINECODE]
+
+
+** {Agregar navegador en una máquina Windows}
+~~~~~~~~~~~
+
+ * Instalar {{{http://www.oracle.com/technetwork/java/javase/downloads/index.html}jdk}} 
+ 
+ * Descomprimir {{{./seleniumGridClient.zip}seleniumGridClient.zip}}. (Por ejemplo en el directorio c:\temp\selenium)
+
+ * Instalar el nuevo navegador
+
+ * Editar el fichero de arranque del nodo del grid (c:\temp\selenium\bin\node-client.bat)
+
++----------------+
+SET URL_GRID="http://develenv_host/grid"
+set SELENIUM_BROWSERS=
+set SELENIUM_BROWSERS="%SELENIUM_BROWSERS% -browser \"browserName=internet explorer,version=8,maxInstances=2,platform=XP\" "
+...
++----------------+
+
+ * Iniciar nodo
+
++----------------+
+node-client.bat
++----------------+
+
+
+ * Comprobar que aparece el nuevo navegador en el grid
+
+  Si la agregación ha sido correcta el debe aparecer el icono de google internet explorer en la siguiente vista del grid console
+
+~~[INLINECODE] <div class="source"><pre><script type="text/javascript" src="./gridConsole.php"></script></pre></div> [INLINECODE]
+
+
+** {Agregar navegador en una máquina Linux o Mac}
+~~~~~~~~~~~
+
+ * Instalar {{{http://www.oracle.com/technetwork/java/javase/downloads/index.html}jdk}} 
+ 
+ * Descomprimir {{{./seleniumGridClient.zip}seleniumGridClient.zip}}
+
+ * Editar el fichero </home/carlosg/selenium/bin/node-client.sh> y añadir el nuevo navegador (Por ejemplo google-chrome)
+  
++-------------------------------+
+#!/bin/bash
+URL_GRID="http://localhost/grid"
+setSeleniumBrowsers(){
+   if [ `arch` == "x86_64" ]; then
+      archSuffix="-x86_64"
+   fi 
+   SELENIUM_BROWSERS="-browser browserName=firefox,version=`firefox --version|sed s:'Mozilla Firefox ':'':g`,maxInstances=2,platform=LINUX
+"
+   # Agregando chrome
+   if [ "`which google-chrome`" != "" ]; then
+      version="`google-chrome -version|sed s:'Google Chrome ':'':g`"
+   else 
+      if [ "`which chromium-browser`" != "" ]; then
+         version="`chromium-browser -version|sed s:'Chromium ':'':g`"
+      fi
+   fi
+   SELENIUM_BROWSERS="$SELENIUM_BROWSERS -browser browserName=chrome,version='$version',maxInstances=2,platform=LINUX"
+   SELENIUM_BROWSERS="$SELENIUM_BROWSERS -Dwebdriver.chrome.driver=\"`readlink -f \"$DIR\"/../drivers`/chromedriver${archSuffix}\""}
+...
++-------------------------------+
+
+ * Iniciar nodo
+
++-----+
+carlosg@triatlon:~$ cd /home/carlosg/selenium/bin
+carlosg@triatlon:~/selenium$ ./node-client.sh start
++-----+
+
+ * Comprobar que aparece el nuevo navegador en el grid
+
+  Si la agregación ha sido correcta el debe aparecer el icono de google chrome en la siguiente vista del grid console
+
+~~[INLINECODE] <div class="source"><pre><script type="text/javascript" src="./gridConsole.php"></script></pre></div> [INLINECODE]
+
+
+ 
+

@@ -1,0 +1,82 @@
+~~Generado con el arquetipo: standalone-archetype
+~~http://www.softwaresano.com
+ -----
+ ${project.artifactId}  ${project.Version}
+ -----
+ ${userName}
+ -----
+ 
+
+{{{http://${project.artifactId}.softwaresano.com}<<${project.artifactId}>>}}
+~~~~~~~~~~~~
+
+  {{{http://${project.artifactId}.softwaresano.com}<<${project.artifactId}>>}} 
+  proporciona una solución para la automatización del proceso de construcción, 
+  testing y despliegue de software.  
+
+  Esta solución implementa un servidor de integración continua completo que permite 
+  hacer una entrega rápida de software y con el menor número de errores posible. 
+  Esto significa que cada vez que se construya proyecto se deben realizar una serie 
+  de comprobaciones (tests unitarios, test de aceptación, extracción de métricas 
+  de calidad de código, ...) que permitan la detección temprana de un error y 
+  que el software esté siempre disponible para ser instalado.
+
+  {{{http://${project.artifactId}.softwaresano.com}<<${project.artifactId}>>}} 
+  integra {{{/jenkins}Jenkins}}, {{{http://maven.apache.org}Maven}}, 
+  {{{/nexus}Nexus}}, {{{/sonar}Sonar}}, {{{http://jakarta.apache.org/jmeter/}Jmeter}}, 
+  {{{http://www.soapui.org}Soapui}}, {{{http://seleniumhq.org}Selenium}} y
+  {{{http://doc.devpi.net}devpi}}.
+  
+  Además este servidor de integración continua se integra 
+  {{{./deploymentPipeline/index.html}<<deployment pipeline>>}}, para poder 
+  implementar el modelo de continuos delivery.
+
+  Todas estas herramientas permiten implementar el flujo de trabajo que se muestra 
+  en la figura siguiente:
+
+[img/develenv.png] Workflow de de develenv
+
+  Este flujo es el que suele dispararse cada vez  que un desarrollador hace una entrega (commit) al repositorio de código (scm). En el se muestran los diferentes estados (compilar, test unitarios, test de aceptación, estracción de métricas de calidad, generación de paquetes, ...) por los que se pasa antes de decir que una entrega al repositorio ha generado un resultado correcto. Seguir este flujo permite detectar un error lo antes posible.
+
+  El software se construye con tecnologías muy diferentes y para que funcionen en dispositivos muy diversos(pcs, móviles, televisión, ...), esto es un reto para la integración continua, por eso con la con la instalación de {{{http://${project.artifactId}.softwaresano.com}<<${project.artifactId}>>}} vienen una serie de {{{./samples.html}ejemplos}} que demuestran el uso de las herramientas anteriores con diferentes tecnologías. En el {{{http://blog.softwaresano.com}blog}} se irán comentando cada uno de estos ejemplos y se verá la integración de {{{http://${project.artifactId}.softwaresano.com}<<${project.artifactId}>>}} con otras herramientas como {{{./jmeter/index.html}jmeter}}, {{{./selenium/index.html}selenium}} y {{{./soapui/index.html}soapui}},  que ya vienen instaladas con {{{http://${project.artifactId}.softwaresano.com}<<${project.artifactId}>>}}
+  
+* Primeros pasos
+~~~~~~~~~~~~~~~~
+  
+  ** {{{./installation.html} Guía básica de instalación de <<${project.artifactId}>>}}
+  
+  ** {{{http://code.google.com/p/develenv/wiki/newProject} Mi primer proyecto con <<${project.artifactId}>>}}
+  
+* Documentación
+~~~~~~~~~~~~~~~~
+
+
+  ** {{{./developer/index.html} Entorno para el desarrollador}}
+
+  ** {{{./useSample.html} Guía de desarrollo de un proyecto java}}
+
+  ** {{{./sonar/index.html} Métricas con sonar}}
+
+  ** {{{./hudson/index.html} Integración contínua con Jenkins}}
+
+  ** {{{./nexus/index.html} Servidor de componentes java con nexus}}
+  
+  ** {{{./samples.html} Ejemplos de aplicaciones que utilizan  <<${project.artifactId}>>}}
+  
+  ** {{{./administrationGuide.html} Guía del administrador}}
+
+  
+* {{{./changes-report.html}Releases}}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	En las {{{./changes-report.html}releases notes}} se describen las funcionalidades que implementan las diferentes versiones de <${project.artifactId}>. 
+	Para descargarse una release pulsa {{{./downloads/releases.html}aquí}}, y {{{./downloads/snapshots.html}aquí}} 
+	para descargarse la última snapshot.
+	
+* Últimas ejecuciones
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   A continuación se muestran todos los builds que se han ejecutado en {{{${continousIntegrationSystemUrl}}Jenkins}}
+  
+   ~~[INLINECODE] <script type="text/javascript" src="/jenkins/jswidgets/runs"></script> [INLINECODE]	
+	
+

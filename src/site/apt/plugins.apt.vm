@@ -1,0 +1,55 @@
+~~Generado con el arquetipo: standalone-archetype
+~~http://www.softwaresano.com
+ -----
+ Plugins
+ -----
+ ${userName}
+ -----
+
+
+
+Plugins
+~~~~~~~~~~~
+ Los plugins se utilizan para ampliar la funcionalidad de {{{http://${project.artifactId}.softwaresano.com}<<${project.artifactId}>>}}. Ejemplo de estas funcionalidades, cálculo de métricas de proyectos en PHP, Flex, Python, etc.
+
+
+* Instalación Plugins
+~~~~~~~~~~~~~~~~~~~
+
+    Todos los plugins se han de descargar de un repositorio de software. El proceso de instalación es el siguiente( Ej: Instalación plugin de php):
+    
++----------+
+carlosg@develenv_host:~$ cd /home/${project.artifactId}/bin
+carlosg@develenv_host:/home/${project.artifactId}/bin$ sudo ./installPlugin.sh php_plugin http://develenv-php-plugin.googlecode.com/files/php_plugin-1.7.7.dp
++----------+
+
+ o bien (a partir del repositorio de fuentes
+ 
++----------+
+carlosg@develenv_host:~$ cd /home/${project.artifactId}/bin
+carlosg@develenv_host:/home/${project.artifactId}/bin$ ./installPlugin.sh php_plugin http://develenv-php-plugin.googlecode.com/svn/trunk/php_plugin
++----------+
+
+* Listado de plugins
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+*-------------+------------------+--------------------+---------+----------------------------------+
+| <<Nombre >> |  <<Descripción>> | <<URL Subversion>> | Estado  | Versión de ${project.artifactId}
+*-------------+------------------+--------------------+---------+----------------------------------+
+| {{{http://develenv-pipeline-plugin.googlecode.com}pipeline_plugin}} | Deployment pipeline| http://develenv-php-plugin.googlecode.com/svn/trunk/php_plugin | Estable | 20
+*-------------+------------------+--------------------+---------+----------------------------------+
+| {{{http://develenv-php-plugin.googlecode.com}php_plugin}} | Integración contínua  y Métricas para proyectos PHP | http://develenv-php-plugin.googlecode.com/svn/trunk/php_plugin | Estable | 1.7.7
+*-------------+------------------+--------------------+---------+----------------------------------+
+| {{{http://develenv-python-plugin.googlecode.com}python_plugin}} | Integración contínua  y Métricas para proyectos Python | http://develenv-python-plugin.googlecode.com/svn/trunk/python_plugin | Estable | 20 
+*-------------+------------------+--------------------+---------+----------------------------------+
+| {{{http://develenv-cpp-plugin.googlecode.com}cpp_plugin}} | Integración contínua (test-unitarios y aceptación)  y Métricas para proyectos en c++ | http://develenv-cpp-plugin.googlecode.com/svn/trunk/cpp/|Estable|1.7.2
+*-------------+------------------+--------------------+---------+----------------------------------+
+| j2me_plugin | Integración contínua  y Métricas para proyectos j2me | http://extdevelenv.googlecode.com/svn/trunk/j2me_plugin/ | Estable|Todas
+*-------------+------------------+--------------------+---------+----------------------------------+
+| {{{http://develenv-android-plugin.googlecode.com}android_plugin}} | Integración contínua (test-unitarios y aceptación)  y Métricas para proyectos en android | http://develenv-android-plugin.googlecode.com/svn/trunk/android_plugin/ | Inestable | Todas
+*-------------+------------------+--------------------+---------+----------------------------------+
+
+
+
+ Un listado completo y actualizado de todos los plugins están disponibles en {{{http://develenv-plugins.googlecode.com}develenv-plugins}} .
+

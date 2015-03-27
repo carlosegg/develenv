@@ -1,0 +1,25 @@
+#http://www.ubuntu-es.org/node/40557
+#http://systemadmin.es/2009/01/como-ampliar-un-sistema-de-ficheros-ext3-en-caliente-con-lvm
+#http://www.gentoo.org/doc/es/handbook/2005.1/handbook-x86.xml?part=1&chap=4
+#Ampliamos sdb y creamos sdb1
+fdisk /dev/sdb
+Command (m for help): n
+Command action
+  e   extended
+  p   primary partition (1-4)
+p
+Partition number (1-4): 1
+First cylinder (1-3876, default 1): (Hit Enter)
+Using default value 1
+Last cylinder or +size or +sizeM or +sizeK (1-3876, default 3876): 
+
+Command (m for help): w
+mkfs.ext4 /dev/sdb1
+
+pvcreate /dev/sdb1
+vgextend develenv /dev/sdb1
+lvextend -l +100%free /dev/mapper/develenv-root
+resize2fs /dev/mapper/develenv-root
+
+
+

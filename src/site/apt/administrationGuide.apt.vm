@@ -1,0 +1,154 @@
+~~Generado con el arquetipo: standalone-archetype
+~~http://www.softwaresano.com/
+ -----
+ ${project.artifactId}  ${project.Version}
+ -----
+ ${userName}
+ -----
+ 
+
+Guía del administrador  de {{{http://${project.artifactId}.softwaresano.com}<<${project.artifactId}>>}} (En construcción)
+~~~~~~~~~~~~
+  
+  En la guía del administrador se detallan los pasos necesarios para poder administrar {{{http://${project.artifactId}.softwaresano.com}<<${project.artifactId}>>}}. Estos pasos son:
+  
+ 
+   * {{{./administrationGuide.html#Arranque_y_parada}Arranque y parada}}
+   
+   * {{{./administrationGuide.html#Estructura_de_directorios}Estructura de directorios}}
+   
+   * {{{./administrationGuide.html#Configuracin_de_herramientas}Configuración de herramientas}}
+   
+   * {{{./administrationGuide.html#Accesos_via_web}Accesos via web}}
+   
+   * {{{./administrationGuide.html#Resulucin_de_problemas}Resolución de problemas}}
+   
+   * {{{./administrationGuide.html#Actualizacin}Actualización}}
+   
+   * {{{./administrationGuide.html#Nueva_organizacin}Nueva Organización}}
+
+   * {{{./security.html}Auditoría de seguridad}}	
+
+* {Arranque y parada}
+~~~~~~~~~~~~~~~~~~~~~~
+
+ * Arranque
+ 
++----------------------------------------+
+sudo service ${project.artifactId} start
++----------------------------------------+
+
+ * Parada
+  
++----------------------------------------+
+sudo  service ${project.artifactId} stop
++----------------------------------------+
+  
+  
+ 
+
+* {Estructura de directorios}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
++--------------------+
+.
+|-- app    ----------------------------------------------> Aplicaciones 
+|   |-- jenkins  ----------------------------------------> Jobs de Jenkins y Plugins
+|   |-- maven   -----------------------------------------> Repositorio local de maven
+|   |-- nexus   -----------------------------------------> Repositorio de componentes de nexus
+|   |-- plugins -----------------------------------------> Plugins instalados de  ${project.artifactId}. Ver http://develenv-plugins.googlecode.com/
+|   |-- sites -> /var/${project.artifactId}/sites --------------------> Sites generados por los proyectos desplegados en Jenkins
+|   `-- sonar   -----------------------------------------> Plugins de sonar
+|
+|-- bin -------------------------------------------------> Scripts de arranque y configuración de ${project.artifactId}  
+|   |-- bootstrap.sh ------------------------------------> Arranque y parada 
+|   |-- installPlugin.sh  -------------------------------> Instala un plugin de ${project.artifactId}. Ver http://develenv-plugins.googlecode.com/
+|   |-- expandHD.sh  ------------------------------------> Añade un volumen lógico para ampliar el disco.
+|   |-- packagePlugin.sh  -------------------------------> Empaqueta un plugin para ${project.artifactId}
+|   |-- setEnv.sh  --------------------------------------> Variables de entorno para la ejecución de los scripts   
+|   |-- shutdownAll.sh ----------------------------------> Parada de ${project.artifactId}        
+|   |-- shutdownTomcat.sh -------------------------------> Parada de tomcat
+|   |-- startSlave.sh -----------------------------------> Inicia un esclavo de Jenkins en otra máquina 
+|   |-- startupAll.sh -----------------------------------> Arranca ${project.artifactId}
+|   |-- startupTomcat.sh --------------------------------> Arranque de tomcat
+|   `-- uninstall.sh ------------------------------------> Desinstala develenv
+|
+|-- conf -> /etc/${project.artifactId} --------------------> Ficheros de configuración de Nexus, Jenkins, Tomcat y Sonar
+|-- docs -> /var/${project.artifactId}/docs --------------------> Documentación de ${project.artifactId}. Visible en http://${develenv.host}
+|-- LICENSE ----------------------------------------------------> Licencia de ${project.artifactId}
+|-- logs -> /var/log/${project.artifactId} ----------------> Logs de cada una de las herramientas que forman parte de develenv.
+|-- platform  -------------------------------------------> Herramientas integradas en la plataforma  
+|   |-- ant ---------------------------------------------> Instancia de ant con la que se ejecutarán los jobs de Jenkins que utilicen ant
+|   |-- cpd ---------------------------------------------> Cut and Paste Detector
+|   |-- jmeter ------------------------------------------> JMeter (pruebas de carga)
+|   |-- maven  ------------------------------------------> Instancia de maven con la que se ejecutarán los jobs de Jenkins que utilicen maven
+|   |-- selenium ----------------------------------------> Selenium (Pruebas funcionales para aplicaciones web)
+|   |-- soapui ------------------------------------------> SOAPUI (Pruebas de aceptación de servicios web y servicios REST)
+|   |-- statsvn -----------------------------------------> Estadísticas de uso de Subversion
+|   |-- tomcat 
+|   `-- wtk ---------------------------------------------> Wireless Tookit para realizar aplicaciones J2ME
+|-- README
+`-- RELEASE_NOTES
++--------------------+
+
+* {Configuración de herramientas}
+~~~~~~~~~~~~~
+  
+ * Configuración de tomcat
+  
+ * Configuración Jenkins
+  
+ * Configuración Nexus
+  
+ * Configuración Sonar
+  
+
+* {Accesos via web}
+~~~~~~~~~~~~~
+
+*--------------------------------------------+-------------------------------------------------------+------------+------------+
+| Url                                        | Descripción                                           | Usuario    | Password (Por defecto)  |
+*--------------------------------------------+-------------------------------------------------------+------------+------------+
+| http://$\{develenv.host}/admin             | Consola de administración de $\{project.artifactId}   | $\{administrator.id} | *****            |
+*--------------------------------------------+-------------------------------------------------------+------------+------------+
+| http://$\{develenv.host}/jenkins           | Jenkins                                               | $\{administrator.id} |  ***** / Password LDAP          |
+*--------------------------------------------+-------------------------------------------------------+------------+------------+
+| http://$\{develenv.host}/nexus             | Nexus                                                 | $\{administrator.id}  | develenv            |
+*--------------------------------------------+-------------------------------------------------------+------------+------------+
+| http://$\{develenv.host}/sonar             | Sonar                   |   $\{administrator.id}          |  develenv / Password LDAP         |
+*--------------------------------------------+-------------------------------------------------------+------------+------------+
+| http://$\{develenv.host}/sites             | Sites de los componentes maven desplegados con Jenkins|            |            |
+*--------------------------------------------+-------------------------------------------------------+------------+------------+
+| http://$\{develenv.host}/guide             | Guía de desarrollo de un componente                   |            |            |
+*--------------------------------------------+-------------------------------------------------------+------------+------------+
+| http://$\{develenv.host}/$\{project.artifactId}/config   | Directorios de configuración de jenkins, nexus, sonar y maven | anonymous  |    |
+*--------------------------------------------+-------------------------------------------------------+------------+------------+
+| http://$\{develenv.host}/$\{project.artifactId}/logs     | Directorios de logs de jenkins,nexus,sonar y maven | anonymous  |  |
+*--------------------------------------------+-------------------------------------------------------+------------+------------+
+
+
+* {Resolución de problemas}
+~~~~~~~~~~~~~
+
+* {Actualización}
+~~~~~~~~~~~~~
+
+  La actualización automática de  {{{http://${project.artifactId}.softwaresano.com}<<${project.artifactId}>>}} no está implementada. Si se quiere hacer una actualización de todo
+el entorno lo recomendable es:
+
+  
+ * Guardar configuración de cada una de las herramientas. 
+
+ * Instalar la nueva versión y restaurar la configuración anterior.
+
+
+* {Añadir nuevas herramientas}
+~~~~~~~~~~~~~
+
+ {{{http://${project.artifactId}.softwaresano.com}<<${project.artifactId}>>}} puede ser actualizado y ampliado con otras herramientas, tal y como se define en la {{{./developerGuide.html}guía del desarollador}}. 
+  
+
+* {Nueva organización}
+~~~~~~~~~~~~~
+
+  TBD

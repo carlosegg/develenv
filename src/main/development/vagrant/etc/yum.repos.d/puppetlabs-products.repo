@@ -1,0 +1,5 @@
+[puppetlabs-products]
+name=puppetlabs - products
+baseurl=http://yum.puppetlabs.com/el/$releasever/products/$basearch/
+gpgcheck=0
+enable=1

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<security>
+  <version>2.0.5</version>
+  <users>
+    <user>
+      <id>${nexus.user}</id>
+      <firstName>Administrator</firstName>
+      <lastName>${nexus.user}</lastName>
+      <password>${nexus.admin.password}</password>
+      <status>active</status>
+      <email>${nexus.user}@${mail.prefix}</email>
+    </user>
+    <user>
+      <id>deployment</id>
+      <firstName>Deployment</firstName>
+      <lastName>User</lastName>
+      <password>369ddcef42f17a789c2d30308b5a18bb0b7036ce</password>
+      <status>active</status>
+      <email>deployment@${mail.prefix}</email>
+    </user>
+    <user>
+      <id>anonymous</id>
+      <firstName>Nexus</firstName>
+      <lastName>Anonynmous User</lastName>
+      <password>0a92fab3230134cca6eadd9898325b9b2ae67998</password>
+      <status>active</status>
+      <email>anonymous@${mail.prefix}</email>
+    </user>
+  </users>
+  <userRoleMappings>
+    <userRoleMapping>
+      <userId>${nexus.user}</userId>
+      <source>${nexus.security.source}</source>
+      <roles>
+        <role>nx-admin</role>
+      </roles>
+    </userRoleMapping>
+   <userRoleMapping>
+      <userId>deployment</userId>
+      <source>default</source>
+      <roles>
+        <role>nx-deployment</role>
+        <role>repo-all-full</role>
+      </roles>
+    </userRoleMapping>
+    <userRoleMapping>
+      <userId>anonymous</userId>
+      <source>default</source>
+      <roles>
+        <role>anonymous</role>
+        <role>repository-any-read</role>
+      </roles>
+    </userRoleMapping>
+    ${nexus.authorization.extra}
+  </userRoleMappings>
+</security>

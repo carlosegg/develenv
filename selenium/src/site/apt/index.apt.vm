@@ -1,0 +1,24 @@
+~~Generado con el arquetipo: standalone-archetype
+~~http://www.softwaresano.com
+ -----
+ ${project.artifactId}  ${project.Version}
+ -----
+ ${userName}
+ -----
+ 
+
+Selenium
+~~~~~~~~
+  
+ {{{http://seleniumhq.org/}Selenium}} permite realizar pruebas de aceptación de aplicaciones web.
+
+ En el arranque de {{{http://develenv.softwaresano.com}<<develenv>>}} se arranca selenium Grid en la url {{{http://develenv_host/grid/}http://develenv_host/grid/}}. Los navegadores que hay disponibles inicialmente se pueden visualizar {{{http://develenv_host/grid/console}consola}} del {{{http://develenv_host/grid}grid}}.
+
+~~[INLINECODE] <div class="source"><pre><script type="text/javascript" src="./gridConsole.php"></script></pre></div> [INLINECODE]
+
+ * {{{./newBrowser.html}Adicción de nuevos navegadores al grid de selenium}}
+
+ * {{{./seleniumGridExample.html}Ejemplo de utilización de selenium grid}}
+
+ * {{{./seleniumGridOff.html}Parada de selenium grid para ahorro de memoria}}
+

@@ -1,0 +1,5 @@
+[puppetlabs-dependencies]
+name=puppetlabs - dependencies
+baseurl=http://yum.puppetlabs.com/el/$releasever/dependencies/$basearch/
+gpgcheck=0
+enable=1

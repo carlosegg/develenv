@@ -1,0 +1,655 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generado con el arquetipo standalone-archetype
+     de http://pimpam.googlecode.com/
+ -->
+<!-- Cada vez que se añada una nueva funcionalidad al proyecto se ha de
+     reflejar en este fichero. Este fichero será utilizado tanto para generar
+     las RELEASE_NOTES como para generar el informe de los últimos cambios
+     que es accesible a través del site del proyecto
+
+     La configuración del changes.xml está disponible en:
+     http://maven.apache.org/plugins/maven-changes-plugin/changes.html
+-->
+<document>
+  <properties>
+    <title>Release Notes</title>
+    <author email="carlosg@softwaresano.com">Carlos E. Gómez Gómez</author>
+  </properties>
+  <body>
+  <release version="37" date="2015-03-25" description="Migration to github">
+  </release>
+  <release version="36" date="2014-12-26" description="">
+      <action dev="carlosg" type="add">devpi 2.1.0</action>
+      <action dev="carlosg" type="add">selenium 2.45</action>
+      <action dev="carlosg" type="add">jenkins 1.605</action>
+      <action dev="carlosg" type="add">sonar 5.0.1</action>
+      <action dev="carlosg" type="add">maven 3.2.5</action>
+      <action dev="carlosg" type="add">nexus 2.11.2-06</action>
+      <action dev="carlosg" type="add">tomcat 8.0.20</action>
+      <action dev="carlosg" type="fix">jenkins skin</action>
+  </release>
+  <release version="35" date="2014-10-08" description="Update and improvements">
+      <action dev="carlosg" type="add">docker registry</action>
+      <action dev="carlosg" type="add">jmeter 2.12</action>
+      <action dev="carlosg" type="add">screenshot</action>
+      <action dev="carlosg" type="add">tomcat 8.0.14</action>
+      <action dev="carlosg" type="add">sonar 4.5.1</action>
+      <action dev="carlosg" type="add">selenium 2.44</action>
+      <action dev="carlosg" type="add">nexus 2.10.0-02</action>
+      <action dev="carlosg" type="add">jenkins 1.595</action>
+  </release>
+  <release version="34" date="2014-10-05" description="Update improvements">
+      <action dev="carlosg" type="add">sonar 4.5</action>
+      <action dev="carlosg" type="add">jenkins 1.583</action>
+  </release>
+  <release version="33" date="2014-05-16" description="Update improvements">
+      <action dev="carlosg" type="add">maven 3.2.3</action>
+      <action dev="carlosg" type="add">tomcat 8.0.12</action>
+      <action dev="carlosg" type="add">nexus 2.9.2-01</action>
+      <action dev="carlosg" type="add">sonar 4.4</action>
+      <action dev="carlosg" type="add">selenium 2.43.1</action>
+      <action dev="carlosg" type="add">sonar-runner 2.4</action>
+      <action dev="carlosg" type="add">jenkins 1.582</action>
+      <action dev="carlosg" type="add">Installation only with rpms</action>
+  </release>
+  <release version="31" date="2014-04-8" description="Update improvements">
+      <action dev="carlosg" type="add">ant 1.9.4</action>
+      <action dev="carlosg" type="add">sonar 4.3</action>
+      <action dev="carlosg" type="add">tomcat 8.0.5</action>
+      <action dev="carlosg" type="add">soapui 4.6.4</action>
+      <action dev="carlosg" type="add">jenkins 1.563</action>
+      <action dev="carlosg" type="add">nexus 2.8.0-05</action>
+  </release>
+  <release version="30" date="2014-03-28" description="Update improvements">
+    <action dev="carlosg" type="add">maven 3.2.1</action>
+    <action dev="carlosg" type="add">selenium 2.41.0</action>
+    <action dev="carlosg" type="add">jenkins 1.558</action>
+    <action dev="carlosg" type="add">sonar 4.2</action>
+  </release>
+  <!-- ADD LAST RELEASES -->
+  <release version="29" date="2014-02-01" description="Update improvements">
+    <action dev="carlosg" type="add">tomcat 7.0.52</action>
+    <action dev="carlosg" type="add">Jenkins job configure is slow</action>
+    <action dev="carlosg" type="add">Sound plugin archive</action>
+    <action dev="carlosg" type="add">Custom jenkins</action>
+    <action dev="carlosg" type="add">Add devpi-server for pypi mirror</action>
+    <action dev="carlosg" type="add">jenkins 1.556</action>
+    <action dev="carlosg" type="add">Docu to deploy in vagrant box</action>
+    <action dev="carlosg" type="add">selenium 2.40.0</action>
+  </release>
+  <release version="28" date="2014-01-04" description="Update tools">
+       <action dev="carlosg" type="fix">Sonar installation without rpms</action>
+       <action dev="carlosg" type="fix">Develenv installation without rpms</action>
+       <action dev="carlosg" type="add">Deployment Pipeline refactorized</action>
+       <action dev="carlosg" type="add">soapui 4.6.4</action>
+       <action dev="carlosg" type="add">sonar 4.1.2</action>
+       <action dev="carlosg" type="add">nexus 2.7.2-03</action>
+       <action dev="carlosg" type="add">tomcat 7.0.50</action>
+       <action dev="carlosg" type="add">jmeter 2.11</action>
+       <action dev="carlosg" type="add">jenkins 1.553</action>
+       <action dev="carlosg" type="add">selenium 2.40.0</action>
+   </release>
+   <release version="27" date="2013-10-28" description="Update tools">
+       <action dev="carlosg" type="add">ant 1.9.3</action>
+       <action dev="carlosg" type="add">selenium 2.39.0</action>
+       <action dev="carlosg" type="add">nexus 2.7.0-06</action>
+       <action dev="carlosg" type="fix">soapui 4.6.3</action>
+       <action dev="carlosg" type="add">tomcat 7.0.47</action>
+       <action dev="carlosg" type="add">jenkins 1.544</action>
+       <action dev="carlosg" type="add">sonar 4.0</action>
+       <action dev="carlosg" type="add">Sonar DB independent of sonar installation</action>
+   </release>
+   <release version="26" date="2013-07-15" description="Update tools">
+       <action dev="carlosg" type="add">maven 3.1.1</action>
+       <action dev="carlosg" type="add">External sonar-runner 2.3</action>
+       <action dev="carlosg" type="add">nexus 2.6.4-02</action>
+       <action dev="carlosg" type="add">selenium 2.37.0</action>
+       <action dev="carlosg" type="fix">tomcat 7.0.42</action>
+       <action dev="carlosg" type="fix">sonar 3.7.3</action>
+       <action dev="carlosg" type="fix">jenkins 1.537</action>
+       <action dev="carlosg" type="fix">soapui 4.6.0</action>
+       <action dev="carlosg" type="fix">ant 1.9.2</action>
+       <action dev="carlosg" type="add">JMeter 2.10</action>
+   </release>
+   <release version="24" date="2013-03-19" description="Deployment profiles">
+       <action dev="carlosg" type="fix">develenv starts when the machines starts</action>
+       <action dev="carlosg" type="add">Execute-develenv-examples job</action>
+       <action dev="carlosg" type="fix">Ant, jmeter, soapui included in the path</action>
+       <action dev="eescorihuelan" type="add">Deployment puppet profiles</action>
+       <action dev="carlosg" type="add">Development puppet profiles</action>
+       <action dev="carlosg" type="add">Develenv development with vagrant</action>
+       <action dev="carlosg" type="add">Build in MAC</action>
+       <action dev="carlosg" type="add">Jenkins v.1514</action>
+       <action dev="carlosg" type="add">nexus 2.4.0-09</action>
+   </release>
+   <release version="23" date="2013-03-15" description="Update Tools and fixing">
+      <action dev="carlosg" type="fix">selenium 2.32.0</action>
+      <action dev="carlosg" type="fix">ant 1.9.0</action>
+      <action dev="carlosg" type="fix">tomcat 7.0.39</action>
+      <action dev="carlosg" type="fix">sonar 3.5.1</action>
+      <action dev="carlosg" type="add">Jenkins v.1511</action>
+   </release>
+   <release version="22" date="2013-03-08" description="Update Tools and fixing">
+      <action dev="carlosg" type="fix">Ubuntu uninstall</action>
+      <action dev="carlosg" type="fix">Deployment pipeline data file</action>
+      <action dev="eescorihuelan" type="add">tomcat rpm</action>
+      <action dev="carlosg" type="add">Nexus 2.3-1</action>
+      <action dev="carlosg" type="add">Jenkins v.1505</action>
+      <action dev="eescorihuelan" type="add">nexus rpm</action>
+      <action dev="eescorihuelan" type="add">sonar rpm</action>
+      <action dev="eescorihuelan" type="add">jenkins rpm</action>
+      <action dev="eescorihuelan" type="add">tomcat rpm</action>
+   </release>
+   <release version="21" date="2012-12-21" description="Update Tools and fixing">
+      <action dev="carlosg" type="add">Maven 3.0.5</action>
+      <action dev="carlosg" type="add">Merge with new pipeline Plugin Report</action>
+      <action dev="carlosg" type="add">Selenium Chrome Driver 26.0.1383.0</action>
+      <action dev="carlosg" type="add">Documentation about libtest</action>
+      <action dev="eescorihuelan" type="fix">cleanTomcat script correct execution dir</action>
+      <action dev="carlosg" type="add">Clean nexus repositories script</action>
+      <action dev="eescorihuelan" type="fix">Logs configuration of nexus</action>
+      <action dev="carlosg" type="fix">Installation withouth rpm</action>
+      <action dev="eescorihuelan" type="fix">Deleting jenkins plugins in RPM install</action>
+      <action dev="eescorihuelan" type="add">Added logrotate file</action>
+      <action dev="carlosg" type="add">Sonar 3.4.1</action>
+      <action dev="carlosg" type="add">Selenium 2.31.0</action>
+      <action dev="carlosg" type="add">Deployment Pipeline 21</action>
+      <action dev="carlosg" type="add">Jenkins v.1504</action>
+      <action dev="carlosg" type="add">Tomcat 7.0.37</action>
+      <action dev="carlosg" type="add">JMeter 2.9</action>
+      <action dev="eescorihuelan" type="add">Smoke and Acceptance Test of develenv</action>
+      <action dev="eescorihuelan" type="fix">Shutdown tomcat</action>
+      <action dev="carlosg" type="add">Jenkins and Nexus unpack in tomcat</action>
+   </release>
+   <release version="20" date="2012-11-23" description="Update Tools">
+      <action dev="carlosg" type="fix">Configure .ssh permissions</action>
+      <action dev="carlosg" type="fix">QA view and RE view</action>
+      <action dev="carlosg" type="add">Jenkins v.1494</action>
+      <action dev="carlosg" type="add">Sonar runner 2.0.1</action>
+      <action dev="carlosg" type="add">Python Plugin-20</action>
+      <action dev="carlosg" type="add">Tomcat 7.0.33</action>
+      <action dev="carlosg" type="add">Selenium 2.27.0</action>
+      <action dev="carlosg" type="add">Deployment Pipeline 20</action>
+  </release>
+  <release version="19" date="2012-11-19" description="Update Tools">
+        <action dev="carlosg" type="add">Sonar 3.3.1</action>
+        <action dev="carlosg" type="add">Log Parser(Errors, INFO, Warning)</action>
+        <action dev="carlosg" type="add">Autenticación mediante openid en jenkins y en sonar (falta nexus(plugin no opensource))</action>
+  </release>
+  <release version="18" date="2012-10-30" description="Update Tools">
+     <action dev="carlosg" type="add">Jenkins v.1491</action>
+     <action dev="carlosg" type="fix">Configure repos in RH6 installation</action>
+     <action dev="carlosg" type="add">setEnv.sh in ssh develenv</action>
+     <action dev="carlosg" type="add">Sonar tocity plugin</action>
+     <action dev="carlosg" type="add">Selenium 2.26.0</action>
+     <action dev="carlosg" type="add">Avoid delete ss-develenv-repo</action>
+  </release>
+  <release version="17" date="2012-10-18" description="Update Tools">
+       <action dev="carlosg" type="add">Add git-prompt.sh and git-bash-completion.sh</action>
+       <action dev="carlosg" type="add">Add motd</action>
+       <action dev="carlosg" type="add">Jenkins v.1488</action>
+       <action dev="carlosg" type="add">Añadidos plugins git-parameter,git-pullrequest de jenkins</action>
+       <action dev="carlosg" type="add">Actualización documentación deployment pipeline</action>
+  </release>
+  <release version="16" date="2012-09-20" description="Update Tools">
+      <action dev="carlosg" type="add">Control del arranque de Selenium Grid</action>
+      <action dev="carlosg" type="add">Jenkins v.1486</action>
+      <action dev="carlosg" type="add">Deployment pipeline plugin</action>
+      <action dev="carlosg" type="add">Sonar 3.2.1</action>
+      <action dev="carlosg" type="add">Tomcat 7.0.32</action>
+      <action dev="carlosg" type="add">JMeter 2.8</action>
+  </release>
+   <release version="15" date="2012-09-14" description="Update Tools">
+      <action dev="carlosg" type="fix">ext-develenv-repo</action>
+      <action dev="carlosg" type="add">Jenkins v.1482</action>
+      <action dev="carlosg" type="add">FHS</action>
+  </release>
+  <release version="14" date="2012-09-04" description="Update Tools">
+      <action dev="carlosg" type="fix">Sustitución de tabs por espacios en los scripts y en los xml</action>
+      <action dev="carlosg" type="add">Jenkins v.1481</action>
+      <action dev="carlosg" type="add">Tomcat 7.0.30</action>
+      <action dev="carlosg" type="add">Selinux activado</action>
+      <action dev="carlosg" type="add">Chrome 21</action>
+  </release>
+  <release version="13" date="2012-08-08" description="Update Tools">
+     <action dev="carlosg" type="add">Sonar 3.2</action>
+     <action dev="carlosg" type="add">Nexus 2.1.2</action>
+     <action dev="carlosg" type="add">Jenkins v.1480</action>
+  </release>
+
+  <release version="12" date="2012-07-24" description="Update Tools">
+     <action dev="carlosg" type="fix">Mirrors in maven repository</action>
+     <action dev="carlosg" type="fix">Remove ci-game jenkins plugin (caused by NPE)</action>
+     <action dev="carlosg" type="add">jenkins v.1476</action>
+     <action dev="carlosg" type="add">nexus 2.1.1</action>
+     <action dev="carlosg" type="add">tomcat 7.0.29</action>
+  </release>
+  <release version="11" date="2012-07-07" description="Update Tools">
+       <action dev="carlosg" type="add">jenkins v.1475</action>
+       <action dev="carlosg" type="add">Added pipeline plugin</action>
+  </release>
+  <release version="10" date="2012-06-26" description="Update Tools">
+       <action dev="carlosg" type="add">ant 1.8.4</action>
+       <action dev="carlosg" type="add">jenkins v.1473</action>
+       <action dev="carlosg" type="add">nexus 2.0.6</action>
+       <action dev="carlosg" type="add">soapui 4.5.1</action>
+  </release>
+  <release version="9" date="2012-06-14" description="Update Tools">
+       <action dev="carlosg" type="add">sonar 3.1.1</action>
+       <action dev="carlosg" type="add">selenium 2.24.1</action>
+       <action dev="carlosg" type="add">jenkins v.1472</action>
+       <action dev="carlosg" type="add">Adaptación para jdk1.7</action>
+  </release>
+  <release version="8" date="2012-06-13" description="Update Tools">
+       <action dev="carlosg" type="add">Jenkins v1.470</action>
+  </release>
+
+  <release version="7" date="2012-06-10" description="Update Tools">
+     <action dev="carlosg" type="add">Selenium 2.23.0</action>
+     <action dev="carlosg" type="add">Jmeter 2.7</action>
+     <action dev="carlosg" type="add">Jenkins v1.467</action>
+  </release>
+  <release version="6" date="2012-05-28" description="Update Tools">
+     <action dev="carlosg" type="add">Jenkins v1.467</action>
+     <action dev="carlosg" type="add">Selenium 2.22.0</action>
+     <action dev="carlosg" type="add">Nexus 2.0.5</action>
+     <action dev="carlosg" type="fix">Epel repository</action>
+  </release>
+  <release version="5" date="2012-05-21" description="Initial Deployment Pipeline">
+   <action dev="carlosg" type="add">Jenkins v1.465</action>
+   <action dev="carlosg" type="fix">PATH variable in develenv User</action>
+   <action dev="carlosg" type="fix">Url sites and sonar in jenkins jobs</action>
+  </release>
+  <release version="4" date="2012-04-27" description="Updating tools">
+   <action dev="carlosg" type="add">Default Jenkins Home</action>
+   <action dev="carlosg" type="add">Web-Calculator and Selenium-Grid Examples added Coverage reports</action>
+   <action dev="carlosg" type="add">Sonar 3.0.1</action>
+   <action dev="carlosg" type="add">Jenkins v1.464</action>
+   <action dev="carlosg" type="add">Nexus 2.0.4</action>
+  </release>
+  <release version="3" date="2012-04-24" description="Updating tools">
+   <action dev="carlosg" type="add">Jenkins v1.461</action>
+   <action dev="carlosg" type="add">Sonar Tab Metrics Plugin</action>
+   <action dev="carlosg" type="fix">Cobertura test widget in sonar</action>
+  </release>
+  <release version="2" date="2012-04-18" description="Sonar 3.0">
+   <action dev="carlosg" type="add">Sonar 3.0</action>
+  </release>
+  <release version="1.9.9" date="2012-03-27" description="Updating tools">
+   <action dev="carlosg" type="add">tomcat 7.0.27</action>
+   <action dev="carlosg" type="add">jenkins 1.460</action>
+   <action dev="carlosg" type="add">nexus 2.0.3</action>
+   <action dev="carlosg" type="add">soapui 4.5</action>
+   <action dev="carlosg" type="add">selenium 2.21.0</action>
+  </release>
+  <release version="1.9.8" date="2012-03-21" description="sonar-2.14">
+   <action dev="carlosg" type="add">jenkins 1.456</action>
+   <action dev="carlosg" type="add">javascript sonar plugin</action>
+   <action dev="carlosg" type="add">flex sonar plugin</action>
+   <action dev="carlosg" type="add">nexus 2.0.2</action>
+   <action dev="carlosg" type="add">Sonar 2.14</action>
+   <action dev="carlosg" type="fix">Javascript problem in jenkins</action>
+  </release>
+  <release version="1.9.7" date="2012-03-06" description="Updating">
+   <action dev="carlosg" type="add">jenkins 1.454</action>
+   <action dev="carlosg" type="fix">develenv-repo installation</action>
+   <action dev="carlosg" type="fix">warnings in jenkins startup</action>
+  </release>
+  <release version="1.9.6" date="2012-03-02" description="Bug Fixing">
+   <action dev="carlosg" type="fix">.gitconfig</action>
+   <action dev="carlosg" type="fix">cross-site problem with downloads.softwaresano.com</action>
+   <action dev="carlosg" type="add">jenkins 1.452</action>
+   <action dev="carlosg" type="add">Selenium 2.20.0</action>
+   <action dev="carlosg" type="add">Tomcat 7.0.26</action>
+  </release>
+  <release version="1.9.5" date="2012-02-19" description="Bug Fixing">
+   <action dev="carlosg" type="fix">Nexus Yum Plugin no se debe instalar en tomcat/webapps</action>
+   <action dev="carlosg" type="fix">develenv-repo incluye la dependencia wget</action>
+  </release>
+  <release version="1.9.4" date="2012-02-02" description="Auditoría de seguridad, actualización a Nexus 2 y JMeter 2.6">
+   <action dev="carlosg" type="add">Auditoría de seguridad</action>
+   <action dev="carlosg" type="add">Selenium 2.19.0</action>
+   <action dev="carlosg" type="add">Jmeter 2.6</action>
+   <action dev="carlosg" type="add">Jenkins 1.451</action>
+   <action dev="carlosg" type="add">Nexus 2.0</action>
+  </release>
+  <release version="1.9.3" date="2012-01-31" description="Actualización herramientas y corrección de error de seguiridad">
+   <action dev="carlosg" type="fix">Error de seguridad en la configuración del proxy de apache</action>
+   <action dev="carlosg" type="add">sonar 2.13.1</action>
+   <action dev="carlosg" type="add">Apache Tomcat 7.0.25</action>
+   <action dev="carlosg" type="add">Actualización plugin sonar php</action>
+   <action dev="carlosg" type="add">Jenkins v.1450</action>
+  </release>
+  <release version="1.9.2" date="2012-01-23" description="Maven 3.0.4">
+   <action dev="carlosg" type="add">Maven 3.0.4</action>
+   <action dev="carlosg" type="add">Nexus como repositorio de rpms</action>
+   <action dev="carlosg" type="add">Selenium 2.17.0</action>
+   <action dev="carlosg" type="add">Selenium 1.449</action>
+  </release>
+  <release version="1.9.1" date="2012-01-19" description="Sonar 2.13">
+      <action dev="carlosg" type="add">Sonar 2.13</action>
+  </release>
+
+  <release version="1.9.0" date="2012-01-18" description="AutoIndex">
+   <action dev="carlosg" type="add">Configuración autoindex para repositorios y sites</action>
+   <action dev="carlosg" type="fix">Configuración apache en Centos</action>
+   <action dev="carlosg" type="add">Testeado para Centos 6.2</action>
+   <action dev="carlosg" type="add">Jenkins v.1.448</action>
+  </release>
+  <release version="1.8.5" date="2011-12-21" description="Updating tools, and web-calculator example">
+   <action dev="carlosg" type="add">Selenium Grid improvements</action>
+   <action dev="carlosg" type="add">Publish rpm repos</action>
+   <action dev="carlosg" type="add">Creación de un rpm en el ejemplo de web-calculator</action>
+   <action dev="carlosg" type="add">Nexus 1.9.2.4</action>
+   <action dev="carlosg" type="add">Jenkins v.1447</action>
+   <action dev="carlosg" type="add">Selenium 2.16.1</action>
+   <action dev="carlosg" type="add">favicon.ico</action>
+  </release>
+  <release version="1.8.4" date="2011-12-20" description="Actualización jenkins">
+   <action dev="carlosg" type="add">Jenkins 1.444</action>
+   <action dev="carlosg" type="fix">JENKINS_URL en SeleniumGridExample</action>
+  </release>
+  <release version="1.8.3" date="2011-12-19" description="Comprobar integridad del instalable">
+   <action dev="carlosg" type="add">Se comprueba la integridad del ejecutable. Si no es correcto se aborta la instalación</action>
+  </release>
+<release version="1.8.2" date="2011-12-10" description="Centos 6">
+   <action dev="carlosg" type="add">Actualización de develenv para Centos 6. NOTA: Para que funcionen los ejemplos que utilizan firefox, se ha tenido que instalar el grupo de paquetes de Centos "Desktop" y "General Purpose Desktop". Se deberían revisar los paquetes sobrantes</action>
+   <action dev="carlosg" type="add">Jenkins 1.443</action>
+</release>
+<release version="1.8.1" date="2011-12-02" description="Sonar 2.12">
+   <action dev="carlosg" type="add">Sonar 2.12</action>
+   <action dev="carlosg" type="add">Selenium 2.15.0</action>
+   <action dev="carlosg" type="add">Jenkins 1.442</action>
+</release>
+<release version="1.8.0" date="2011-11-04" description="Selenium Grid">
+   <action dev="carlosg" type="add">Añadido plugin para extraer estadísticas de los builds de jenkins</action>
+   <action dev="carlosg" type="add">Mejoras en el Job JS</action>
+   <action dev="carlosg" type="add">Añadido Selenium Grid en http://localhost/grid</action>
+   <action dev="carlosg" type="add">Añadido SeleniumGridExample</action>
+   <action dev="carlosg" type="add">Actualizado Jenkins 1441</action>
+   <action dev="carlosg" type="add">Actualizado tomcat 7.0.24</action>
+</release>
+<release version="1.7.10" date="2011-10-28" description="Update Documentation">
+   <action dev="carlosg" type="add">Mejoras en la documentación de la máquina virtual</action>
+   <action dev="carlosg" type="add">Jenkins 1437</action>
+</release>
+ <release version="1.7.9" date="2011-10-26" description="Instalación de plugins por defecto">
+   <action dev="carlosg" type="add">Instalación por defecto de los plugins Cpp, Python y PHP</action>
+   <action dev="carlosg" type="fix">Ubuntu oneiric installation</action>
+ </release>
+ <release version="1.7.8" date="2011-10-27" description="Actualización de sistemas operativos">
+   <action dev="carlosg" type="add">Adaptación Redhat 6 y Ubuntu 11.10</action>
+   <action dev="carlosg" type="add">jenkins 1436, Selenium 2.8.0, JMeter 2.5.1, Tomcat 7.0.22</action>
+   <action dev="carlosg" type="add">Repositorio con los rpms que generan los jobs de jenkins</action>
+   <action dev="carlosg" type="add">Actualización de la vista principal de jenkins</action>
+   <action dev="carlosg" type="add">Actualización de los jobs de jenkins, para extraer un resumen de las líneas de código</action>
+   <action dev="carlosg" type="add">Ejemplo de desarrollo en Python</action>
+ </release>
+ <release version="1.7.7" date="2011-10-07" description="Sonar customatization">
+   <action dev="carlosg" type="add">Personalización de los filtros y del dashboard de sonar</action>
+   <action dev="carlosg" type="add">Jenkins 1434</action>
+ </release>
+ <release version="1.7.6" date="2011-09-26" description="Updating Tools">
+   <action dev="carlosg" type="add">Sonar-2.11,Updating Soap-UI 4.0.1, nexus 1.9.2.3, jenkins 1433, Selenium 2.7.0</action>
+   <action dev="carlosg" type="fix">Typographic error in selenium</action>
+ </release>
+ <release version="1.7.5" date="2011-09-20" description="Pre-VM"></release>
+ <release version="1.7.4" date="2011-09-19" description="JMeter Example">
+   <action dev="carlosg" type="add">Ejemplo con JMeter</action>
+ </release>
+ <release version="1.7.3" date="2011-09-13" description="Built by Softwaresano"></release>
+ <release version="1.7.2" date="2011-09-08" description="Actualizaciones jenkins">
+      <action dev="carlosg" type="add">Añadida las columnas de configurar, cron y test results en las vistas de jenkins</action>
+      <action dev="carlosg" type="add">Añadido el sonido de la explosión cuando un job falla</action>
+ </release>
+ <release version="1.7.1" date="2011-08-30" description="FIX errors in Centos6">
+   <action dev="carlosg" type="add">Sonar 2.10 en español</action>
+   <action dev="carlosg" type="add">Jenkins 1429</action>
+   <action dev="carlosg" type="add">jmter 2.5</action>
+   <action dev="carlosg" type="fix">Errores en la instalación para centos Centos6</action>
+ </release>
+ <release version="1.7.0" date="2011-07-27" description="Actualización de herramientas y generación inicial rpms">
+   <action dev="carlosg" type="add">Sonar 2.10, Nexus 1.9.2.2, Jenkins 1427</action>
+   <action dev="carlosg" type="add">Rpm iniciales de develenv</action>
+   <action dev="carlosg" type="add">Adaptación a Centos 6</action>
+ </release>
+ <release version="1.6.0" date="2011-07-26" description="Documentación máquina virtual, y actualización herramientas">
+   <action dev="carlosg" type="add">Documentación máquina virtual</action>
+        <action dev="carlosg" type="add">Maven 2 y Maven 3</action>
+   <action dev="carlosg" type="add">Sonar 2.9, Nexus 1.9.2, Jenkins 1.423</action>
+ </release>
+ <release version="1.5.16" date="2011-06-27" description="SOAPUI">
+   <action dev="carlosg" type="add">Soap-UI</action>
+   <action dev="carlosg" type="add">Cálculo de cobertura en el ejemplo JSSample</action>
+ </release>
+<release version="1.5.15" date="2011-06-22" description="Actualización herramientas">
+   <action dev="carlosg" type="add">Actualización Sonar 2.8</action>
+   <action dev="carlosg" type="add">Actualización Tomcar 7.0.16</action>
+</release>
+<release version="1.5.14" date="2011-06-08" description="Bug Fixing">
+   <action dev="carlosg" type="fix">Acceso solo lectura al usuario anónimo en nexus</action>
+</release>
+<release version="1.5.13" date="2011-05-23" description="Actualización herramientas">
+   <action dev="carlosg" type="add">Actualización Ant 1.8.2</action>
+   <action dev="carlosg" type="add">Actualización Jmeter 2.4</action>
+   <action dev="carlosg" type="add">Actualización Nexus 1.9.1.1</action>
+   <action dev="carlosg" type="add">Actualización Jenkins 1.414</action>
+ </release>
+ <release version="1.5.12" date="2011-04-29" description="Tomcat 7">
+    <action dev="carlosg" type="add">Migración a tomcat 7.0.14</action>
+ </release>
+ <release version="1.5.11" date="2011-04-21" description="Centos5.6"></release>
+ <release version="1.5.10" date="2011-04-20" description="Actualización de jenkins (v1408) and maven (3.0.3)"></release>
+ <release version="1.5.9" date="2011-04-12" description="Comprobar integridad descarga">
+     <action dev="carlosg" type="add">Se añade md5 para comprobar la integridad de la descarga de develenv</action>
+ </release>
+ <release version="1.5.8" date="2011-04-10" description="CPPSample">
+     <action dev="carlosg" type="add">Análisis de código estático para C++</action>
+     <action dev="carlosg" type="fix">Problema con la url de los sites de los jobs (CSample, FlexSample,JSSample y GroovySample)</action>
+ </release>
+ <release version="1.5.7" date="2011-04-05" description="Detección de errores en la instalación">
+   <action dev="carlosg" type="fix">Detección de errores en la instalación.</action>
+ </release>
+ <release version="1.5.6" date="2011-04-01" description="Groovy Sample">
+    <action dev="carlosg" type="add">Se añade un job para mostrar el cálculo de métricas en Groovy</action>
+    <action dev="carlosg" type="fix">Mejoras en los jobs de análisis estáticos de código (flexSample, JSSample, CSample)</action>
+ </release>
+ <release version="1.5.5" date="2011-03-12" description="Mejoras sites">
+        <action dev="carlosg" type="add">Se añade un job para mostrar el cálculo de métricas en JavaScript</action>
+       <action dev="carlosg" type="add">Se añade un job para hacer backup de la configuración de develenv</action>
+       <action dev="carlosg" type="add">En el site se añaden los reports a cada uno de los módulos</action>
+       <action dev="carlosg" type="fix">version.sh controla que no haya versiones repetidas</action>
+ </release>
+ <release version="1.5.4" date="2011-03-09" description="Adaptación sites a maven 3.0">
+    <action dev="carlosg" type="fix">Adaptación sites a maven 3.0</action>
+    <action dev="carlosg" type="fix">Configuración plugins de cobertura</action>
+    <action dev="carlosg" type="add">stat-scm en la creación de las releases de develenv</action>
+ </release>
+ <release version="1.5.3" date="2011-03-08" description="Mejoras en site">
+   <action dev="carlosg" type="add">Configuración robots.txt</action>
+   <action dev="carlosg" type="add">Uso de Google Analitics en el site</action>
+   <action dev="carlosg" type="fix">Arreglados links rotos en el despliegue de softwaresano</action>
+   <action dev="carlosg" type="fix">Si hay un develenv*.sh en el mismo directorio de instalación se borra el directorio completo</action>
+ </release>
+ <release version="1.5.2" date="2011-02-27" description="Migración a maven 3.0.2">
+    <action dev="carlosg" type="add">Migración a maven 3.0.2</action>
+   <action dev="carlosg" type="add">Nueva vista para QA, y para eXperimental</action>
+   <action dev="carlosg" type="add">Creación de la página de descargas de develenv</action>
+    <action dev="carlosg" type="fix">repo-third-party-release en el settings.xml de maven</action>
+    <action dev="carlosg" type="fix">Links rotos en la documentación</action>
+ </release>
+ <release version="1.5.1" date="2011-02-27" description="QA dashboard en Jenkins">
+    <action dev="carlosg" type="add">QA dashboard en Jenkins</action>
+    <action dev="carlosg" type="fix">.htaccess</action>
+    <action dev="carlosg" type="fix">Redirecciones de apache</action>
+ </release>
+  <release version="1.5.0" date="2011-02-18" description="Migración de Hudson a Jenkins">
+    <action dev="carlosg" type="add">Cambiando /hudson por /jenkins</action>
+    <action dev="carlosg" type="add">Añadido plugins develenv en Jenkins</action>
+    <action dev="carlosg" type="add">Widget softwaresano en sonar</action>
+    <action dev="carlosg" type="fix">Error en los widgets softwaresano</action>
+   <action dev="carlosg" type="fix">Downgrade nexus 1.8.0.1. En nexus 1.9 la autenticación por LDAP no funciona</action>
+   <action dev="carlosg" type="fix">Autenticación LDAP en sonar</action>
+ </release>
+  <release version="1.4.2" date="2011-02-18" description="Sonar 2.6"/>
+ <release version="1.4.1" date="2011-02-04" description="Test de aceptación">
+       <action dev="carlosg" type="add">Se añade el job test-develenv que sirve de test de aceptación para develenv</action>
+       <action dev="carlosg" type="add">Actualizacion plugins de develenv</action>
+       <action dev="carlosg" type="add">Actualización configuración ejemplos develenv (se añaden links a sonar y al site)</action>
+       <action dev="carlosg" type="add">Se añade enlace a los artefactos generados en los ejemplos de Jenkins</action>
+       <action dev="carlosg" type="fix">Arreglado assembly para plugins de Jenkins</action>
+ </release>
+ <release version="1.4.0" date="2011-02-01" description="Jenkins">
+   <action dev="carlosg" type="add">Sustitución de Hudson por Jenkins v.1396</action>
+   <action dev="carlosg" type="fix">Editar jobs</action>
+ </release>
+ <release version="1.3.5" date="2011-01-28" description="Simplificación módulo developer">
+    <action dev="carlosg" type="add">Simplificación módulo developer. Sólo hudson podrá escribir en nexus</action>
+    <action dev="carlosg" type="add">Eliminar módulo integrador</action>
+ </release>
+ <release version="1.3.4" date="2011-01-24" description="Sonar 2.5">
+   <action dev="carlosg" type="add">Actualización a sonar 2.5</action>
+ </release>
+ <release version="1.3.3" date="2011-01-23" description="Encriptación de passwords en maven">
+    <action dev="carlosg" type="add">Encriptar passwords en maven</action>
+ </release>
+ <release version="1.3.2" date="2011-01-19" description="Auto-release">
+    <action dev="carlosg" type="add">Creación releases a partir de los jobs de Hudson</action>
+ </release>
+ <release version="1.3.1" date="2011-01-16" description="Producción">
+    <action dev="carlosg" type="fix">Actualización links de documentación</action>
+ </release>
+ <release version="1.3.0" date="2011-01-14" description="Simplificando instalación">
+   <action dev="carlosg" type="add">Creación autoejecutable (Ya no hace falta descomprimir)</action>
+   <action dev="carlosg" type="add">Ya no es necesario el password de root de la bd</action>
+   <action dev="carlosg" type="add">Instalación por defecto</action>
+</release>
+<release version="1.2.1" date="2010-12-24" description="Pre-blog">
+    <action dev="carlosg" type="fix">Links de Hudson relativos</action>
+    <action dev="carlosg" type="fix">Ahorrando espacio en el job develenv</action>
+    <action dev="carlosg" type="add">Exportación de displays mediante framebuffer. Se añade el job web-calulator a Hudson para demostrarlo</action>
+    <action dev="carlosg" type="add">Añadido plugin para aplicaciones web (sonar-web-plugin) a sonar</action>
+ </release>
+ <release version="1.2.0" date="2010-12-20" description="Integración con Git, e integración de nexus con LDAP">
+   <action dev="carlosg" type="fix">Instalación de git en Centos</action>
+    <action dev="carlosg" type="add">Acceso via ldap a Nexus</action>
+ </release>
+ <release version="1.1.0" date="2010-12-12" description="Integración con C, Flex y PHP">
+    <action dev="carlosg" type="add">Integración con proyectos C</action>
+    <action dev="carlosg" type="add">Integración con proyectos Flex</action>
+    <action dev="carlosg" type="add">Integración con proyectos PHP. (Utilizando el http://plugin de develenv-php-plugin.googlecode.com</action>
+    <action dev="carlosg" type="add">Integración con proyectos almacenados en GitHub</action>
+ </release>
+ <release version="1.0.6" date="2010-12-02" description="Corrección errores Preproducción">
+  <action dev="carlosg" type="fix">url downloads.softwaresano.com</action>
+  <action dev="carlosg" type="fix">version.sh</action>
+ </release>
+  <release version="1.0.5" date="2010-11-12" description="Preproducción">
+    <action dev="carlosg" type="add"> Integration with softwaresano</action>
+    <action dev="carlosg" type="add"> Added widgets</action>
+    <action dev="carlosg" type="add"> Update documentation</action>
+    <action dev="carlosg" type="add"> Update Hudson version 1387</action>
+    <action dev="carlosg" type="add"> Update Hudson version 1.8.0.1</action>
+  </release>
+  <release version="1.0.4" date="2010-09-03" description="Actualización documentación">
+    <action dev="carlosg" type="add"> deploySite in google</action>
+    <action dev="carlosg" type="add"> Update documentation</action>
+    <action dev="carlosg" type="add"> Update Hudson version 1384</action>
+    <action dev="carlosg" type="add"> Update Nexus version 1.9</action>
+    <action dev="carlosg" type="add"> package a develenv plugin</action>
+    <action dev="carlosg" type="fix"> change domain</action>
+    <action dev="carlosg" type="fix"> excludes</action>
+    <action dev="carlosg" type="fix"> google site dir</action>
+    <action dev="carlosg" type="fix"> badproperty</action>
+    <action dev="carlosg" type="fix"> Creating temp directory with develenv user</action>
+    <action dev="carlosg" type="fix"> Double quoted</action>
+    <action dev="carlosg" type="fix"> Create app/plugins direcotry</action>
+    <action dev="carlosg" type="fix"> job crond configurable</action>
+    <action dev="carlosg" type="fix"> removed unnecessary *.tar.gz, *.jars, *.zip in maven site</action>
+    <action dev="carlosg" type="fix"> java.awt.headless=true added</action>
+   </release>
+
+  <release version="1.0.3" date="2010-06-14" description="Get in started">
+  </release>
+  <release version="1.0.2" date="2010-06-14" description="Documentación">
+      <action dev="carlosg" type="add">
+         Instalación de plugins
+      </action>
+  </release>
+
+  <release version="1.0.1" date="2010-03-31" description="Documentación">
+      <action dev="carlosg" type="add">
+         Testeada para ubuntu
+      </action>
+  </release>
+  <release version="1.0.0" date="2010-02-25" description="Documentación">
+        <action dev="carlosg" type="add">
+         Testeada para ubuntu
+      </action>
+  </release>
+  <release version="0.0.11" date="2010-02-04" description="Centos y Ubuntu, jmeter y selenium">
+        <action dev="carlosg" type="add">
+         Testeada para ubuntu y centos
+      </action>
+      <action dev="carlosg" type="add">
+         Agregado selenium
+      </action>
+      <action dev="carlosg" type="add">
+         Agregado jmeter
+      </action>
+  </release>
+  <release version="0.0.10" date="2009-11-30" description="Depuración">
+  </release>
+  <release version="0.0.9" date="2009-11-30" description="Instalación online y offline">
+  </release>
+  <release version="0.0.8" date="2009-10-21" description="Instalación configurable">
+        <action dev="carlosg" type="add">
+         Añadido develenv dentro del proceso de integración contínua
+      </action>
+        <action dev="carlosg" type="add">
+         Configuracion independiente de la distribución testeado para linux, pero no para windows
+      </action>
+      <action dev="carlosg" type="fix">
+         Configuracion independiente de la distribución
+      </action>
+  </release>
+  <release version="0.0.7" date="2009-09-25" description="Instalación configurable">
+      <action dev="carlosg" type="fix">
+         Configuracion independiente de la distribución
+      </action>
+      <action dev="carlosg" type="add">
+         Añadido pdf-report
+      </action>
+  </release>
+
+  <release version="0.0.6" date="2009-09-10" description="Adaptación a RedHat"/>
+  <release version="0.0.5" date="2009-07-28" description="Mejora documentación">
+  </release>
+  <release version="0.0.4" date="2009-07-08" description="Mejora documentación">
+   <action dev="carlosg" type="add">
+         Configuracion plugins para integración contínua con C++
+      </action>
+    <action dev="carlosg" type="add">
+        Inicio cross-platform
+      </action>
+  </release>
+  <release version="0.0.3" date="2009-01-10" description="Initial Release">
+  </release>
+  <release version="0.0.2" date="2009-01-10" description="Hudson, sonar y nexus">
+      <action dev="carlosg" type="add">
+         Configurados hudson,nexus y sonar para una ubuntu
+      </action>
+  </release>
+    <release version="0.0.1" date="2009-01-10" description="Initial Release">
+
+      <!-- action dev="aramirez" type="fix" issue="MPJIRA-11">
+        Enable retrieving component-specific issues.
+      </action>
+      <action dev="jruiz" type="remove" due-to="Allan Ramirez" due-to-email="aramirez@exist.com">
+        The element type " link " must be terminated by the matching end-tag.
+        Deleted the erroneous code.
+      </action -->
+    </release>
+  </body>
+</document>
+

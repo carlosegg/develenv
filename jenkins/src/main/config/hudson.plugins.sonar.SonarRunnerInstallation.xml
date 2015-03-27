@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<hudson.plugins.sonar.SonarRunnerInstallation_-DescriptorImpl plugin="sonar@2.1">
+  <helpRedirect/>
+  <installations>
+    <hudson.plugins.sonar.SonarRunnerInstallation>
+      <name>DEFAULT_SONAR_RUNNER</name>
+      <home>${PROJECT_HOME}/platform/sonar-runner/</home>
+      <properties/>
+    </hudson.plugins.sonar.SonarRunnerInstallation>
+  </installations>
+</hudson.plugins.sonar.SonarRunnerInstallation_-DescriptorImpl>

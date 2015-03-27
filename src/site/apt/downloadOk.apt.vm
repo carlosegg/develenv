@@ -1,0 +1,25 @@
+~~Generado con el arquetipo: standalone-archetype
+~~http://www.softwaresano.com/
+ -----
+ ${project.artifactId}  ${project.Version}
+ -----
+ ${userName}
+ -----
+ 
+
+Verificación descarga
+~~~~~~~~~~~~
+  
+  Antes de proceder a la instalación de {{{http://${project.artifactId}.softwaresano.com}<<${project.artifactId}>>}} hay que comprobar la integridad de la descarga utilizando MD5.
+  Para ello se debejen ejecutar los siguientes comandos:
+    
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+carlosg@ironman:/tmp$ # Se calcula el md5 del fichero descargado
+carlosg@ironman:/tmp$ md5sum ./${project.artifactId}-${project.version}.sh > md5calculated
+carlosg@ironman:/tmp$ #Se obtiene el md5 que hay publicado en http://downloads.softwaresano.com/${project.artifactId}/${project.artifactId}-${project.version}.sh.md5
+carlosg@ironman:/tmp$ wget http://donwloads.softwaresano.com/${project.artifactId}/${project.artifactId}-${project.version}.sh.md5
+carlosg@ironman:/tmp$ #Se calcula la diferencia entre el md5 calculado y el descargado
+carlosg@ironman:/tmp$ diff ${project.artifactId}-${project.version}.sh.md5 md5calculated 
+carlosg@ironman:/tmp$ #Si no hay diferencias entonces la descarga ha sido correcta
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+

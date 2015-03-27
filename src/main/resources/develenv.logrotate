@@ -1,0 +1,64 @@
+/var/log/${artifactId}/${artifactId}.log {
+  rotate 7
+  daily
+}
+
+/var/log/${artifactId}/${artifactId}.error.log {
+  rotate 7
+  daily
+}
+
+/var/log/${artifactId}/jenkins/*.xml {
+  rotate 7
+  daily
+  missingok
+}
+
+/var/log/${artifactId}/nexus/*.log {
+  rotate 7
+  daily
+  missingok
+}
+
+/var/log/${artifactId}/selenium/*.log {
+  copytruncate
+  rotate 7
+  daily
+  compress
+  missingok
+}
+
+/var/log/${artifactId}/sonar/*.log {
+  copytruncate
+  rotate 7
+  daily
+  compress
+  missingok
+}
+
+/var/log/${artifactId}/tomcat/catalina.out {
+  copytruncate
+  daily
+  rotate 7
+  compress
+  missingok
+  size 5M
+}
+
+/var/log/${artifactId}/tomcat/localhost.*.log {
+  copytruncate
+  daily
+  rotate 7
+  compress
+  missingok
+  size 5M
+}
+
+/var/log/${artifactId}/tomcat/localhost_access.*.txt {
+  copytruncate
+  daily
+  rotate 7
+  compress
+  missingok
+  size 5M
+}

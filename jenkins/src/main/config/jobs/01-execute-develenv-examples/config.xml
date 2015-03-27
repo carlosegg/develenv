@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<com.cloudbees.plugins.flow.BuildFlow plugin="build-flow-plugin@0.17">
+  <actions/>
+  <description>&lt;a href=&quot;http://www.softwaresano.com/&quot; title=&quot;SoftwareSano&quot; class=&quot;poweredBy&quot;&gt;&#xd;
+&#xd;
+   &lt;img id=&quot;jobJenkins&quot; class=&quot;poweredBy&quot;  alt=&quot;softwaresano&quot; src=&quot;http://pimpam.googlecode.com/files/jobJenkins.png&quot;/&gt;&#xd;
+&#xd;
+   &lt;script type=&quot;text/javascript&quot; src=&quot;http://www.softwaresano.com/widgets/jobBuiltyBy.php&quot;&gt;&lt;/script&gt;&#xd;
+&#xd;
+   &lt;script type=&quot;text/javascript&quot; src=&quot;/widgets/jobBuiltyBy.php&quot;&gt;&lt;/script&gt;&#xd;
+&#xd;
+&lt;/a&gt;&#xd;
+&#xd;
+&lt;br/&gt;&#xd;
+&#xd;
+Ejecuta en paralelo todos los ejemplos de develenv.&#xd;
+&#xd;
+</description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.14">
+      <optOut>false</optOut>
+    </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
+    <hudson.plugins.googlecode.GoogleCodeProjectProperty plugin="googlecode@1.7"/>
+    <hudson.plugins.disk__usage.DiskUsageProperty plugin="disk-usage@0.24"/>
+  </properties>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <authToken>9iufas9jfnniu6adfj</authToken>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders/>
+  <publishers>
+    <hudson.plugins.chucknorris.CordellWalkerRecorder plugin="chucknorris@0.5">
+      <factGenerator/>
+    </hudson.plugins.chucknorris.CordellWalkerRecorder>
+  </publishers>
+  <buildWrappers/>
+  <icon/>
+  <dsl>parallel (
+    ignore(FAILURE) {   
+       build(&quot;SeleniumGridExample&quot;)
+     },
+    ignore(FAILURE) {
+        build(&quot;CppSample&quot;)
+     },
+    ignore(FAILURE) {  
+        build(&quot;flexSample&quot;)
+     }, 
+     ignore(FAILURE) {  
+        build(&quot;GroovySample&quot;)
+     },
+     ignore(FAILURE) {   
+        build(&quot;j2meSample&quot;)
+     },
+     ignore(FAILURE) {   
+       build(&quot;standalone-archetype&quot;)
+     },
+     ignore(FAILURE) {   
+       build(&quot;test-calculator&quot;)
+     },
+     ignore(FAILURE) {
+        build(&quot;JSSample&quot;)
+     },
+     ignore(FAILURE) {
+        build(&quot;screenshotExample&quot;)
+     }
+     //New develenv jobs examples    
+)
+</dsl>
+  <buildNeedsWorkspace>false</buildNeedsWorkspace>
+</com.cloudbees.plugins.flow.BuildFlow>

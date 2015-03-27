@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<user>
+  <fullName>Administrador de develenv</fullName>
+  <description>Administrador de develenv</description>
+  <properties>
+    <hudson.security.HudsonPrivateSecurityRealm_-Details>
+      <passwordHash>jiiigC:aad014a1ebb5ef473322199a97bd13e1a3515db56a48847063d4da1d8c12fd72</passwordHash>
+    </hudson.security.HudsonPrivateSecurityRealm_-Details>
+    <hudson.tasks.Mailer_-UserProperty>
+      <emailAddress>carlosg@softwaresano.com</emailAddress>
+    </hudson.tasks.Mailer_-UserProperty>
+  </properties>
+</user>

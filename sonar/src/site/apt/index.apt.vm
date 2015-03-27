@@ -1,0 +1,22 @@
+~~Generado con el arquetipo: standalone-archetype
+~~http://pimpam.googlecode.com
+ -----
+ ${project.artifactId}  ${project.Version}
+ -----
+ ${userName}
+ -----
+ 
+
+Introducción
+~~~~~~~~~~~~
+  
+ Sonar es una herramienta que muestra informes sobre métricas de análisis estático de código.
+
+* Acceso
+~~~~~~~~
+  
+  El {{{${sonarUrl}}acceso}} en modo lectura a <sonar> es público
+
+  Para la instalación por defecto de {{{http://${project.artifactId}.softwaresano.com}<<develenv>>}} se puede configurar sonar se puede acceder con el usuario <<develenv>> y password <<develenv>>. 
+
+[../img/sonar.png] Sonar
