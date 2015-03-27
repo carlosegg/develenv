@@ -17,4 +17,4 @@ soapui/src/main/rpm/SOURCES/
 src/main/rpm/SOURCES/
 devpi/src/main/rpm/SOURCES/
 deploymentPipeline/src/main/deploymentPipeline/
-
+maven
