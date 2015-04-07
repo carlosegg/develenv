@@ -99,18 +99,17 @@ function get_external(){
 }
 
 function get_externals(){
+  local external_dir=$PWD/externals
   DEFAULT_EXT_DEVELENV_DIR=$external_dir/develenv
   DEFAULT_PIPELINE_PLUGIN_DIR=$external_dir/pipeline_plugin
-  local external_dir=$PWD/externals
   if [[ "$EXT_DEVELENV_DIR" == "" ]]; then
     get_external $external_dir "http://thirdparty4-develenv-softwaresano.googlecode.com/svn/trunk/develenv"
-    EXT_DEVELENV_DIR=$DEFAULT_EXT_DEVELENV_DIR 
+    EXT_DEVELENV_DIR=$DEFAULT_EXT_DEVELENV_DIR
   fi
   if [[ "$PIPELINE_PLUGIN_DIR" == "" ]];then 
     get_external $external_dir "http://develenv-pipeline-plugin.googlecode.com/svn/trunk/pipeline_plugin/"
     PIPELINE_PLUGIN_DIR=$DEFAULT_PIPELINE_PLUGIN_DIR
   fi
-  local ext_develenv_dir=
   rsync --delete --exclude .svn -arv $EXT_DEVELENV_DIR/sonar-runner/src/site/resources/ sonar-runner/src/main/rpm/SOURCES
   rsync --delete --exclude .svn -arv $EXT_DEVELENV_DIR/jenkins/src/site/resources/ jenkins/src/main/rpm/SOURCES
   mkdir -p src/main/development/vagrant/instance/modules/home/files
