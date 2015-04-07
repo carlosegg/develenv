@@ -1,5 +1,6 @@
 .project
 .settings/
+externals/
 ci.sh
 localci.sh
 get_externals.sh

@@ -58,7 +58,7 @@ fi
 externalToolDir="src/main/rpm/SOURCES"
 version=$(grep "</\?version>" pom.xml|head -n1|sed s:"</\?version>":"":g|awk '{print $1}')
 artifactId=$(grep "</\?artifactId>" pom.xml|head -n1|sed s:"</\?artifactId>":"":g|awk '{print $1}')
-url_external_repo=`svn propget svn:externals .|grep "^${externalToolDir}"|awk '{print $2}'|sed s:"/src/site/resources/tools$":"":g`
+url_external_repo="http://thirdparty4-develenv-softwaresano.googlecode.com/svn/trunk/develenv/"
 export MAVEN_HOME=$PWD/${externalToolDir}/platform/maven/
 export PATH=$MAVEN_HOME/bin:$PATH
 export MAVEN_OPTS="-Xmx512m"
@@ -81,13 +81,35 @@ MVN_BASE_OPTIONS="--global-settings=$settings_file --settings=$settings_file \
                     -Dpassword=@password \
                     -DDEFAULT_JAVA_HOME=$develenv_java_home"
 
+function get_external(){
+  local external_dir=$1
+  local external_url=$2
+  local dependency_name=$(basename $1)
+  local external_dir=$PWD/externals
+  pushd . >/dev/null
+  mkdir -p $external_dir
+  cd $external_dir
+  local svn_command
+  [[ ! -d $external_dir/$dependency_name/.svn ]] && \
+      svn_command="svn co $external_url" || \
+      svn_command="cd $external_dir/$dependency_name && svn up"
+  eval $svn_command
+  [[ "$?" != 0 ]] && echo "[ERROR] Unnable download externals dependencies for $dependency_name" && exit 1
+  popd >/dev/null
+}
+
 function get_externals(){
-  DEFAULT_EXT_DEVELENV_DIR=../ext-develenv
-  DEFAULT_PIPELINE_PLUGIN_DIR=../pipeline_plugin
-  
-  [[ "$EXT_DEVELENV_DIR" == "" ]] && EXT_DEVELENV_DIR=$DEFAULT_EXT_DEVELENV_DIR
-  [[ "$PIPELINE_PLUGIN_DIR" == "" ]] && PIPELINE_PLUGIN_DIR=$DEFAULT_PIPELINE_PLUGIN_DIR
- 
+  DEFAULT_EXT_DEVELENV_DIR=$external_dir/develenv
+  DEFAULT_PIPELINE_PLUGIN_DIR=$external_dir/pipeline_plugin
+  local external_dir=$PWD/externals
+  if [[ "$EXT_DEVELENV_DIR" == "" ]]; then
+    get_external $external_dir "http://thirdparty4-develenv-softwaresano.googlecode.com/svn/trunk/develenv"
+    EXT_DEVELENV_DIR=$DEFAULT_EXT_DEVELENV_DIR 
+  fi
+  if [[ "$PIPELINE_PLUGIN_DIR" == "" ]];then 
+    get_external $external_dir "http://develenv-pipeline-plugin.googlecode.com/svn/trunk/pipeline_plugin/"
+    PIPELINE_PLUGIN_DIR=$DEFAULT_PIPELINE_PLUGIN_DIR
+  fi
   local ext_develenv_dir=
   rsync --delete --exclude .svn -arv $EXT_DEVELENV_DIR/sonar-runner/src/site/resources/ sonar-runner/src/main/rpm/SOURCES
   rsync --delete --exclude .svn -arv $EXT_DEVELENV_DIR/jenkins/src/site/resources/ jenkins/src/main/rpm/SOURCES
