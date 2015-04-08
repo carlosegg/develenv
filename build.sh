@@ -85,7 +85,6 @@ function get_external(){
   local external_dir=$1
   local external_url=$2
   local dependency_name=$(basename $1)
-  local external_dir=$PWD/externals
   pushd . >/dev/null
   mkdir -p $external_dir
   cd $external_dir
