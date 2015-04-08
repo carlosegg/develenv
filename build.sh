@@ -84,7 +84,7 @@ MVN_BASE_OPTIONS="--global-settings=$settings_file --settings=$settings_file \
 function get_external(){
   local external_dir=$1
   local external_url=$2
-  local dependency_name=$(basename $1)
+  local dependency_name=$(basename $external_url)
   pushd . >/dev/null
   mkdir -p $external_dir
   cd $external_dir
