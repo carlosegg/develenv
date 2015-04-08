@@ -91,10 +91,11 @@ function get_external(){
   cd $external_dir
   local svn_command
   [[ ! -d $external_dir/$dependency_name/.svn ]] && \
-      svn_command="svn co $external_url" || \
+      svn_command="svn co $external_url && cd $dependency_name" || \
       svn_command="cd $external_dir/$dependency_name && svn up"
   eval $svn_command
-  [[ "$?" != 0 ]] && echo "[ERROR] Unnable download externals dependencies for $dependency_name" && exit 1
+  [[ "$?" != 0 ]] && echo "[ERROR] Unable download externals dependencies for $dependency_name" && exit 1
+  LANG=C LANG=C svn info|grep ^Revision:|awk '{print $2}' >external_id
   popd >/dev/null
 }
 
