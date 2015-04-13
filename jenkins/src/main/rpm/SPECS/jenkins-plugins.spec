@@ -1,8 +1,8 @@
 # rpmbuild -bb SPECS/jenkins-plugins.spec --define '_topdir '`pwd` -v --clean
 
 Name:       jenkins-plugins
-Version:    2538
-Release:    124.1
+Version:    2538.%{versionModule}
+Release:    130.1
 Summary:    Plugins for jenkins
 Group:      develenv
 License:    http://creativecommons.org/licenses/by/3.0/
@@ -10,7 +10,7 @@ Packager:   softwaresano.com
 URL:        http://jenkins-ci.org/
 BuildArch:  noarch
 BuildRoot:  %{_topdir}/BUILDROOT
-Requires:   ss-develenv-jenkins >= 1.605-2538.124 ss-develenv-sonar-runner >= 2.4-2295.174 graphviz subversion mercurial git lcov sloccount
+Requires:   ss-develenv-jenkins >= 1.609-2538.%{versionModule}.130 ss-develenv-sonar-runner >= 2.4-2295.174 graphviz subversion mercurial git lcov sloccount
 Vendor:     tid.es
 
 %define jenkins_plugins_path jenkins/plugins
