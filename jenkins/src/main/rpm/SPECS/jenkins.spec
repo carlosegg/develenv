@@ -2,7 +2,7 @@
 
 Name:       jenkins
 Version:    1.609
-Release:    2538.%{versionModule}.130
+Release:    130
 Summary:    An extendable open source continuous integration server
 Group:      develenv
 License:    http://creativecommons.org/licenses/by/3.0/
