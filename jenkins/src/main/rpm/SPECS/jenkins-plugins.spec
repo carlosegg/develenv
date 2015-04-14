@@ -1,7 +1,7 @@
 # rpmbuild -bb SPECS/jenkins-plugins.spec --define '_topdir '`pwd` -v --clean
 
 Name:       jenkins-plugins
-Version:    %{versionModule}
+Version:    2538-%{versionModule}
 Release:    130.1
 Summary:    Plugins for jenkins
 Group:      develenv

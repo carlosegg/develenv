@@ -116,7 +116,7 @@ function get_externals(){
   rsync --delete --exclude .svn -arv ./src/main/resources/home src/main/development/vagrant/instance/modules/home/files
   
   rsync --delete --exclude .svn -arv $PIPELINE_PLUGIN_DIR/plugin/app/hudson/jobs/pipeline-ADMIN-01-addPipeline/ jenkins/src/main/config/jobs/pipeline-ADMIN-01-addPipeline
-  rsync --delete --exclude .svn -arv $EXT_DEVELENV_DIR/jenkins/src/main/config/plugins jenkins/src/main/config/plugins
+  rsync --delete --exclude .svn -arv $EXT_DEVELENV_DIR/jenkins/src/main/config/plugins jenkins/src/main/config
   rsync --delete --exclude .svn -arv $EXT_DEVELENV_DIR/nexus/src/site/resources/ nexus/src/main/rpm/SOURCES
   rsync --delete --exclude .svn -arv $EXT_DEVELENV_DIR/sonar/src/site/resources/ sonar/src/main/rpm/SOURCES
   rsync --delete --exclude .svn -arv $EXT_DEVELENV_DIR/selenium/src/site/resources/ selenium/src/main/rpm/SOURCES
