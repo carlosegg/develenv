@@ -1,8 +1,8 @@
 # rpmbuild -bb SPECS/sonar-plugins.spec --define '_topdir '`pwd` -v --clean
 
 Name:       sonar-plugins
-Version:    2544
-Release:    127.1
+Version:    2544.%{versionModule}
+Release:    131.1
 Summary:    Plugins for sonar
 Group:      develenv
 License:    http://www.gnu.org/licenses/quick-guide-gplv3.html
