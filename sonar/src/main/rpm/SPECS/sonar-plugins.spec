@@ -1,8 +1,8 @@
 # rpmbuild -bb SPECS/sonar-plugins.spec --define '_topdir '`pwd` -v --clean
 
 Name:       sonar-plugins
-Version:    2544.%{versionModule}
-Release:    131.1
+Version:    2544.37
+Release:    134.1
 Summary:    Plugins for sonar
 Group:      develenv
 License:    http://www.gnu.org/licenses/quick-guide-gplv3.html
@@ -10,7 +10,7 @@ Packager:   softwaresano.com
 URL:        http://docs.codehaus.org/display/SONAR/Plugin+Library
 BuildArch:  noarch
 BuildRoot:  %{_topdir}/BUILDROOT
-Requires:   ss-develenv-sonar >= 5.0.1-2537.123
+Requires:   ss-develenv-sonar >= 5.1-2537.37.134
 Vendor:     tid.es
 
 %define sonar_plugins_path sonar/extensions/plugins
