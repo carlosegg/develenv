@@ -17,7 +17,8 @@
   </properties>
   <body>
   <release version="37" date="2015-03-25" description="Migration to github">
-        <action dev="carlosg" type="add">jenkins 1.609</action>
+        <action dev="carlosg" type="add">jenkins 1.616</action>
+        <action dev="carlosg" type="add">sonar 5.1</action>
   </release>
   <release version="36" date="2014-12-26" description="">
       <action dev="carlosg" type="add">devpi 2.1.0</action>

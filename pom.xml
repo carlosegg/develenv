@@ -327,7 +327,7 @@
       <maven2.version>2.2.1</maven2.version>
       <ant.version>1.9.4</ant.version>
       <tomcat.version>8.0.20</tomcat.version>
-      <jenkins.version>1.609</jenkins.version>
+      <jenkins.version>1.616</jenkins.version>
       <nexus.version>2.11.2</nexus.version>
       <sonar.version>5.1</sonar.version>
       <sonar.runner.version>2.4</sonar.runner.version>
