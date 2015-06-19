@@ -103,7 +103,7 @@ function get_externals(){
   DEFAULT_EXT_DEVELENV_DIR=$external_dir/develenv
   DEFAULT_PIPELINE_PLUGIN_DIR=$external_dir/pipeline_plugin
   if [[ "$EXT_DEVELENV_DIR" == "" ]]; then
-    get_external $external_dir "http://thirdparty4-develenv-softwaresano.googlecode.com/svn/trunk/develenv"
+    #get_external $external_dir "http://thirdparty4-develenv-softwaresano.googlecode.com/svn/trunk/develenv"
     EXT_DEVELENV_DIR=$DEFAULT_EXT_DEVELENV_DIR
   fi
   if [[ "$PIPELINE_PLUGIN_DIR" == "" ]];then 
