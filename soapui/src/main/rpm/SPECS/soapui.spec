@@ -3,8 +3,8 @@
 %define org_acronynm ss
 Name:       soapui 
 Summary:    develenv soapui
-Version:    5.0.0
-Release:    2250.142
+Version:    5.1.3
+Release:    1
 License:    None
 Packager:   softwaresano.com
 Group:      http://www.soapui.org/Developers-Corner/soapui-license.html

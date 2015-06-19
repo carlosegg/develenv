@@ -3,8 +3,8 @@
 %define org_acronynm ss
 Name:       jmeter
 Summary:    application designed to load test functional behavior and mesure performance
-Version:    2.12
-Release:    97.2
+Version:    2.13
+Release:    1
 License:    http://www.apache.org/licenses/LICENSE-2.0
 Packager:   softwaresano.com
 Group:      develenv
