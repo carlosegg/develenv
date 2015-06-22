@@ -1,6 +1,6 @@
-                 =========================================
+                 ==========================================
                   ${project.artifactId} Versión - ${project.version}
-                 =========================================
+                 ==========================================
 1. Introducción
 ================
 ${project.artifactId} proporciona una solución para la automatización del proceso de construcción, testing y despliegue de software.
