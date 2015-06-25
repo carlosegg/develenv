@@ -1,6 +1,6 @@
 Name:       sonar
 Version:    5.1.1
-Release:    2537.37.139
+Release:    2542.4
 Summary:    Sonar is an open platform to manage code quality. 
 Group:      develenv
 License:    http://www.sonarsource.org/support/license/
@@ -9,7 +9,7 @@ URL:        http://www.sonarsource.org
 BuildArch:  noarch
 BuildRoot:  %{_topdir}/BUILDROOT
 Source0:    sonarqube-%{version}.zip
-Requires:   ss-develenv-sonar-db >= 5.0.1-2537.123 php-xml jdk httpd
+Requires:   ss-develenv-sonar-db >= 5.1.1-2542.4 php-xml jdk httpd
 Vendor:     tid.es
 AutoReqProv:no
 

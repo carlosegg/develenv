@@ -1,6 +1,6 @@
 Name:       sonar-db
-Version:    5.0.1
-Release:    2537.123
+Version:    5.1.1
+Release:    2542.4
 Summary:    Sonar database
 Group:      develenv
 License:    http://www.sonarsource.org/support/license/
