@@ -331,7 +331,7 @@
       <nexus.version>2.11.2</nexus.version>
       <sonar.version>5.1.1</sonar.version>
       <sonar.runner.version>2.4</sonar.runner.version>
-      <selenium.version>2.45.0</selenium.version>
+      <selenium.version>2.46.0</selenium.version>
       <selenium.chrome.version>26.0.1383.0</selenium.chrome.version>
       <jmeter.version>2.13</jmeter.version>
       <soapui.version>5.1.3</soapui.version>

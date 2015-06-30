@@ -3,8 +3,8 @@
 %define org_acronynm ss
 Name:       selenium
 Summary:    Selenium automates browsers
-Version:    2.45.0
-Release:    2536.122
+Version:    2.46.0
+Release:    2536.8
 License:    http://www.apache.org/licenses/LICENSE-2.0
 Packager:   softwaresano.com
 Group:      develenv
