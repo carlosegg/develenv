@@ -2,7 +2,7 @@
 
 Name:       jenkins-plugins
 Version:    2538.%{versionModule}
-Release:    130.4
+Release:    130.6
 Summary:    Plugins for jenkins
 Group:      develenv
 License:    http://creativecommons.org/licenses/by/3.0/
