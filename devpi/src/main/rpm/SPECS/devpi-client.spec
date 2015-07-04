@@ -4,7 +4,7 @@
 Name:       devpi-client
 Summary:    client reliable fast pypi.python.org caching
 Version:    2.0.5
-Release:    1
+Release:    2
 License:    http://opensource.org/licenses/MIT
 Packager:   softwaresano.com
 Group:      develenv
@@ -21,6 +21,8 @@ Source0:    devpi-client-%{version}.tar.gz
 %define config_dir /etc
 %define data_dir   /var/develenv/repositories
 %define devpi_scripts devpi devpi-upload.sh
+%{!?python_dependency: %global python_dependency %([[ "$(cat /etc/redhat-release |sed s:'.*release ':'':g|awk '{print $1}'|cut -d '.' -f1)" == "6" ]] && echo python2.6 || echo python2.7)}
+
 
 
 # Redefine post install macros 
@@ -40,9 +42,9 @@ reliable fast pypi.python.org caching server
 %{__mkdir_p} %{buildroot}
 
 %install
-mkdir -p %{buildroot}/%{target_dir}/bin %{buildroot}/%{target_dir}/lib/python2.6/site-packages/
+mkdir -p %{buildroot}/%{target_dir}/bin %{buildroot}/%{target_dir}/lib/%{python_dependency}/site-packages/
 
-PYTHONPATH=%{buildroot}/%{target_dir}/lib/python2.6/site-packages/ python setup.py install --prefix %{buildroot}/%{target_dir}
+PYTHONPATH=%{buildroot}/%{target_dir}/lib/%{python_dependency}/site-packages/ python setup.py install --prefix %{buildroot}/%{target_dir}
 
 
 cd %{buildroot}/%{target_dir}/bin
