@@ -1,6 +1,4 @@
 %{!?mysql_dependency: %global mysql_dependency %([[ "$(cat /etc/redhat-release |sed s:'.*release ':'':g|awk '{print $1}'|cut -d '.' -f1)" == "7" ]] && echo mariadb || echo mysql)}
-
-mysql_package
 Name:       sonar-db
 Version:    5.1.1
 Release:    2542.4

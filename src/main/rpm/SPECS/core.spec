@@ -2,6 +2,8 @@
 #'/home/carlosg/workspace/develenv/target/.rpm --define 'versionModule '1 \
 #--define 'releaseModule '2  -bb /var/tmp/rpm/ss-develenv-core-1-2/ss-develenv-core.spec
 
+%{!?xorg_dependency: %global xorg_dependency %([[ "$(cat /etc/redhat-release |sed s:'.*release ':'':g|awk '{print $1}'|cut -d '.' -f1)" == "7" ]] && echo "" || echo "xorg-x11-xdm")}
+
 %define project_name develenv
 %define org_acronynm ss
 Name:      core
@@ -13,7 +15,7 @@ Packager:  ss
 Group:     develenv
 BuildArch: noarch
 BuildRoot: %{_topdir}/BUILDROOT
-Requires:  %{org_acronynm}-%{project_name}-user >= 33-2409, bind-utils,httpd,php,wget,xorg-x11-server-Xvfb,libXfont,xorg-x11-xdm,curl,openssh-clients,rpm-build,rpmdevtools,createrepo,ss-develenv-config = %{versionModule}-%{releaseModule}, ss-develenv-devpi-server >= 2.1.0-1, ss-develenv-devpi-client >= 2.0.5-1 ,ss-develenv-jmeter >= 2.12-97.1 ,ss-develenv-soapui >= 5.0.0-2250.142, ss-develenv-ant >= 1.9.4-2270.157, ss-develenv-maven >= 3.2.5-2521, ss-develenv-maven2 >= 2.2.1-2, ss-develenv-jenkins-plugins >= 2538.%{versionModule}-130.1, ss-develenv-nexus >= 2.11.2-2537.125, ss-develenv-sonar-plugins >= 2544-127.1, ss-develenv-sonar-rules >= 3-2054.1, ss-develenv-selenium-drivers >= 26.0.1383-2236.130, ss-develenv-docs = %{versionModule}-%{releaseModule}, ss-develenv-screenshot >= %{versionModule} ss-develenv-docker-registry >= %{versionModule} ss-develenv-dp-jenkins, ss-develenv-dp-dashboard
+Requires:  %{org_acronynm}-%{project_name}-user >= 33-2409, bind-utils,httpd,php,wget,xorg-x11-server-Xvfb,libXfont %{xorg_dependency} curl,openssh-clients,rpm-build,rpmdevtools,createrepo,ss-develenv-config = %{versionModule}-%{releaseModule}, ss-develenv-devpi-server >= 2.1.0-1, ss-develenv-devpi-client >= 2.0.5-1 ,ss-develenv-jmeter >= 2.12-97.1 ,ss-develenv-soapui >= 5.0.0-2250.142, ss-develenv-ant >= 1.9.4-2270.157, ss-develenv-maven >= 3.2.5-2521, ss-develenv-maven2 >= 2.2.1-2, ss-develenv-jenkins-plugins >= 2538.%{versionModule}-130.1, ss-develenv-nexus >= 2.11.2-2537.125, ss-develenv-sonar-plugins >= 2544-127.1, ss-develenv-sonar-rules >= 3-2054.1, ss-develenv-selenium-drivers >= 26.0.1383-2236.130, ss-develenv-docs = %{versionModule}-%{releaseModule}, ss-develenv-screenshot >= %{versionModule} ss-develenv-docker-registry >= %{versionModule} ss-develenv-dp-jenkins, ss-develenv-dp-dashboard
 Vendor:    SoftwareSano.com
 
 

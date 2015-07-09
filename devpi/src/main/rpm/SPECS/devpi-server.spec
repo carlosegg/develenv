@@ -4,7 +4,7 @@
 Name:       devpi-server
 Summary:    reliable fast pypi.python.org caching server
 Version:    2.1.0
-Release:    2
+Release:    3
 License:    http://opensource.org/licenses/MIT
 Packager:   softwaresano.com
 Group:      develenv
@@ -35,32 +35,24 @@ Vendor:     softwaresano.com
 reliable fast pypi.python.org caching server
 
 %install
+function install_library(){
+  local source_file=$1
+  tar xvfz %{_sourcedir}/${source_file}.tar.gz
+  cd $source_file
+  echo "Installing $source_file"
+  PYTHONPATH=%{buildroot}/%{target_dir}/lib/%{python_dependency}/site-packages/ python setup.py install --prefix %{buildroot}/%{target_dir}
+  cd ../
+}
 PYTHONPATH=""
 unset PYTHONPATH
 mkdir -p %{buildroot}/%{target_dir}/lib/%{python_dependency}/site-packages/
-tar xvfz %{_sourcedir}/supervisor-3.1.3.tar.gz
-cd supervisor*
-PYTHONPATH=%{buildroot}/%{target_dir}/lib/%{python_dependency}/site-packages/ python setup.py install --prefix %{buildroot}/%{target_dir}
-cd ../
-tar xvfz %{_sourcedir}/hgdistver-0.25.tar.gz
-cd ./hgdistver-0.25
-PYTHONPATH=%{buildroot}/%{target_dir}/lib/%{python_dependency}/site-packages/ python setup.py install --prefix %{buildroot}/%{target_dir}
-cd ..
-tar xvfz %{_sourcedir}/pip-6.0.8.tar.gz
-cd ./pip-6.0.8
-PYTHONPATH=%{buildroot}/%{target_dir}/lib/%{python_dependency}/site-packages/ python setup.py install --prefix %{buildroot}/%{target_dir}
-cd ..
-tar xvfz %{_sourcedir}/pbr-0.10.8.tar.gz
-cd ./pbr-0.10.8
-PYTHONPATH=%{buildroot}/%{target_dir}/lib/%{python_dependency}/site-packages/ python setup.py install --prefix %{buildroot}/%{target_dir}
-cd ..
-tar xvfz %{_sourcedir}/devpi-%{version}.tar.gz
-cd ./devpi-%{version}
-PYTHONPATH=%{buildroot}/%{target_dir}/lib/%{python_dependency}/site-packages/ python setup.py install --prefix %{buildroot}/%{target_dir}
-cd ..
-tar xvfz %{_sourcedir}/devpi-web-2.2.3.tar.gz
-cd ./devpi-web-2.2.3
-PYTHONPATH=%{buildroot}/%{target_dir}/lib/%{python_dependency}/site-packages/ python setup.py install --prefix %{buildroot}/%{target_dir}
+#for library in supervisor-3.1.3 Pygments-2.0.2 WebOb-1.4.1 PasteDeploy-1.5.2 Chameleon-2.22 pyramid_chameleon-0.3 hgdistver-0.25 pip-6.0.8 pbr-0.10.8 devpi-%{version} devpi-web-2.2.3; do
+
+
+for library in supervisor-3.1.3 hgdistver-0.25 pip-6.0.8 pbr-0.10.8 devpi-%{version} devpi-web-2.2.3; do
+  install_library $library
+done
+
 
 cd %{buildroot}
 cp -R %{_sourcedir}/%{config_dir} .
@@ -152,3 +144,4 @@ fi
 
 %clean
 [ ${RPM_BUILD_ROOT} != "/" ] && rm -rf ${RPM_BUILD_ROOT}/*
+
