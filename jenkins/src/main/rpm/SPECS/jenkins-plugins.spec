@@ -3,7 +3,7 @@
 
 Name:       jenkins-plugins
 Version:    2538.%{versionModule}
-Release:    10.ge4ba582.el%{redhat_version}
+Release:    11.gc28875f.el%{redhat_version}
 Summary:    Plugins for jenkins
 Group:      develenv
 License:    http://creativecommons.org/licenses/by/3.0/
@@ -11,7 +11,7 @@ Packager:   softwaresano.com
 URL:        http://jenkins-ci.org/
 BuildArch:  noarch
 BuildRoot:  %{_topdir}/BUILDROOT
-Requires:   ss-develenv-jenkins >= 1.617-3 ss-develenv-sonar-runner >= 2.4-2295.174 graphviz subversion mercurial git lcov sloccount
+Requires:   ss-develenv-jenkins >= 1.619-11.gc28875f ss-develenv-sonar-runner >= 2.4-2295.174 graphviz subversion mercurial git lcov sloccount
 Vendor:     tid.es
 
 %define jenkins_plugins_path jenkins/plugins
