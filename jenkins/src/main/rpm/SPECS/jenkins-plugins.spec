@@ -1,8 +1,9 @@
 # rpmbuild -bb SPECS/jenkins-plugins.spec --define '_topdir '`pwd` -v --clean
+%{!?redhat_version: %global redhat_version %(cat /etc/redhat-release |sed s:'.*release ':'':g|awk '{print $1}'|cut -d '.' -f1)}
 
 Name:       jenkins-plugins
 Version:    2538.%{versionModule}
-Release:    130.6
+Release:    10.ge4ba582.el%{redhat_version}
 Summary:    Plugins for jenkins
 Group:      develenv
 License:    http://creativecommons.org/licenses/by/3.0/
