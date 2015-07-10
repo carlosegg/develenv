@@ -196,9 +196,11 @@ fi
 #-------------------------------------------------------------------------------
 %files
 %defattr(-,%{project_name},%{project_name},-)
-/home/%{project_name}
-/var/
-/opt/
+/home/%{project_name}/
+/var/%{project_name}/
+/var/tmp/%{project_name}/tomcat/
+/var/log/%{project_name}/tomcat/
+/opt/ss/%{project_name}/
 # Jenkins config files that we need to keep between updates
 # General jenkins config
 %config(noreplace) /home/%{project_name}/app/jenkins/config.xml

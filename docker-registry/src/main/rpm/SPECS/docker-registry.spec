@@ -1,10 +1,11 @@
 # rpmbuild -bb SPECS/docker-registry.spec  --define '_topdir '`pwd`  -v --clean
+%{!?redhat_version: %global redhat_version %(cat /etc/redhat-release |sed s:'.*release ':'':g|awk '{print $1}'|cut -d '.' -f1)}
 %define     project_name develenv
 %define     org_acronym ss
 Name:       docker-registry
 Summary:    Docker-Registry
 Version:    %{versionModule}
-Release:    5
+Release:    11.gc28875f.el%{redhat_version}
 License:    http://www.apache.org/licenses/LICENSE-2.0
 Packager:   softwaresano.com
 Group:      develenv
@@ -14,6 +15,7 @@ Requires:   docker-registry %{org_acronym}-%{project_name}-user httpd
 Vendor:     softwaresano.com
 
 %define package_name docker-registry
+%define docker_registry_home /var/develenv/repositories/docker-registry
 
 %description
 Wrapper for docker-registry
@@ -42,7 +44,7 @@ function configure_iptables(){
       fi
 
 }
-sed -i s:"/var/lib/docker-registry":"/var/develenv/repositories/docker-registry":g /etc/docker-registry.yml
+sed -i s:"/var/lib/docker-registry":"%{docker_registry_home}":g /etc/docker-registry.yml
 sed -i s:"REGISTRY_PORT=.*":"REGISTRY_PORT=5010":g /etc/sysconfig/docker-registry
 
 configure_iptables
@@ -54,7 +56,7 @@ fi
 
 %files
 %defattr(-,develenv,develenv,-)
-/
+%{docker_registry_home}
 
 %clean
 [ ${RPM_BUILD_ROOT} != "/" ] && rm -rf ${RPM_BUILD_ROOT}/*

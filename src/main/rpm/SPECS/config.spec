@@ -47,7 +47,9 @@ find . -name "*.sh" -exec chmod 755 {} \;
 
 %files
 %defattr(-,%{project_name},%{project_name},755)
-%config(noreplace) /etc
+%config(noreplace) /etc/%{project_name}
+%config(noreplace) /etc/httpd/conf.d/%{project_name}.conf
+%config(noreplace) /etc/httpd/conf.d/%{project_name}.conf.d
 
 %pre
 #-----------------------------------------------------------------------------
