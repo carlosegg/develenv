@@ -6,7 +6,7 @@
 Name:       devpi-server
 Summary:    reliable fast pypi.python.org caching server
 Version:    2.1.0
-Release:    11.gc28875f.el%{redhat_version}
+Release:    12.gc28875f.el%{redhat_version}
 License:    http://opensource.org/licenses/MIT
 Packager:   softwaresano.com
 Group:      develenv
@@ -138,7 +138,8 @@ fi
 %files
 %defattr(-,develenv,develenv,-)
 %{target_dir}
-%{home_dir}
+%{home_dir}/develenv/.pip/
+%{home_dir}/develenv/.pydistutils.cfg
 %{data_dir}
 %attr(755,develenv,develenv) /etc/init.d/develenv-devpi
 %config(noreplace) %{config_dir}/httpd/conf.d/develenv.conf.d/develenv-devpi.conf
