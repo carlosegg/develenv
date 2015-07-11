@@ -300,8 +300,8 @@ function areYouSure(){
 }
 
 function getHostname(){
-   IP=`LANG=C /sbin/ifconfig | grep "inet addr" | grep "Bcast" | awk '{ print $2 }' | awk 'BEGIN { FS=":" } { print $2 }' | awk ' BEGIN { FS="." } { print $1 "." $2 "." $3 "." $4 }'`
-   MAC_ADDRESSES=`LANG=C /sbin/ifconfig -a|grep HWaddr|awk '{ print $5 }'`
+   IP=$(LANG=C /sbin/ip addr|grep -v inet6|grep inet|grep global|awk '{print $2}'|cut -d'/' -f1)
+   MAC_ADDRESSES=$(LANG=C /sbin/ip addr|grep ether|awk '{print $2}')
    if [ "$IP" == "" ]; then
       echo -e "\nNo hay conexión de red. Introduce el nombre o la ip de la máquina: \c"
       read HOST
