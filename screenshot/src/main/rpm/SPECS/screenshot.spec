@@ -7,7 +7,7 @@
 Name:       screenshot
 Summary:    Screenshot of a web page
 Version:    %{versionModule}
-Release:    11.gc28875f.el%{redhat_version}
+Release:    2562.g2074459.el%{redhat_version}
 License:    http://www.apache.org/licenses/LICENSE-2.0
 Packager:   softwaresano.com
 Group:      develenv
