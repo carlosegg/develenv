@@ -38,11 +38,15 @@ function status_db(){
    if [[ "$(cat /proc/version|grep -i "Red Hat")" == "" ]]; then
       #Ubuntu
       running_filter="process"
+      is_running=$(service $mysqlService status|grep process)
    else
       #Redhat
-      running_filter="(pid"
+      if [[ "$rh_version" == "7" ]]; then
+         is_running=$(sudo service $mysqlService status 2>/dev/null|grep Main|grep mysqld_safe)
+      else
+           is_running=$(service $mysqlService status|grep $running_filter)
+      fi
    fi
-   is_running=$(service $mysqlService status|grep $running_filter)
    sleep 1
 }
 
@@ -70,8 +74,18 @@ if [ "$ID" == "0" ]; then
    fi
    projectName=$(getProjectName)
    administratorId=$(getAdministratorId)
-   [[ "$(cat /proc/version|grep -i "Red Hat")" == "" ]] \
-      && mysqlService="mysql" || mysqlService="mysqld"
+   rh_version=$(cat /etc/redhat-release 2>/dev/null|sed s:'.*release ':'':g|awk '{print $1}'|cut -d '.' -f1)
+   case $rh_version in
+     '')
+       mysqlService="mysql"
+     ;;
+     6)
+       mysqlService="mysqld"
+     ;;
+     7)
+       mysqlService="mariadb"
+     ;;
+    esac
    SQL_SONAR_FILE="scriptDB.sql"
    lineSeparator=`grep -n "#### $SQL_SONAR_FILE ####" $0|grep -v "grep" |sed s:"\:#### $SQL_SONAR_FILE ####":"":g`
    sed 1,${lineSeparator}d $0 > $SQL_SONAR_FILE
