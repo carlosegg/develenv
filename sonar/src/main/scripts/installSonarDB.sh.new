@@ -44,7 +44,7 @@ function status_db(){
       if [[ "$rh_version" == "7" ]]; then
          is_running=$(sudo service $mysqlService status 2>/dev/null|grep Main|grep mysqld_safe)
       else
-           is_running=$(service $mysqlService status|grep $running_filter)
+           is_running=$(service $mysqlService status|grep "(pid")
       fi
    fi
    sleep 1
