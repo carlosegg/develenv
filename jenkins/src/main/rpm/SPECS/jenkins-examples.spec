@@ -2,8 +2,8 @@
 %define project_name develenv
 %define org_acronynm ss
 Name:       jenkins-examples
-Version:    36
-Release:    2542
+Version:    37
+Release:    2567.g5690bfd.%{os_release}
 Summary:    Example jenkins jobs
 Group:      develenv
 License:    http://creativecommons.org/licenses/by/3.0/
