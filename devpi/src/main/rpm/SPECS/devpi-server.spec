@@ -1,12 +1,10 @@
 # rpmbuild -bb SPECS/devpi-server.spec  --define '_topdir '`pwd`  -v --clean
-%{!?redhat_version: %global redhat_version %(cat /etc/redhat-release |sed s:'.*release ':'':g|awk '{print $1}'|cut -d '.' -f1)}
-
 %define project_name develenv
 %define org_acronynm ss
 Name:       devpi-server
 Summary:    reliable fast pypi.python.org caching server
 Version:    2.1.0
-Release:    12.gc28875f.el%{redhat_version}
+Release:    12.gc28875f.%{os_release}
 License:    http://opensource.org/licenses/MIT
 Packager:   softwaresano.com
 Group:      develenv
