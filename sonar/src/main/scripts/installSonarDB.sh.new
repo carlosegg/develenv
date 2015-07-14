@@ -22,7 +22,7 @@ function getProjectName(){
 
 function getSonarJdbcPassword(){
     if [ -f /etc/$PROJECT_NAME/$PROJECT_NAME.properties ]; then
-       sonar_password=$(sed s:"-D":"\n":g /etc/$PROJECT_NAME/$PROJECT_NAME.properties 2>/dev/null|grep ^password=|cut -d'=' -f2-)
+       sonar_password=$(sed s:"-D":"\n":g /etc/$PROJECT_NAME/$PROJECT_NAME.properties 2>/dev/null|grep ^password=|cut -d'=' -f2-|tr -d '"'|tr -d "'")
        if [ $? == 0 ]; then
           if [ "$sonar_password" != "" ]; then
              echo $sonar_password
@@ -91,6 +91,10 @@ if [ "$ID" == "0" ]; then
    sed 1,${lineSeparator}d $0 > $SQL_SONAR_FILE
    #Update sonar password
    sed -i s:"#JDBC_PASSWORD":"INSERT INTO user (Host,User,Password)  VALUES('localhost','sonar',PASSWORD('$(getSonarJdbcPassword)'));":g $SQL_SONAR_FILE
+  # UPDATE table_name SET field1=new-value1, field2=new-value2
+#[WHERE Clause]
+    UPDATE user SET Password=PASSWORD('$(getSonarJdbcPassword)') WHERE User='sonar'
+   
    #Update sonar administrator user
    echo "UPDATE \`users\` SET login='$administratorId',name='$projectName (Administrator)',crypted_password='997890e6d0e1a6d92d88763b5eec503a7443b60e', salt='df7db2226da21958d8f6a2f42fb73bb41858efce' WHERE id=1;" >> $SQL_SONAR_FILE
    echo "UPDATE \`properties\` SET text_value='UA-8116005-4' WHERE prop_key='sonar.google-analytics.account';" >> $SQL_SONAR_FILE
