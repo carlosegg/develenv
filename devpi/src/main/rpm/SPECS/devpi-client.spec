@@ -4,7 +4,7 @@
 Name:       devpi-client
 Summary:    client reliable fast pypi.python.org caching
 Version:    2.0.5
-Release:    2
+Release:    12.g2923249.%{os_release}
 License:    http://opensource.org/licenses/MIT
 Packager:   softwaresano.com
 Group:      develenv

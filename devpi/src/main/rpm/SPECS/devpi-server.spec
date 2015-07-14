@@ -4,7 +4,7 @@
 Name:       devpi-server
 Summary:    reliable fast pypi.python.org caching server
 Version:    2.1.0
-Release:    12.gc28875f.%{os_release}
+Release:    12.g2923249.%{os_release}
 License:    http://opensource.org/licenses/MIT
 Packager:   softwaresano.com
 Group:      develenv

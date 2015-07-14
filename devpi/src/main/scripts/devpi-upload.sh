@@ -1,6 +1,7 @@
 #!/bin/bash
 DEVPI_HOME=/opt/ss/develenv/platform/devpi-client
-export PYTHONPATH=$DEVPI_HOME/lib/python2.6/site-packages
+PYTHON_VERSION=$(python --version 2>&1|awk '{print $2}'|cut -d'.' -f1,2) 
+export PYTHONPATH=$DEVPI_HOME/lib/python${PYTHON_VERSION}/site-packages
 DEVPI_COMMAND="$DEVPI_HOME/bin/devpi"
 $DEVPI_COMMAND login develenv --password=develenv
 if [[ -f setup.cfg ]]; then
