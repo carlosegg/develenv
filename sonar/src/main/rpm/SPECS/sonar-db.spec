@@ -2,7 +2,7 @@
 %{!?redhat_version: %global redhat_version %(cat /etc/redhat-release |sed s:'.*release ':'':g|awk '{print $1}'|cut -d '.' -f1)}
 Name:       sonar-db
 Version:    5.1.1
-Release:    2564.gd8654b5.el%{redhat_version}
+Release:    2566.gc6cd979.el%{redhat_version}
 Summary:    Sonar database
 Group:      develenv
 License:    http://www.sonarsource.org/support/license/
