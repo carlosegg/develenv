@@ -4,7 +4,7 @@
 %define org_acronynm ss
 Name:       maven
 Version:    3.2.5
-Release:    2521.107
+Release:    2521.107.g2923249.%{os_release}
 Summary:    Apache Maven is a software project management and comprehension tool.
 Group:      develenv
 License:    http://www.apache.org/licenses/LICENSE-2.0.html

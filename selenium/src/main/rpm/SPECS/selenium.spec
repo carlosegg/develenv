@@ -4,7 +4,7 @@
 Name:       selenium
 Summary:    Selenium automates browsers
 Version:    2.46.0
-Release:    2536.8
+Release:    2536.8.%{os_release}
 License:    http://www.apache.org/licenses/LICENSE-2.0
 Packager:   softwaresano.com
 Group:      develenv

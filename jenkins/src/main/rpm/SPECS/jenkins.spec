@@ -1,9 +1,8 @@
 # rpmbuild -bb SPECS/jenkins.spec --define '_topdir '`pwd` -v --clean
-%{!?redhat_version: %global redhat_version %(cat /etc/redhat-release |sed s:'.*release ':'':g|awk '{print $1}'|cut -d '.' -f1)}
 
 Name:       jenkins
 Version:    1.619
-Release:    11.gc28875f.el%{redhat_version}
+Release:    11.gc28875f.%{os_release}
 Summary:    An extendable open source continuous integration server
 Group:      develenv
 License:    http://creativecommons.org/licenses/by/3.0/

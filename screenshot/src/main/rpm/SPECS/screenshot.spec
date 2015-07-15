@@ -1,13 +1,12 @@
 # rpmbuild -bb SPECS/screenshot.spec  --define '_topdir '`pwd`  -v --clean
 %{!?python_dependency: %global python_dependency %([[ "$(cat /etc/redhat-release |sed s:'.*release ':'':g|awk '{print $1}'|cut -d '.' -f1)" == "6" ]] && echo python2.6 || echo python2.7)}
-%{!?redhat_version: %global redhat_version %(cat /etc/redhat-release |sed s:'.*release ':'':g|awk '{print $1}'|cut -d '.' -f1)}
 
 %define     project_name develenv
 %define     org_acronym ss
 Name:       screenshot
 Summary:    Screenshot of a web page
 Version:    %{versionModule}
-Release:    2562.g2074459.el%{redhat_version}
+Release:    2562.g2074459.%{os_release}
 License:    http://www.apache.org/licenses/LICENSE-2.0
 Packager:   softwaresano.com
 Group:      develenv

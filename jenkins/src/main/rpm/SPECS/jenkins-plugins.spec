@@ -3,7 +3,7 @@
 
 Name:       jenkins-plugins
 Version:    2538.%{versionModule}
-Release:    11.gc28875f.el%{redhat_version}
+Release:    11.gc28875f.%{os_release}
 Summary:    Plugins for jenkins
 Group:      develenv
 License:    http://creativecommons.org/licenses/by/3.0/

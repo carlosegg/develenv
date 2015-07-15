@@ -1,11 +1,10 @@
 # rpmbuild -bb SPECS/docker-registry.spec  --define '_topdir '`pwd`  -v --clean
-%{!?redhat_version: %global redhat_version %(cat /etc/redhat-release |sed s:'.*release ':'':g|awk '{print $1}'|cut -d '.' -f1)}
 %define     project_name develenv
 %define     org_acronym ss
 Name:       docker-registry
 Summary:    Docker-Registry
 Version:    %{versionModule}
-Release:    11.gc28875f.el%{redhat_version}
+Release:    11.gc28875f.%{os_release}
 License:    http://www.apache.org/licenses/LICENSE-2.0
 Packager:   softwaresano.com
 Group:      develenv

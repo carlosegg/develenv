@@ -3,7 +3,7 @@
 %define org_acronynm ss
 Name:       ant
 Version:    1.9.4
-Release:    2270.157
+Release:    2270.157.g2923249.%{os_release}
 Summary:    Tool whose mission is to drive processes described in build files as targets and extension points dependent upon each other.
 Group:      develenv
 License:    http://www.apache.org/licenses/LICENSE-2.0.html

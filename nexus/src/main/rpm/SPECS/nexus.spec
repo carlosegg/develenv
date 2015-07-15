@@ -3,7 +3,7 @@
 
 Name:       nexus
 Version:    2.11.2
-Release:    2537.125
+Release:    2537.125.%{os_release}
 Summary:    Nexus manages software "artifacts" required for development.
 Group:      develenv
 License:    http://www.sonatype.org/nexus/license

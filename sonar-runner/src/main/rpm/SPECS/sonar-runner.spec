@@ -2,7 +2,7 @@
 
 Name:       sonar-runner
 Version:    2.4
-Release:    2295.174
+Release:    2295.174.g2923249.%{os_release}
 Summary:    Sonar client for analyzing code quality
 Group:      develenv
 License:    http://www.gnu.org/licenses/lgpl.txt

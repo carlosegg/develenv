@@ -3,7 +3,7 @@
 
 Name:       sonar-rules
 Version:    3
-Release:    2054.1
+Release:    2054.1.g2923249.%{os_release}
 Summary:    Rules for sonar
 Group:      develenv
 License:    http://www.gnu.org/licenses/quick-guide-gplv3.html

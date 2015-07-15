@@ -4,7 +4,7 @@
 Name:       jmeter
 Summary:    application designed to load test functional behavior and mesure performance
 Version:    2.13
-Release:    1
+Release:    1.%{os_release}
 License:    http://www.apache.org/licenses/LICENSE-2.0
 Packager:   softwaresano.com
 Group:      develenv

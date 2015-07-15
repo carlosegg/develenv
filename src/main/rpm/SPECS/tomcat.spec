@@ -2,7 +2,7 @@
 %define org_acronynm ss
 Name:       tomcat
 Version:    8.0.20
-Release:    2535.121
+Release:    2535.121.g2923249.%{os_release}
 Summary:    Apache Tomcat is an open source software implementation of the Java Servlet and JavaServer Pages technologies.
 Group:      develenv
 License:    http://www.apache.org/licenses/LICENSE-2.0.html

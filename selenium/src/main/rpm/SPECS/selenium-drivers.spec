@@ -4,7 +4,7 @@
 Name:       selenium-drivers
 Summary:    Selenium Webdrivers for Google Chrome
 Version:    26.0.1383
-Release:    2236.130
+Release:    2236.130.%{os_release}
 License:    http://opensource.org/licenses/BSD-3-Clause
 Packager:   softwaresano.com
 Group:      develenv
