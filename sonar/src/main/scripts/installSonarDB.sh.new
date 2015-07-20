@@ -115,6 +115,10 @@ if [ "$ID" == "0" ]; then
    kill `ps -ef|grep "mysqld"|grep -v "grep"|grep -v "mysqld_safe"|awk '{print $2}'`
    sleep 4
    service ${mysqlService} start
+   rh_version=$(cat /etc/redhat-release |sed s:'.*release ':'':g|awk '{print $1}'|cut -d '.' -f1)
+   if [[ "$rh_version" == 7 ]]; then
+        systemctl enable mariadb
+   fi
 else
    echo You must be root to execute $0
    exit 1

@@ -1,7 +1,7 @@
-%{!?mysql_dependency: %global mysql_dependency %([[ "$(cat /etc/redhat-release |sed s:'.*release ':'':g|awk '{print $1}'|cut -d '.' -f1)" == "7" ]] && echo mariadb || echo mysql)}
+%{!?mysql_dependency: %global mysql_dependency %([[ "%{os_release}" == "el7" ]] && echo mariadb || echo mysql)}
 Name:       sonar-db
 Version:    5.1.1
-Release:    2566.gc6cd979.%{os_release}
+Release:    2566.gd655857.%{os_release}
 Summary:    Sonar database
 Group:      develenv
 License:    http://www.sonarsource.org/support/license/
