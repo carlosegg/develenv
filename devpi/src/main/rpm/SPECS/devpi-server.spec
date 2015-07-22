@@ -4,7 +4,7 @@
 Name:       devpi-server
 Summary:    reliable fast pypi.python.org caching server
 Version:    2.1.0
-Release:    12.g2923249.%{os_release}
+Release:    13.g6ef1ebe.%{os_release}
 License:    http://opensource.org/licenses/MIT
 Packager:   softwaresano.com
 Group:      develenv
@@ -101,6 +101,9 @@ is_a_service="$(chkconfig --list develenv-devpi 2>/dev/null)"
 if [ "$is_a_service" == "" ]; then
    _log "[INFO] Creating develenv-devpi service"
    chkconfig develenv-devpi on
+   if [[ "%{os_release}" == "el7" ]]; then
+        systemctl enable develenv-devpi
+   fi
 fi
 if [ "$(service develenv-devpi status 2>/dev/null|grep '^server is running with pid')" == "" ]; then
   service develenv-devpi start

@@ -1,6 +1,6 @@
 Name:       sonar
 Version:    5.1.1
-Release:    2542.4.g2923249.%{os_release}
+Release:    2573.g484bace.%{os_release}
 Summary:    Sonar is an open platform to manage code quality. 
 Group:      develenv
 License:    http://www.sonarsource.org/support/license/
@@ -176,13 +176,16 @@ if [ "$is_a_service" == "" ]; then
    unlink develenv-sonar 2>/dev/null
    ln -s %{sonar_script} develenv-sonar
    chkconfig develenv-sonar on
+   if [[ "%{os_release}" == "el7" ]]; then
+        systemctl enable develenv-sonar
+   fi
 fi
 
 if [ -f %{sonar_upgrading} ]; then
    rm -rf %{sonar_upgrading}
    service develenv-sonar start
 else
-   _log "[INFO] Execute service develenv-sonar start] to start sonar"
+   _log "[INFO] Execute: 'service develenv-sonar start' to start sonar"
 fi
 
 %preun

@@ -120,6 +120,10 @@ function postInstallRedHat(){
    _log "[Start] RedHat PostInstallation"
    configureSelinux
    chkconfig --add develenv
+   local rh_version=$(cat /etc/redhat-release |sed s:'.*release ':'':g|awk '{print $1}'|cut -d '.' -f1)
+   if [[ "$rh_version" == 7 ]]; then
+        systemctl enable develenv
+   fi
    _log "[Finish] RedHat PostInstallation"
 }
 
