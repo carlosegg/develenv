@@ -241,4 +241,3 @@ Toda la documentación del proyecto está disponible en ${maven.site.url}/${proj
    
    	/home/develenv/platform/maven/conf/settings.xml.
    	y desactivar el perfil <scm>
-
