@@ -229,7 +229,7 @@ Toda la documentación del proyecto está disponible en ${maven.site.url}/${proj
    
    
 9 Advertencias
-===============
+==============
 
    1.- El arranque por primera vez de ${project.artifactId} y ejecución de los diferentes proyectos de ejemplo puede 
    tardar alrededor de 15 minutos. Esto es debido a que se deben descargar los plugins de maven de los repositorios
