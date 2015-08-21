@@ -2,7 +2,7 @@
 
 Name:       sonar-plugins
 Version:    2544.37
-Release:    142.6.g2923249.%{os_release}
+Release:    142.16.g61e16ad..%{os_release}
 Summary:    Plugins for sonar
 Group:      develenv
 License:    http://www.gnu.org/licenses/quick-guide-gplv3.html
