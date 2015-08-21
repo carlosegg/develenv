@@ -1,8 +1,8 @@
 # rpmbuild -bb SPECS/jenkins.spec --define '_topdir '`pwd` -v --clean
 
 Name:       jenkins
-Version:    1.619
-Release:    11.gc28875f.%{os_release}
+Version:    1.625
+Release:    15.gfea58b4.%{os_release}
 Summary:    An extendable open source continuous integration server
 Group:      develenv
 License:    http://creativecommons.org/licenses/by/3.0/
