@@ -88,11 +88,11 @@ function get_external(){
   pushd . >/dev/null
   mkdir -p $external_dir
   cd $external_dir
-  local svn_command
-  [[ ! -d $external_dir/$dependency_name/.svn ]] && \
-      svn_command="svn co $external_url && cd $dependency_name" || \
-      svn_command="cd $external_dir/$dependency_name && svn up"
-  eval $svn_command
+  local repo_command
+  [[ ! -d $external_dir/$dependency_name/.git ]] && \
+      repo_command="git clone $external_url && cd $dependency_name" || \
+      repo_command="cd $external_dir/$dependency_name && git pull origin master"
+  eval $repo_command
   [[ "$?" != 0 ]] && echo "[ERROR] Unable download externals dependencies for $dependency_name" && exit 1
   LANG=C LANG=C svn info|grep ^Revision:|awk '{print $2}' >external_id
   popd >/dev/null
@@ -107,7 +107,7 @@ function get_externals(){
     EXT_DEVELENV_DIR=$DEFAULT_EXT_DEVELENV_DIR
   fi
   if [[ "$PIPELINE_PLUGIN_DIR" == "" ]];then 
-    get_external $external_dir "http://develenv-pipeline-plugin.googlecode.com/svn/trunk/pipeline_plugin/"
+    get_external $external_dir "https://github.com/carlosegg/pipeline_plugin.git"
     PIPELINE_PLUGIN_DIR=$DEFAULT_PIPELINE_PLUGIN_DIR
   fi
   rsync --delete --exclude .svn -arv $EXT_DEVELENV_DIR/sonar-runner/src/site/resources/ sonar-runner/src/main/rpm/SOURCES
