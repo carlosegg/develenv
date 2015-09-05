@@ -94,7 +94,7 @@ function get_external(){
       repo_command="cd $external_dir/$dependency_name && git pull origin master"
   eval $repo_command
   [[ "$?" != 0 ]] && echo "[ERROR] Unable download externals dependencies for $dependency_name" && exit 1
-  LANG=C LANG=C svn info|grep ^Revision:|awk '{print $2}' >external_id
+  dp_release.sh >external_id
   popd >/dev/null
 }
 
