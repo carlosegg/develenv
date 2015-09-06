@@ -2,7 +2,7 @@
 
 Name:       sonar-plugins
 Version:    2544.37
-Release:    142.16.g61e16ad.%{os_release}
+Release:    142.19.g1b2740a.%{os_release}
 Summary:    Plugins for sonar
 Group:      develenv
 License:    http://www.gnu.org/licenses/quick-guide-gplv3.html
@@ -10,7 +10,7 @@ Packager:   softwaresano.com
 URL:        http://docs.codehaus.org/display/SONAR/Plugin+Library
 BuildArch:  noarch
 BuildRoot:  %{_topdir}/BUILDROOT
-Requires:   ss-develenv-sonar >= 5.1.1-2537.37.139
+Requires:   ss-develenv-sonar >= 5.1.2-19.g1b2740a.%{os_release}
 Vendor:     tid.es
 
 %define sonar_plugins_path sonar/extensions/plugins

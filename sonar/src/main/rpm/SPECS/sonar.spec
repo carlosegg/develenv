@@ -1,6 +1,6 @@
 Name:       sonar
-Version:    5.1.1
-Release:    2573.g484bace.%{os_release}
+Version:    5.1.2
+Release:    19.g1b2740a.%{os_release}
 Summary:    Sonar is an open platform to manage code quality. 
 Group:      develenv
 License:    http://www.sonarsource.org/support/license/
