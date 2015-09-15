@@ -45,7 +45,8 @@
     mode     => 440,
     source   => 'puppet:///modules/sudo/sudoers',
   }
-# Needed packages to guest additions installation  
+# Needed packages to guest additions installation
+  package { 'bzip2': ensure => installed }
   package { 'sudo': ensure => installed }
   package { 'make': ensure => installed }
   package { 'puppet': ensure => installed }
