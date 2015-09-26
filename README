@@ -2,7 +2,7 @@
                   ${project.artifactId} Versión - ${project.version}
                  =========================================
 1. Introducción
-================
+===============
 ${project.artifactId} proporciona una solución para la automatización del proceso de construcción, testing y despliegue de software.
 
 Esta solución implementa un servidor de integración continua completo que permite hacer una entrega rápida de software y con el menor 
