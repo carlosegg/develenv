@@ -15,7 +15,6 @@ un error y que el software esté siempre disponible para ser instalado.
 ${project.artifactId} puede ser construido a partir de los fuentes, utilizando
 máquinas vagrant.
 
-
 3. Instalación
 ================
  
