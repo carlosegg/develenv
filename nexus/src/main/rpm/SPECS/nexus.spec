@@ -2,8 +2,8 @@
 # rpmbuild -bb SPECS/nexus.spec --define '_topdir '`pwd` -v --clean
 
 Name:       nexus
-Version:    2.11.2
-Release:    2537.125.%{os_release}
+Version:    2.11.4
+Release:    24.g8251546.%{os_release}
 Summary:    Nexus manages software "artifacts" required for development.
 Group:      develenv
 License:    http://www.sonatype.org/nexus/license
