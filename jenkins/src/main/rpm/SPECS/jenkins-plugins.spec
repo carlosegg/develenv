@@ -11,7 +11,7 @@ Packager:   softwaresano.com
 URL:        http://jenkins-ci.org/
 BuildArch:  noarch
 BuildRoot:  %{_topdir}/BUILDROOT
-Requires:   ss-develenv-jenkins >= 1.640-26.g336e1b5.%{os_release} ss-develenv-sonar-runner >= 2.4-2295.174 graphviz subversion mercurial git lcov sloccount
+Requires:   ss-develenv-jenkins >= 1.644-27.g75d63d9.%{os_release} ss-develenv-sonar-runner >= 2.4-2295.174 graphviz subversion mercurial git lcov sloccount
 Vendor:     tid.es
 
 %define jenkins_plugins_path jenkins/plugins
