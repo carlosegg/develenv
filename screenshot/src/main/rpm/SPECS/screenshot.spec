@@ -15,6 +15,7 @@ BuildRoot:  %{_topdir}/BUILDROOT
 Requires:   %{org_acronym}-%{project_name}-selenium >= 2.46.0 python php >= 5.3.3  %{org_acronym}-%{project_name}-user
 Vendor:     softwaresano.com
 Obsoletes:  python26-selenium >= 2.44.0 python26-PIL
+AutoReqProv: no
 # Redefine post install macros 
 %define __os_install_post    \
     /usr/lib/rpm/redhat/brp-compress \
